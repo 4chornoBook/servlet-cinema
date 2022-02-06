@@ -3,10 +3,7 @@ package com.chornobuk.web.model.dao;
 import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class UserDao implements IDao<User> {
@@ -46,9 +43,12 @@ public class UserDao implements IDao<User> {
 	public void add(User user) {
 		try{
 			Connection connection = connectionPool.getConnection();
-			PreparedStatement ps = connection.prepareStatement(INSERT_USER);
+			PreparedStatement ps = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
 			setParams(ps, user);
 			ps.execute();
+			ResultSet rs = ps.getGeneratedKeys();
+			if(rs.next())
+				user.setId(rs.getLong(1));
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

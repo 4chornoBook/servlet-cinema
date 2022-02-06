@@ -4,10 +4,7 @@ import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.entity.MovieSession;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -42,9 +39,13 @@ public class MovieDao implements IDao<Movie> {
 	public void add(Movie movie) {
 		try {
 			Connection con = DBManager.getInstance().getConnection();
-			PreparedStatement ps = con.prepareStatement(INSERT_MOVIE);
+			PreparedStatement ps = con.prepareStatement(INSERT_MOVIE, Statement.RETURN_GENERATED_KEYS);
 			setParams(ps, movie);
 			ps.execute();
+			ResultSet rs = ps.getGeneratedKeys();
+			if(rs.next())
+				movie.setId(rs.getLong(1));
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -3,10 +3,7 @@ package com.chornobuk.web.model.dao;
 import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.Ticket;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class TicketDao implements IDao<Ticket>{
@@ -39,9 +36,12 @@ public class TicketDao implements IDao<Ticket>{
 	public void add(Ticket ticket) {
 		try {
 			Connection con = DBManager.getInstance().getConnection();
-			PreparedStatement ps = con.prepareStatement(INSERT_TICKET);
+			PreparedStatement ps = con.prepareStatement(INSERT_TICKET, Statement.RETURN_GENERATED_KEYS);
 			setParams(ps, ticket);
 			ps.execute();
+			ResultSet rs = ps.getGeneratedKeys();
+			if(rs.next())
+				ticket.setId(rs.getLong(1));
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

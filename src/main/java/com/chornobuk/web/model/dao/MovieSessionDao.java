@@ -3,10 +3,7 @@ package com.chornobuk.web.model.dao;
 import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.MovieSession;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,7 +21,6 @@ public class MovieSessionDao implements IDao<MovieSession> {
 			ResultSet rs = ps.executeQuery();
 			if(rs.next())
 				movieSession = getValues(rs);
-
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -41,9 +37,12 @@ public class MovieSessionDao implements IDao<MovieSession> {
 	public void add(MovieSession movieSession) {
 		try {
 			Connection con = DBManager.getInstance().getConnection();
-			PreparedStatement ps = con.prepareStatement(INSERT_SESSION);
+			PreparedStatement ps = con.prepareStatement(INSERT_SESSION, Statement.RETURN_GENERATED_KEYS);
 			setParams(ps, movieSession);
 			ps.execute();
+			ResultSet rs = ps.getGeneratedKeys();
+			if(rs.next())
+				movieSession.setId(rs.getLong(1));
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

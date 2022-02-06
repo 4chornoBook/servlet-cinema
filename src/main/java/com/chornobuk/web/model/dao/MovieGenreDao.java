@@ -4,10 +4,7 @@ import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.entity.MovieGenre;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 public class MovieGenreDao implements IDao<MovieGenre> {

@@ -3,12 +3,10 @@ package com.chornobuk.web.model.dao;
 import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.Order;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Stack;
 
 public class OrderDao implements IDao<Order> {
 	private final static String GET_ORDER_BY_ID = "select * from tickets_order where order_id = ?";
@@ -40,9 +38,12 @@ public class OrderDao implements IDao<Order> {
 	public void add(Order order) {
 		try {
 			Connection con = DBManager.getInstance().getConnection();
-			PreparedStatement ps = con.prepareStatement(INSERT_ORDER);
+			PreparedStatement ps = con.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS);
 			setParams(ps, order);
 			ps.execute();
+			ResultSet rs = ps.getGeneratedKeys();
+			if(rs.next())
+				order.setId(rs.getLong(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
