@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.List;
 
 public class TicketDao implements IDao<Ticket>{
-	private final static String GET_TICKET_BY_ID = "select * from ticket where id = ?";
+	private final static String GET_TICKET_BY_ID = "select * from ticket where ticket_id = ?";
 	private final static String INSERT_TICKET = "insert into ticket values (default ,?,?,?)";
 	@Override
 	public Ticket get(long id) {

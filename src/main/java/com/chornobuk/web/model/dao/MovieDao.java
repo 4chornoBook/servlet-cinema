@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class MovieDao implements IDao<Movie> {
-	private static final String GET_MOVIE_BY_ID = "select * from movie where id = ?";
+	private static final String GET_MOVIE_BY_ID = "select * from movie where movie_id = ?";
 	private static final String INSERT_MOVIE = "insert into movie values(default, ?,?,?,?,?,?)";
 
 	@Override
