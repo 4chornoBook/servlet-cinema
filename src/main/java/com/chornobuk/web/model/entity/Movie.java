@@ -1,17 +1,17 @@
 package com.chornobuk.web.model.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 
 public class Movie {
 	private long id;
 	private String name;
-	private LocalDateTime releaseDate;
+	private LocalDate releaseDate;
 	private String description;
 	private String imageURL;
 	private int ticketPrice;
 	private int lengthInMinutes;
-	private Set<String> genres;
+	private Set<MovieGenre> genres;
 
 	public long getId() {
 		return id;
@@ -29,11 +29,11 @@ public class Movie {
 		this.name = name;
 	}
 
-	public LocalDateTime getReleaseDate() {
+	public LocalDate getReleaseDate() {
 		return releaseDate;
 	}
 
-	public void setReleaseDate(LocalDateTime releaseDate) {
+	public void setReleaseDate(LocalDate releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
@@ -69,11 +69,11 @@ public class Movie {
 		this.lengthInMinutes = lengthInMinutes;
 	}
 
-	public Set<String> getGenres() {
+	public Set<MovieGenre> getGenres() {
 		return genres;
 	}
 
-	public void setGenres(Set<String> genres) {
+	public void setGenres(Set<MovieGenre> genres) {
 		this.genres = genres;
 	}
 }
