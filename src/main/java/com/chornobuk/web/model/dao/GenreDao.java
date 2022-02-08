@@ -2,7 +2,6 @@ package com.chornobuk.web.model.dao;
 
 import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.Genre;
-import com.chornobuk.web.model.entity.MovieGenre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

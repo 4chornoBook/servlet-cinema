@@ -16,7 +16,7 @@ public class UserDao implements IDao<User> {
 		User user = null;
 		return user;
 	}
-	public User getUserById(String login) {
+	public User getUserByLogin(String login) {
 		User user = null;
 		try {
 			Connection con = connectionPool.getConnection();

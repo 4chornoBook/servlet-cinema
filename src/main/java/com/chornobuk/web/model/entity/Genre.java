@@ -9,6 +9,9 @@ public class Genre {
 		this.name = name;
 	}
 
+	public Genre() {
+
+	}
 	public long getId() {
 		return id;
 	}
