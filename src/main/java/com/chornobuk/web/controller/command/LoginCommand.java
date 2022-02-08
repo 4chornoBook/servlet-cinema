@@ -24,10 +24,8 @@ public class LoginCommand implements ICommand {
 			result = "Error! enter password";
 			return forward;
 		} else {
-			System.out.println("user created");
 			UserDao userDao = new UserDao();
 			User user = userDao.getUserByLogin(login);
-			System.out.println("login salt:" + user.getSalt());
 			if (user == null || user.getPassword().compareTo(HashingAlgorithm.cryptPassword(password, user.getSalt())) != 0) {
 				result = "Error. wrong password or login";
 				return forward;
@@ -37,12 +35,11 @@ public class LoginCommand implements ICommand {
 				session.setAttribute("user", user);
 				session.setAttribute("role", userRole);
 				if (userRole.equals(UserRole.ADMIN))
-					forward = "admin.jsp";
+					forward = "WEB-INF/jsp/admin/admin.jsp";
 				else if (userRole.equals(UserRole.USER))
-					forward = "user.jsp";
+					forward = "WEB-INF/jsp/user/user.jsp";
 			}
 		}
-
 		return forward;
 	}
 }

@@ -36,7 +36,6 @@ public class RegistrationCommand implements ICommand {
 			user.setRoleId(2);
 			user.setPassword(HashingAlgorithm.cryptPassword(password, user.getSalt()));
 			userDao.add(user);
-			System.out.println("registration salt:"+ user.getSalt());
 			forward = "login.jsp";
 			return forward;
 		} else {
