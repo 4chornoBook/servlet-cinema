@@ -7,7 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.chornobuk.web.controller.command.ICommand;
 import com.chornobuk.web.controller.command.CommandFactory;
+import com.chornobuk.web.model.dao.MovieDao;
+import com.chornobuk.web.model.entity.Genre;
+import com.chornobuk.web.model.entity.Movie;
+
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.LinkedList;
 
 public class Controller extends HttpServlet {
 	@Override
