@@ -14,6 +14,7 @@ public class MovieDao implements IDao<Movie> {
 	private static final String INSERT_MOVIE = "insert into movie values(default, ?,?,?,?,?,?)";
 	private static final String GET_MOVIE_GENRES = "select genre.genre_name from genre inner join movie_genre on genre.genre_id = movie_genre.genre_id inner join movie on movie_genre.movie_id = movie.movie_id where movie.movie_id = ?";
 	private static final String INSERT_MOVIE_GENRE = "insert into movie_genre values(?, ?)";
+	private static final String GET_ALL_MOVIES = "select * from movie";
 
 	@Override
 	public Movie get(long id) {
@@ -35,7 +36,18 @@ public class MovieDao implements IDao<Movie> {
 
 	@Override
 	public List<Movie> getAll() {
-		return null;
+		List<Movie> movies = new LinkedList<>();
+		try {
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(GET_ALL_MOVIES);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				movies.add(getValues(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return movies;
 	}
 
 	@Override

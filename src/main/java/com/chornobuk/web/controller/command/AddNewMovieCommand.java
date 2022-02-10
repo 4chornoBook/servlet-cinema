@@ -18,6 +18,7 @@ public class AddNewMovieCommand implements ICommand{
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 //		todo add validation
+		String forward = "WEB-INF/jsp/admin/admin.jsp";
 		System.out.println(req.getCharacterEncoding());
 		try {
 			PrintWriter pr = resp.getWriter();
@@ -52,6 +53,6 @@ public class AddNewMovieCommand implements ICommand{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "redirect";
+		return forward;
 	}
 }

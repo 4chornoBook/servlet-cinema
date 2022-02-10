@@ -11,6 +11,8 @@ public class CommandFactory {
 		commands.put("registration", new RegistrationCommand());
 		commands.put("newMovieForm", new NewMovieFormCommand());
 		commands.put("addNewMovie", new AddNewMovieCommand());
+		commands.put("newMovieSession", new NewSessionCommand());
+		commands.put("addNewMovieSession", new AddNewMovieSessionCommand());
 	}
 
 	public static CommandFactory getInstance() {
