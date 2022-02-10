@@ -10,6 +10,7 @@ public class CommandFactory {
 		commands.put("login", new LoginCommand());
 		commands.put("registration", new RegistrationCommand());
 		commands.put("newMovieForm", new NewMovieFormCommand());
+		commands.put("addNewMovie", new AddNewMovieCommand());
 	}
 
 	public static CommandFactory getInstance() {

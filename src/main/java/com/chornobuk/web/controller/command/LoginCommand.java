@@ -8,7 +8,6 @@ import com.chornobuk.web.model.HashingAlgorithm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 public class LoginCommand implements ICommand {
 	@Override
