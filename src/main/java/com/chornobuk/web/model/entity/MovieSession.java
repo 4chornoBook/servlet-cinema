@@ -1,12 +1,14 @@
 package com.chornobuk.web.model.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class MovieSession {
 	private long id;
 	private long movieId;
-	private LocalDateTime beginningDate;
-	private LocalDateTime endingDate;
+	private LocalDate movieDate;
+	private LocalTime beginningTime;
+	private LocalTime endingTime;
 	private int availablePlaces;
 
 	public long getId() {
@@ -25,28 +27,36 @@ public class MovieSession {
 		this.movieId = movieId;
 	}
 
-	public LocalDateTime getBeginningDate() {
-		return beginningDate;
-	}
-
-	public void setBeginningDate(LocalDateTime beginningDate) {
-		this.beginningDate = beginningDate;
-	}
-
-	public LocalDateTime getEndingDate() {
-		return endingDate;
-	}
-
-	public void setEndingDate(LocalDateTime endingDate) {
-		this.endingDate = endingDate;
-	}
-
 	public int getAvailablePlaces() {
 		return availablePlaces;
 	}
 
 	public void setAvailablePlaces(int availablePlaces) {
 		this.availablePlaces = availablePlaces;
+	}
+
+	public LocalDate getMovieDate() {
+		return movieDate;
+	}
+
+	public void setMovieDate(LocalDate movieDate) {
+		this.movieDate = movieDate;
+	}
+
+	public LocalTime getBeginningTime() {
+		return beginningTime;
+	}
+
+	public void setBeginningTime(LocalTime beginningTime) {
+		this.beginningTime = beginningTime;
+	}
+
+	public LocalTime getEndingTime() {
+		return endingTime;
+	}
+
+	public void setEndingTime(LocalTime endingTime) {
+		this.endingTime = endingTime;
 	}
 }
 
