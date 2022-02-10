@@ -9,6 +9,7 @@ public class CommandFactory {
 	private CommandFactory() {
 		commands.put("login", new LoginCommand());
 		commands.put("registration", new RegistrationCommand());
+		commands.put("newMovieForm", new NewMovieFormCommand());
 	}
 
 	public static CommandFactory getInstance() {

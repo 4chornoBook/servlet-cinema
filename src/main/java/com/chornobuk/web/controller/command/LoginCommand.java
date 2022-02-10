@@ -8,6 +8,7 @@ import com.chornobuk.web.model.HashingAlgorithm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class LoginCommand implements ICommand {
 	@Override
@@ -34,8 +35,9 @@ public class LoginCommand implements ICommand {
 				HttpSession session = req.getSession();
 				session.setAttribute("user", user);
 				session.setAttribute("role", userRole);
-				if (userRole.equals(UserRole.ADMIN))
+				if (userRole.equals(UserRole.ADMIN)) {
 					forward = "WEB-INF/jsp/admin/admin.jsp";
+				}
 				else if (userRole.equals(UserRole.USER))
 					forward = "WEB-INF/jsp/user/user.jsp";
 			}
