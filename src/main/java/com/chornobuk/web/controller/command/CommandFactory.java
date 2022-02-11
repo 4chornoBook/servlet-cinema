@@ -13,6 +13,7 @@ public class CommandFactory {
 		commands.put("addNewMovie", new AddNewMovieCommand());
 		commands.put("newMovieSession", new NewSessionCommand());
 		commands.put("addNewMovieSession", new AddNewMovieSessionCommand());
+		commands.put("removeMovieSession", new RemoveSessionCommand());
 	}
 
 	public static CommandFactory getInstance() {

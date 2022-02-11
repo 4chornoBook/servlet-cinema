@@ -73,6 +73,7 @@ public class MovieDao implements IDao<Movie> {
 			}
 			con.commit();
 			con.setAutoCommit(true);
+			con.close();
 		} catch (SQLException e) {
 			if (con != null) {
 				try {

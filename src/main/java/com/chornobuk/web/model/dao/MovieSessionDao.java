@@ -12,6 +12,8 @@ import java.util.List;
 public class MovieSessionDao implements IDao<MovieSession> {
 	public static final String GET_SESSION_BY_ID = "select * from movie_session where session_id = ?";
 	public static final String INSERT_SESSION = "insert into movie_session values (default,?,?,?,?,?)";
+	public static final String DELETE_SESSION_BY_ID = "delete from movie_session where session_id = ?";
+	public static final String DELETE_TICKETS_BY_SESSION = "delete from ticket where movie_session_id = ?";
 
 	@Override
 	public MovieSession get(long id) {
@@ -57,7 +59,30 @@ public class MovieSessionDao implements IDao<MovieSession> {
 
 	@Override
 	public void delete(MovieSession movieSession) {
-// don't need now
+//		method removes session and all tickets
+		Connection con = DBManager.getInstance().getConnection();
+		try {
+			con.setAutoCommit(false);
+			PreparedStatement deleteTickets = con.prepareStatement(DELETE_TICKETS_BY_SESSION);
+			PreparedStatement deleteSession = con.prepareStatement(DELETE_SESSION_BY_ID);
+			deleteTickets.setLong(1, movieSession.getId());
+			deleteSession.setLong(1, movieSession.getId());
+			deleteTickets.execute();
+			deleteSession.execute();
+			con.commit();
+			con.setAutoCommit(true);
+			con.close();
+		} catch (SQLException e) {
+			if (con != null) {
+				try {
+					System.out.println("transaction is being rolled back");
+					con.rollback();
+				} catch (SQLException ex) {
+
+				}
+			}
+			e.printStackTrace();
+		}
 	}
 
 	private void setParams(PreparedStatement ps, MovieSession movieSession) throws SQLException {
