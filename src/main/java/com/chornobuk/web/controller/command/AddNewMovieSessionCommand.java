@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
 
@@ -8,8 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-public class AddNewMovieSessionCommand implements ICommand{
+public class AddNewMovieSessionCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String forward = "WEB-INF/jsp/admin/newSession.jsp";
@@ -23,6 +25,7 @@ public class AddNewMovieSessionCommand implements ICommand{
 		LocalDate movieDate = LocalDate.parse(movieDateString);
 
 		MovieSessionDao movieSessionDao = new MovieSessionDao();
+		MovieDao movieDao = new MovieDao();
 		MovieSession movieSession = new MovieSession();
 		movieSession.setMovieId(movieId);
 		movieSession.setMovieDate(movieDate);
@@ -30,6 +33,10 @@ public class AddNewMovieSessionCommand implements ICommand{
 		movieSession.setEndingTime(endingTime);
 		movieSession.setAvailablePlaces(100);
 		movieSessionDao.add(movieSession);
-		return "WEB-INF/jsp/admin/admin.jsp";
+		movieSession.setMovie(movieDao.get(movieSession.getMovieId()));
+		List<MovieSession> availableSessions = movieSessionDao.getAvailableSessions();
+		req.getServletContext().setAttribute("availableSessions",availableSessions);
+		forward = "WEB-INF/jsp/admin/admin.jsp";
+		return forward;
 	}
 }

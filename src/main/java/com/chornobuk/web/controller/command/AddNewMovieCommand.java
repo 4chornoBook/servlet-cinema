@@ -30,7 +30,6 @@ public class AddNewMovieCommand implements ICommand{
 			int lengthInMinutes = Integer.parseInt(req.getParameter("length"));
 
 			String[] genresId = req.getParameterValues("genre");
-			System.out.println(Arrays.toString(genresId));
 			LinkedList<Genre> genres = GenreManager.getInstance().getGenres()
 					.stream()
 					.filter(x -> Arrays.binarySearch(genresId, x.getName()) >= 0)

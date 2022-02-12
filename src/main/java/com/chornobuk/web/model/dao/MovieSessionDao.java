@@ -1,12 +1,14 @@
 package com.chornobuk.web.model.dao;
 
 import com.chornobuk.web.model.database.DBManager;
+import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.entity.MovieSession;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MovieSessionDao implements IDao<MovieSession> {
@@ -14,7 +16,12 @@ public class MovieSessionDao implements IDao<MovieSession> {
 	public static final String INSERT_SESSION = "insert into movie_session values (default,?,?,?,?,?)";
 	public static final String DELETE_SESSION_BY_ID = "delete from movie_session where session_id = ?";
 	public static final String DELETE_TICKETS_BY_SESSION = "delete from ticket where movie_session_id = ?";
-
+//	todo rewrite as a procedure
+	public static final String GET_AVAILABLE_MOVIES = "select movie_session.*, movie.* from movie_session"
+			+" inner join movie"
+			+" on movie_session.movie_id = movie.movie_id"
+			+" where movie_session.session_date >= current_date"
+			+" and movie_session.beginning_time >= current_time";
 	@Override
 	public MovieSession get(long id) {
 		MovieSession movieSession = null;
@@ -83,6 +90,32 @@ public class MovieSessionDao implements IDao<MovieSession> {
 			}
 			e.printStackTrace();
 		}
+	}
+
+	public List<MovieSession> getAvailableSessions() {
+		List<MovieSession> availableSession = new LinkedList<>();
+		try{
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(GET_AVAILABLE_MOVIES);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				MovieSession session = getValues(rs);
+				Movie movie = new Movie();
+				movie.setId(session.getMovieId());
+				movie.setName(rs.getString(8));
+				movie.setReleaseDate(rs.getObject(9, LocalDate.class));
+				movie.setDescription(rs.getString(10));
+				movie.setImageURL(rs.getString(11));
+				movie.setTicketPrice(rs.getInt(12));
+				movie.setLengthInMinutes(rs.getInt(13));
+				session.setMovie(movie);
+				availableSession.add(session);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return availableSession;
 	}
 
 	private void setParams(PreparedStatement ps, MovieSession movieSession) throws SQLException {

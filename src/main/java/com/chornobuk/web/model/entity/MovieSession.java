@@ -11,6 +11,8 @@ public class MovieSession {
 	private LocalTime endingTime;
 	private int availablePlaces;
 
+	private Movie movie;
+
 	public long getId() {
 		return id;
 	}
@@ -57,6 +59,14 @@ public class MovieSession {
 
 	public void setEndingTime(LocalTime endingTime) {
 		this.endingTime = endingTime;
+	}
+
+	public Movie getMovie() {
+		return movie;
+	}
+
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
 }
 
