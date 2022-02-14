@@ -15,6 +15,8 @@ public class CommandFactory {
 		commands.put("addNewMovieSession", new AddNewMovieSessionCommand());
 		commands.put("removeMovieSession", new RemoveSessionCommand());
 		commands.put("showMovieSession", new ShowSessionCommand());
+		commands.put("buyTickets", new BuyTicketsCommand());
+		commands.put("logout", new LogoutCommand());
 	}
 
 	public static CommandFactory getInstance() {

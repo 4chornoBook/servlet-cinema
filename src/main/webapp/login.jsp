@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <jsp:include page="/WEB-INF/head.jsp"/>
 <style>
@@ -15,10 +16,10 @@
     }
 
     body {
-        display: flex;
+        /*display: flex;*/
         align-items: center;
-        padding-top: 40px;
-        padding-bottom: 40px;
+        /*padding-top: 40px;*/
+        /*padding-bottom: 40px;*/
         background-color: #f5f5f5;
     }
 
@@ -27,9 +28,10 @@
         max-width: 330px;
         padding: 15px;
         margin: auto;
+		margin-top: 10%;
     }
 
-    .form-signin .checkbox {
+    .form-signin.checkbox {
         font-weight: 400;
     }
 
@@ -50,18 +52,8 @@
     }
 </style>
 <body>
-<%--<h1>Super cinema</h1>--%>
-<form action="controller?action=login" method="post">
-	<%--	<label for="login"></label>--%>
-	<%--	<input type="text" name="login" id="login" placeholder="login">--%>
-	<%--	<br>--%>
-	<%--	<br>--%>
-	<%--	<label for="password"></label>--%>
-	<%--	<input type="password" name="password" id="password" minlength="5" maxlength="128" placeholder="password"--%>
-	<%--	&lt;%&ndash;           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" &ndash;%&gt;--%>
-	<%--		   title="enter normal password"--%>
-</form>
-<main class="form-signin">
+<jsp:include page="header.jsp"/>
+<div class="form-signin">
 	<form action="controller?action=login" method="post">
 		<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 		<div class="form-floating">
@@ -79,6 +71,6 @@
 		<%--		</div>--%>
 		<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 	</form>
-</main>
+</div>
 </body>
 </html>
