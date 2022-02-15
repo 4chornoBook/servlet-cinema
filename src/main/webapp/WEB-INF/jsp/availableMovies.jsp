@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<h2 style="margin-left: 5%; margin-top: 2%">Розклад показів</h2>
+<h2 style="margin-left: 5%; margin-top: 2%">Розклад показів</h2>
 <c:forEach items="${applicationScope['availableSessions']}" var="session">
 	<div class="movie" style="
 	border: 2px black solid; width: auto; display: flex; width: 70%; align-items: center;
@@ -30,7 +30,14 @@
 			<p>Тривалість: <c:out value="${session.getMovie().getLengthInMinutes()}"/> хв.</p>
 			<form action="controller?action=showMovieSession" method="post">
 				<input type="hidden" value="${session.getId()}" name="sessionId">
-				<input class="btn btn-primary btn-lg" type="submit" value="buy ticket">
+				<c:choose>
+					<c:when test="${sessionScope.get('role').name().equals('ADMIN')}">
+						<input class="btn btn-primary btn-lg" type="submit" value="details">
+					</c:when>
+					<c:otherwise>
+						<input class="btn btn-primary btn-lg" type="submit" value="buy ticket">
+					</c:otherwise>
+				</c:choose>
 			</form>
 		</div>
 	</div>

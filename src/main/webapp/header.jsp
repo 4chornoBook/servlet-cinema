@@ -18,6 +18,12 @@
 			<div class="navbar-nav">
 				<a class="nav-link active" href="#">Location</a>
 			</div>
+			<c:if test="${sessionScope.get('role').name().equals('ADMIN')}">
+				<div class="navbar-nav">
+					<a class="nav-link active" href="controller?action=newMovieForm">Add Movie</a>
+					<a class="nav-link active" href="controller?action=newMovieSession">Add Session</a>
+				</div>
+			</c:if>
 		</div>
 		<c:choose>
 			<c:when test="${sessionScope.user == null}">
@@ -33,7 +39,7 @@
 					<div class="navbar-nav">
 						<a class="nav-link active" href="#">
 							<c:out value="${sessionScope.get('user').getName()}"/>
-							 <c:out value="${sessionScope.get('user').getSurname()}"/>
+							<c:out value="${sessionScope.get('user').getSurname()}"/>
 						</a>
 						<a class="nav-link active" href="controller?action=logout">Logout</a>
 					</div>

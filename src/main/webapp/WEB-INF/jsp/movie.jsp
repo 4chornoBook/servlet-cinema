@@ -35,8 +35,10 @@
 <div class="movie" style="
 	border: 2px darkblue solid; width: auto; display: flex; width: 70%; align-items: center;
 	background-color: #f0f8ff;
-	margin-left: 5%;
-	margin-top: 5%;
+	padding: 10px;
+	border-radius: 20px;
+	/*margin-left: 5%;*/
+	margin: 5% auto;
 	">
 	<div>
 		<img src="${session.getMovie().getImageURL()}"
@@ -63,6 +65,91 @@
 			<input type="hidden" value="${session.getId()}" name="sessionId">
 		</form>
 	</div>
+</div>
+<div>
+
+	<%--<table>--%>
+	<%--	<c:forEach var="i" begin="1" end="100">--%>
+	<%--		<c:if test="${(i-1) % 10 == 0}">--%>
+	<%--			<tr>--%>
+	<%--		</c:if>--%>
+	<%--		<td>--%>
+	<%--			<c:choose>--%>
+	<%--				<c:when test="${ticketsNumber.contains(i)}">--%>
+	<%--					<p style="color: red"><c:out value="${i}"/> ticket</p>--%>
+	<%--				</c:when>--%>
+	<%--				<c:otherwise>--%>
+	<%--					<p style="color: green"><c:out value="${i}"/> ticket</p>--%>
+	<%--				</c:otherwise>--%>
+	<%--			</c:choose>--%>
+	<%--		</td>--%>
+	<%--		<c:if test="${(i-1) % 10 == 9}">--%>
+	<%--			</tr>--%>
+	<%--		</c:if>--%>
+	<%--	</c:forEach>--%>
+	<%--</table>--%>
+	<%--<style>--%>
+	<%--	#reserved {--%>
+	<%--		background-color: grey;--%>
+	<%--        width: 4%;--%>
+	<%--        height: 4%;--%>
+	<%--	}--%>
+	<%--	.btn-primary {--%>
+	<%--	}--%>
+	<%--</style>--%>
+	<c:if test="${!sessionScope.get('role').name().equals('ADMIN')}">
+	<form action="controller?action=buyTickets">
+		</c:if>
+		<table style="margin: 0 auto">
+			<c:forEach var="i" begin="1" end="100">
+				<c:if test="${(i-1) % 10 == 0}">
+					<tr>
+				</c:if>
+				<td>
+					<c:choose>
+						<c:when test="${ticketsNumber.contains(i)}">
+							<%--						<button type="button" value="<c:out value="${i}"/>" disabled class="btn btn-secondary btn-lg"--%>
+							<button type="button" value="<c:out value="${i}"/>" disabled
+									class="btn btn-secondary"
+									data-bs-toggle="button" autocomplete="off">
+								<c:out value="${i}"/>
+								<br>
+								місце
+							</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" value="<c:out value="${i}"/>" class="btn btn-outline-primary"
+									data-bs-toggle="button" autocomplete="off">
+								<c:out value="${i}"/>
+								<br>
+								місце
+							</button>
+						</c:otherwise>
+					</c:choose>
+				</td>
+				<c:if test="${(i-1) % 10 == 9}">
+					</tr>
+				</c:if>
+			</c:forEach>
+
+		</table>
+		<c:choose>
+		<c:when test="${sessionScope.get('role').name().equals('ADMIN')}">
+			<form action="controller?action=removeMovieSession">
+				<div class="text-center">
+					<button type="submit" class="w-50 btn btn-outline-danger">
+						Delete Session
+					</button>
+				</div>
+			</form>
+		</c:when>
+		<c:otherwise>
+		<div class="text-center">
+			<input class="w-50 btn btn-outline-success mx-auto" type="submit" value="order tickets">
+		</div>
+	</form>
+	</c:otherwise>
+	</c:choose>
 </div>
 <jsp:include page="/footer.jsp"/>
 </body>

@@ -60,7 +60,7 @@
 	margin: auto;
 	margin-top: 5%;">
 	<h2>New session</h2>
-	<select class="form-select" aria-label="Default select example">
+	<select class="form-select" name="movie" size="4" aria-label="Default select example">
 		<option selected>Choose movie for session</option>
 		<c:forEach items="${applicationScope['movies']}" var="movie">
 			<option value="<c:out value="${movie.getId()}"/>"><c:out value="${movie.getName()}"/></option>
@@ -77,7 +77,7 @@
 			   aria-describedby="movieBeginningTimeHelp">
 		<div id="movieBeginningTimeHelp" class="form-text">Ending time will be set automatically depending on movie length and cleaning time</div>
 	</div>
-	<button type="submit" class="btn btn-primary">Add movie</button>
+	<button type="submit" class="btn btn-primary">Add session</button>
 </form>
 <jsp:include page="/footer.jsp"/>
 </body>

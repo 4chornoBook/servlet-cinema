@@ -14,12 +14,6 @@
 <jsp:include page="/WEB-INF/head.jsp"/>
 <body>
 <jsp:include page="/header.jsp"/>
-<h2>Hello admin</h2>
-<form action="controller?action=newMovieForm" method="post">
-	<input type="submit" value="add new movie">
-</form>
-<form action="controller?action=newMovieSession" method="post">
-	<input type="submit" value="add new session">
 </form>
 <jsp:include page="/WEB-INF/jsp/availableMovies.jsp"/>
 <%--print all movies--%>
