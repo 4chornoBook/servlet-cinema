@@ -12,10 +12,13 @@ import java.util.List;
 public class MovieDao implements IDao<Movie> {
 	private static final String GET_MOVIE_BY_ID = "select * from movie where movie_id = ?";
 	private static final String INSERT_MOVIE = "insert into movie values(default, ?,?,?,?,?,?)";
-	private static final String GET_MOVIE_GENRES = "select genre.genre_name from genre inner join movie_genre on genre.genre_id = movie_genre.genre_id inner join movie on movie_genre.movie_id = movie.movie_id where movie.movie_id = ?";
 	private static final String INSERT_MOVIE_GENRE = "insert into movie_genre values(?, ?)";
 	private static final String GET_ALL_MOVIES = "select * from movie";
-
+	private static  final String GET_MOVIE_GENRES = "select genre.* from genre" +
+			" inner join movie_genre" +
+			" on genre.genre_id = movie_genre.genre_id" +
+			" inner join movie on movie_genre.movie_id = movie.movie_id" +
+			" where movie.movie_id = ?;";
 	@Override
 	public Movie get(long id) {
 		Movie movie = null;
@@ -25,9 +28,11 @@ public class MovieDao implements IDao<Movie> {
 			PreparedStatement ps = con.prepareStatement(GET_MOVIE_BY_ID);
 			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next())
+			if (rs.next()) {
 				movie = getValues(rs);
-
+				movie.setGenres(getMovieGenres(movie));
+			}
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -44,6 +49,7 @@ public class MovieDao implements IDao<Movie> {
 			while (rs.next()) {
 				movies.add(getValues(rs));
 			}
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -101,12 +107,13 @@ public class MovieDao implements IDao<Movie> {
 		LinkedList<Genre> genres = new LinkedList<>();
 		try {
 			Connection con = DBManager.getInstance().getConnection();
-			PreparedStatement ps = con.prepareStatement(GET_MOVIE_BY_ID);
+			PreparedStatement ps = con.prepareStatement(GET_MOVIE_GENRES);
 			ps.setLong(1, movie.getId());
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				genres.add(new Genre(rs.getLong(1), rs.getString(2)));
 			}
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

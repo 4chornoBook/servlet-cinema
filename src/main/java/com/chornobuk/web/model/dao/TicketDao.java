@@ -19,7 +19,7 @@ public class TicketDao implements IDao<Ticket>{
 			ResultSet rs = ps.executeQuery();
 			if(rs.next())
 				ticket = getTicket(rs);
-
+			con.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -42,6 +42,7 @@ public class TicketDao implements IDao<Ticket>{
 			ResultSet rs = ps.getGeneratedKeys();
 			if(rs.next())
 				ticket.setId(rs.getLong(1));
+			con.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

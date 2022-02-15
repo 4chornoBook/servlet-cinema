@@ -28,6 +28,7 @@ public class GenreDao implements IDao<Genre>{
 			while(rs.next()) {
 				genres.add(getValues(rs));
 			}
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

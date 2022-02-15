@@ -10,12 +10,14 @@ public class UserDao implements IDao<User> {
 	private final static String GET_USER_BY_LOGIN = "select * from cinema_user where login = ?";
 	private final static String INSERT_USER = "insert into cinema_user values(default,?,?,?,?,?,?);";
 	DBManager connectionPool = DBManager.getInstance();
+
 	@Override
 	public User get(long id) {
 //		don't need now
 		User user = null;
 		return user;
 	}
+
 	public User getUserByLogin(String login) {
 		User user = null;
 		try {
@@ -23,11 +25,11 @@ public class UserDao implements IDao<User> {
 			PreparedStatement ps = con.prepareStatement(GET_USER_BY_LOGIN);
 			ps.setString(1, login);
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				user = getUser(rs);
 			}
-		}
-		catch (SQLException e) {
+			con.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return user;
@@ -41,16 +43,17 @@ public class UserDao implements IDao<User> {
 
 	@Override
 	public void add(User user) {
-		try{
-			Connection connection = connectionPool.getConnection();
-			PreparedStatement ps = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+		try {
+			Connection con = connectionPool.getConnection();
+			PreparedStatement ps = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
 			setParams(ps, user);
 			ps.execute();
 			ResultSet rs = ps.getGeneratedKeys();
-			if(rs.next())
+			if (rs.next())
 				user.setId(rs.getLong(1));
-		}
-		catch (SQLException e) {
+
+			con.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -61,7 +64,7 @@ public class UserDao implements IDao<User> {
 	}
 
 	@Override
-	public void delete(User user)  {
+	public void delete(User user) {
 //		I don't need to delete user
 	}
 
@@ -79,10 +82,10 @@ public class UserDao implements IDao<User> {
 
 	private void setParams(PreparedStatement ps, User user) throws SQLException {
 		ps.setString(1, user.getLogin());
-		ps.setString(2,user.getName());
-		ps.setString(3,user.getSurname());
-		ps.setString(4,user.getPassword());
-		ps.setString(5,user.getSalt());
-		ps.setLong(6,user.getRoleId());
+		ps.setString(2, user.getName());
+		ps.setString(3, user.getSurname());
+		ps.setString(4, user.getPassword());
+		ps.setString(5, user.getSalt());
+		ps.setLong(6, user.getRoleId());
 	}
 }

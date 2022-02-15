@@ -22,7 +22,7 @@ public class OrderDao implements IDao<Order> {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 				order = getOrder(rs);
-
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -44,6 +44,7 @@ public class OrderDao implements IDao<Order> {
 			ResultSet rs = ps.getGeneratedKeys();
 			if(rs.next())
 				order.setId(rs.getLong(1));
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

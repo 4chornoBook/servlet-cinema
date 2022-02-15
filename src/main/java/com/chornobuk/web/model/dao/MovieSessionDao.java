@@ -20,8 +20,7 @@ public class MovieSessionDao implements IDao<MovieSession> {
 	public static final String GET_AVAILABLE_MOVIES = "select movie_session.*, movie.* from movie_session"
 			+" inner join movie"
 			+" on movie_session.movie_id = movie.movie_id"
-			+" where movie_session.session_date >= current_date"
-			+" and movie_session.beginning_time >= current_time";
+			+" where movie_session.session_date + movie_session.beginning_time >= now()";
 	@Override
 	public MovieSession get(long id) {
 		MovieSession movieSession = null;

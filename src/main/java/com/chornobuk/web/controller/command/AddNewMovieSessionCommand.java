@@ -18,24 +18,34 @@ public class AddNewMovieSessionCommand implements ICommand {
 		long movieId = Long.parseLong(req.getParameter("movie"));
 		String movieDateString = req.getParameter("movieDate");
 		String beginningTimeS = req.getParameter("beginningTime");
-		String endingTimeS = req.getParameter("endingTime");
+//		String endingTimeS = req.getParameter("endingTime");
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 		LocalTime beginningTime = LocalTime.parse(beginningTimeS, dateTimeFormatter);
-		LocalTime endingTime = LocalTime.parse(endingTimeS, dateTimeFormatter);
-		LocalDate movieDate = LocalDate.parse(movieDateString);
+//		LocalTime endingTime = LocalTime.parse(endingTimeS, dateTimeFormatter);
 
+//		get movie length
 		MovieSessionDao movieSessionDao = new MovieSessionDao();
 		MovieDao movieDao = new MovieDao();
+		LocalDate movieDate = LocalDate.parse(movieDateString);
+
 		MovieSession movieSession = new MovieSession();
 		movieSession.setMovieId(movieId);
 		movieSession.setMovieDate(movieDate);
 		movieSession.setBeginningTime(beginningTime);
-		movieSession.setEndingTime(endingTime);
+
+
 		movieSession.setAvailablePlaces(100);
-		movieSessionDao.add(movieSession);
 		movieSession.setMovie(movieDao.get(movieSession.getMovieId()));
+		int cleaningTime = 20;
+//		add to beginning time length of movie rounded to the next 10 and cleaning time
+		LocalTime endingTime = beginningTime.plusMinutes(movieSession.getMovie().getLengthInMinutes() +
+				(10 - (movieSession.getMovie().getLengthInMinutes() % 10)) + cleaningTime);
+
+		movieSession.setEndingTime(endingTime);
+		movieSessionDao.add(movieSession);
+
 		List<MovieSession> availableSessions = movieSessionDao.getAvailableSessions();
-		req.getServletContext().setAttribute("availableSessions",availableSessions);
+		req.getServletContext().setAttribute("availableSessions", availableSessions);
 		forward = "WEB-INF/jsp/admin/admin.jsp";
 		return forward;
 	}
