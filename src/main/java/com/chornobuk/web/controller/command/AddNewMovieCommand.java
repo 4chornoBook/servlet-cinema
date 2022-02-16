@@ -1,6 +1,6 @@
 package com.chornobuk.web.controller.command;
 
-import com.chornobuk.web.model.GenreManager;
+import com.chornobuk.web.model.dao.GenreDao;
 import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.entity.Genre;
 import com.chornobuk.web.model.entity.Movie;
@@ -25,7 +25,8 @@ public class AddNewMovieCommand implements ICommand {
 		int lengthInMinutes = Integer.parseInt(req.getParameter("length"));
 
 		String[] genresId = req.getParameterValues("genre");
-		LinkedList<Genre> genres = GenreManager.getInstance().getGenres()
+		GenreDao genreDao = new GenreDao();
+		LinkedList<Genre> genres = genreDao.getAll()
 				.stream()
 				.filter(x -> Arrays.binarySearch(genresId, x.getName()) >= 0)
 				.collect(Collectors.toCollection(LinkedList::new));

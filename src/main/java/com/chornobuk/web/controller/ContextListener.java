@@ -1,6 +1,6 @@
 package com.chornobuk.web.controller;
 
-import com.chornobuk.web.model.GenreManager;
+import com.chornobuk.web.model.dao.GenreDao;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
 
@@ -16,7 +16,8 @@ public class ContextListener implements ServletContextListener {
 		List<MovieSession> availableSessions = movieSessionDao.getAvailableSessions();
 		sce.getServletContext().setAttribute("availableSessions", availableSessions);
 //		todo replace this class with using dao
-		sce.getServletContext().setAttribute("genres", GenreManager.getInstance().getGenres());
+		GenreDao genreDao = new GenreDao();
+		sce.getServletContext().setAttribute("genres", genreDao.getAll());
 	}
 
 	@Override
