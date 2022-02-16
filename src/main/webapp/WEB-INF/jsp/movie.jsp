@@ -61,9 +61,6 @@
 		<p>
 			<c:out value="${session.getMovie().getDescription()}"/>
 		</p>
-		<form action="controller?action=showMovieSession" method="post">
-			<input type="hidden" value="${session.getId()}" name="sessionId">
-		</form>
 	</div>
 </div>
 <div>
@@ -98,7 +95,7 @@
 	<%--	}--%>
 	<%--</style>--%>
 	<c:if test="${!sessionScope.get('role').name().equals('ADMIN')}">
-	<form action="controller?action=buyTickets">
+	<form action="controller?action=buyTickets" id="buyTickets" method="post">
 		</c:if>
 		<table style="margin: 0 auto">
 			<c:forEach var="i" begin="1" end="100">
@@ -108,22 +105,15 @@
 				<td>
 					<c:choose>
 						<c:when test="${ticketsNumber.contains(i)}">
-							<%--						<button type="button" value="<c:out value="${i}"/>" disabled class="btn btn-secondary btn-lg"--%>
-							<button type="button" value="<c:out value="${i}"/>" disabled
-									class="btn btn-secondary"
-									data-bs-toggle="button" autocomplete="off">
-								<c:out value="${i}"/>
-								<br>
-								місце
-							</button>
+							<input type="checkbox" name="numberPlace" disabled class="btn-check" id="btn-check${i}"
+								   autocomplete="off"/>
+							<label class="btn btn-secondary" for="btn-check${i}"><c:out value="${i}"/><br>місце</label>
 						</c:when>
 						<c:otherwise>
-							<button type="button" value="<c:out value="${i}"/>" class="btn btn-outline-primary"
-									data-bs-toggle="button" autocomplete="off">
-								<c:out value="${i}"/>
-								<br>
-								місце
-							</button>
+							<input type="checkbox" name="numberPlace" value="${i}" class="btn-check" id="btn-check${i}"
+								   autocomplete="off"/>
+							<label class="btn btn-outline-primary" for="btn-check${i}"><c:out
+									value="${i}"/><br>місце</label>
 						</c:otherwise>
 					</c:choose>
 				</td>
@@ -131,25 +121,60 @@
 					</tr>
 				</c:if>
 			</c:forEach>
-
 		</table>
 		<c:choose>
 		<c:when test="${sessionScope.get('role').name().equals('ADMIN')}">
-			<form action="controller?action=removeMovieSession">
+			<form action="controller?action=removeMovieSession" id="removeSession" method="post">
 				<div class="text-center">
-					<button type="submit" class="w-50 btn btn-outline-danger">
+					<button type="button" form="removeSession" class="w-50 btn btn-outline-danger"
+							data-bs-toggle="modal"
+							data-bs-target="#myModal">
 						Delete Session
 					</button>
+					<div class="modal" id="myModal" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Попередження!</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<p>Ви дійсно хочете видалити показ фільму. Квитки всіх клієнтів буде відмінено</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+									</button>
+									<button type="submit" form="removeSession" class="btn btn-primary">Save changes
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
+				<input type="hidden" form="removeSession" value="${session.getId()}" name="sessionId">
 			</form>
 		</c:when>
 		<c:otherwise>
 		<div class="text-center">
-			<input class="w-50 btn btn-outline-success mx-auto" type="submit" value="order tickets">
+			<input form="buyTickets" class="w-50 btn btn-outline-success mx-auto" type="submit" value="order tickets">
 		</div>
 	</form>
 	</c:otherwise>
 	</c:choose>
+	<style>
+
+	</style>
+	<table data-toggle="buttons">
+		<tr>
+			<td>
+				<input type="checkbox" class="btn-check" id="btn-check" autocomplete="off"/>
+				<label class="btn btn-outline-primary" for="btn-check">1 <br> place</label>
+			</td>
+		</tr>
+
+
+	</table>
 </div>
 <jsp:include page="/footer.jsp"/>
 </body>
