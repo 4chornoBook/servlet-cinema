@@ -12,26 +12,6 @@
 <jsp:include page="/WEB-INF/head.jsp"/>
 <body>
 <jsp:include page="/header.jsp"/>
-<%--<h1><c:out value="${requestScope.session.getMovie().getName()}"/></h1>--%>
-<%--<h2><c:out value="${requestScope.session.getMovieDate()}"/></h2>--%>
-<%--<h2><c:out value="${requestScope.session.getBeginningTime()}"/></h2>--%>
-<%--<h2><c:out value="${requestScope.session.getEndingTime()}"/></h2>--%>
-<%--<img src="<c:out value="${requestScope.session.getMovie().getImageURL()}"/>" alt="movie poster">--%>
-<%--<c:if test="${sessionScope.role != null && sessionScope.role.name().equals('ADMIN')}">--%>
-<%--	<form action="controller?action=removeMovieSession" method="post">--%>
-<%--		<input type="submit">--%>
-<%--		<input type="hidden" name="sessionId" value="<c:out value="${requestScope.session.getId()}"/>">--%>
-<%--		<input type="submit" value="remove session">--%>
-<%--	</form>--%>
-<%--</c:if>--%>
-<%--<form action="controller?action=buyTickets" method="post">--%>
-<%--	<input type="submit" value="choose tickets">--%>
-<%--	<input type="hidden" name="action" value="">--%>
-<%--</form>--%>
-
-<%--<div style="height: 1000px"></div>--%>
-
-
 <div class="movie" style="
 	border: 2px darkblue solid; width: auto; display: flex; width: 70%; align-items: center;
 	background-color: #f0f8ff;
@@ -64,38 +44,9 @@
 	</div>
 </div>
 <div>
-
-	<%--<table>--%>
-	<%--	<c:forEach var="i" begin="1" end="100">--%>
-	<%--		<c:if test="${(i-1) % 10 == 0}">--%>
-	<%--			<tr>--%>
-	<%--		</c:if>--%>
-	<%--		<td>--%>
-	<%--			<c:choose>--%>
-	<%--				<c:when test="${ticketsNumber.contains(i)}">--%>
-	<%--					<p style="color: red"><c:out value="${i}"/> ticket</p>--%>
-	<%--				</c:when>--%>
-	<%--				<c:otherwise>--%>
-	<%--					<p style="color: green"><c:out value="${i}"/> ticket</p>--%>
-	<%--				</c:otherwise>--%>
-	<%--			</c:choose>--%>
-	<%--		</td>--%>
-	<%--		<c:if test="${(i-1) % 10 == 9}">--%>
-	<%--			</tr>--%>
-	<%--		</c:if>--%>
-	<%--	</c:forEach>--%>
-	<%--</table>--%>
-	<%--<style>--%>
-	<%--	#reserved {--%>
-	<%--		background-color: grey;--%>
-	<%--        width: 4%;--%>
-	<%--        height: 4%;--%>
-	<%--	}--%>
-	<%--	.btn-primary {--%>
-	<%--	}--%>
-	<%--</style>--%>
 	<c:if test="${!sessionScope.get('role').name().equals('ADMIN')}">
-	<form action="controller?action=buyTickets" id="buyTickets" method="post">
+	<form action="controller?action=submitOrder" id="buyTickets" method="post">
+		<input type="hidden" form="buyTickets" value="${session.getId()}" name="sessionId">
 		</c:if>
 		<table style="margin: 0 auto">
 			<c:forEach var="i" begin="1" end="100">
@@ -162,19 +113,6 @@
 	</form>
 	</c:otherwise>
 	</c:choose>
-	<style>
-
-	</style>
-	<table data-toggle="buttons">
-		<tr>
-			<td>
-				<input type="checkbox" class="btn-check" id="btn-check" autocomplete="off"/>
-				<label class="btn btn-outline-primary" for="btn-check">1 <br> place</label>
-			</td>
-		</tr>
-
-
-	</table>
 </div>
 <jsp:include page="/footer.jsp"/>
 </body>
