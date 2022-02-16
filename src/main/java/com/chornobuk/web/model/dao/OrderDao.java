@@ -8,13 +8,24 @@ import com.chornobuk.web.model.entity.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class OrderDao implements IDao<Order> {
 	private final static String GET_ORDER_BY_ID = "select * from tickets_order where order_id = ?";
 	private final static String INSERT_ORDER = "insert into tickets_order values(default,?,?,?)";
 	private final static String INSERT_TICKET = "insert into ticket values(default, ?, ?, ?)";
+	private final static String GET_ORDERS_BY_USER = "select * from tickets_order where user_id = ?";
+	private final static String GET_ORDER_ID_PRICE_MAP_BY_USER = "select ticket.order_id, sum(ticket_price) from ticket" +
+			" inner join tickets_order" +
+			" on ticket.order_id = tickets_order.order_id" +
+			" inner join movie_session" +
+			" on ticket.movie_session_id = movie_session.session_id" +
+			" inner join movie" +
+			" on movie.movie_id = movie_session.movie_id" +
+			" inner join cinema_user" +
+			" on tickets_order.user_id = cinema_user.user_id" +
+			" where cinema_user.user_id = ?" +
+			" group by ticket.order_id ";
 
 	@Override
 	public Order get(long id) {
@@ -103,6 +114,41 @@ public class OrderDao implements IDao<Order> {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public Map<Long, Integer> getOrdersPricesByUser(User user) {
+		Map<Long, Integer> map = new HashMap<>();
+		try {
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(GET_ORDER_ID_PRICE_MAP_BY_USER);
+			ps.setLong(1, user.getId());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				long orderId = rs.getLong(1);
+				int price = rs.getInt(2);
+				map.put(orderId, price);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+	public List<Order> getOrdersByUser(User user) {
+		List<Order> orders = new LinkedList<>();
+		try {
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(GET_ORDERS_BY_USER);
+			ps.setLong(1, user.getId());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Order order = getOrder(rs);
+				orders.add(order);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return orders;
 	}
 
 	private void setParams(PreparedStatement ps, Order order) throws SQLException {

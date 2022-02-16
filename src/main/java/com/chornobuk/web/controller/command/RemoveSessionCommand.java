@@ -5,6 +5,7 @@ import com.chornobuk.web.model.entity.MovieSession;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class RemoveSessionCommand implements ICommand{
 	@Override
@@ -13,10 +14,10 @@ public class RemoveSessionCommand implements ICommand{
 		MovieSession movieSession;
 		MovieSessionDao movieSessionDao = new MovieSessionDao();
 		long id = Long.parseLong( req.getParameter("sessionId"));
-
 		movieSession = movieSessionDao.get(id);
 		movieSessionDao.delete(movieSession);
-		System.out.println(movieSession.getId() +"deleted");
+		List<MovieSession> availableSessions = movieSessionDao.getAvailableSessions();
+		req.getSession().setAttribute("availableSessions", availableSessions);
 		return forward;
 	}
 }

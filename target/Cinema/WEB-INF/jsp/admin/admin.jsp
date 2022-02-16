@@ -8,18 +8,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-	<title>Cinema admin</title>
-	<h2>Hello admin</h2>
-</head>
+<%--<head>--%>
+<%--	<title>Cinema admin</title>--%>
+<%--</head>--%>
+<jsp:include page="/WEB-INF/head.jsp"/>
 <body>
-<form action="controller?action=newMovieForm" method="post">
-	<input type="submit" value="add new movie">
+<jsp:include page="/header.jsp"/>
 </form>
-<form action="controller?action=newMovieSession" method="post">
-	<input type="submit" value="add new session">
-</form>
-	<jsp:include page="/WEB-INF/jsp/availableMovies.jsp"/>
+<jsp:include page="/WEB-INF/jsp/availableMovies.jsp"/>
 <%--print all movies--%>
 <%--<c:forEach items="${applicationScope['availableSessions']}" var="session">--%>
 <%--	<div class="movie">--%>
@@ -35,6 +31,6 @@
 <%--        </p>--%>
 <%--	</div>--%>
 <%--</c:forEach>--%>
-
+<jsp:include page="/footer.jsp"/>
 </body>
 </html>

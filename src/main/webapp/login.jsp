@@ -72,5 +72,6 @@
 		<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 	</form>
 </div>
+<jsp:include page="/footer.jsp"/>
 </body>
 </html>

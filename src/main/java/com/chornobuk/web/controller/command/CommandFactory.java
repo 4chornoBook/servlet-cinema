@@ -15,8 +15,10 @@ public class CommandFactory {
 		commands.put("addNewMovieSession", new AddNewMovieSessionCommand());
 		commands.put("removeMovieSession", new RemoveSessionCommand());
 		commands.put("showMovieSession", new ShowSessionCommand());
-		commands.put("buyTickets", new BuyTicketsCommand());
+		commands.put("submitOrder", new SubmitOrderCommand());
 		commands.put("logout", new LogoutCommand());
+		commands.put("buyTickets",new BuyTicketsCommand());
+		commands.put("showProfile", new ShowProfileCommand());
 	}
 
 	public static CommandFactory getInstance() {

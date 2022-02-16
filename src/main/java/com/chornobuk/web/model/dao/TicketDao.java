@@ -2,6 +2,7 @@ package com.chornobuk.web.model.dao;
 
 import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.MovieSession;
+import com.chornobuk.web.model.entity.Order;
 import com.chornobuk.web.model.entity.Ticket;
 
 import java.sql.*;
@@ -12,6 +13,7 @@ public class TicketDao implements IDao<Ticket>{
 	private final static String GET_TICKET_BY_ID = "select * from ticket where ticket_id = ?";
 	private final static String INSERT_TICKET = "insert into ticket values (default ,?,?,?)";
 	private final static String GET_TICKETS_BY_MOVIE = "select * from ticket where movie_session_id = ?";
+	private final static String GET_TICKETS_BY_ORDER = "select * from ticket where order_id = ?";
 	@Override
 	public Ticket get(long id) {
 		Ticket ticket = null;

@@ -13,7 +13,6 @@ public class NewSessionCommand implements ICommand {
 		MovieDao movieDao = new MovieDao();
 		LinkedList<Movie> movies = new LinkedList<>(movieDao.getAll());
 		req.getServletContext().setAttribute("movies", movies);
-		System.out.println(movies);
 		return "WEB-INF/jsp/admin/newSession.jsp";
 	}
 }
