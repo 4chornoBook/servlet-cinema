@@ -21,6 +21,12 @@ public class MovieSessionDao implements IDao<MovieSession> {
 			+" inner join movie"
 			+" on movie_session.movie_id = movie.movie_id"
 			+" where movie_session.session_date + movie_session.beginning_time >= now()";
+	public static final String GET_N_SESSIONS_FROM_POSITION = "select movie_session.*, movie.* from movie_session"
+			+" inner join movie"
+			+" on movie_session.movie_id = movie.movie_id"
+			+" where movie_session.session_date + movie_session.beginning_time >= now()"
+			+" order by movie_session.session_date, movie_session.beginning_time"
+			+" limit ? offset ?";
 	@Override
 	public MovieSession get(long id) {
 		MovieSession movieSession = null;
@@ -115,6 +121,38 @@ public class MovieSessionDao implements IDao<MovieSession> {
 			e.printStackTrace();
 		}
 		return availableSession;
+	}
+
+	public List<MovieSession> getSomeElements(int offset, int limit) {
+		List<MovieSession> sessions = new LinkedList<>();
+		try{
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(GET_N_SESSIONS_FROM_POSITION);
+			ps.setInt(1,  limit);
+			ps.setInt(2, offset);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				MovieSession session = getValues(rs);
+				Movie movie = new Movie();
+				movie.setId(session.getMovieId());
+				movie.setName(rs.getString(8));
+				movie.setReleaseDate(rs.getObject(9, LocalDate.class));
+				movie.setDescription(rs.getString(10));
+				movie.setImageURL(rs.getString(11));
+				movie.setTicketPrice(rs.getInt(12));
+				movie.setLengthInMinutes(rs.getInt(13));
+				session.setMovie(movie);
+				sessions.add(session);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sessions;
+	}
+
+	public int getNumberOfAvailableSessions() {
+		return getAvailableSessions().size();
 	}
 
 	private void setParams(PreparedStatement ps, MovieSession movieSession) throws SQLException {

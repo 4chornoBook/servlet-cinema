@@ -28,7 +28,18 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
-
+    <filter>
+        <filter-name>MoviesFilter</filter-name>
+        <filter-class>com.chornobuk.web.controller.filter.MoviesListFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>MoviesFilter</filter-name>
+        <url-pattern>/index.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MoviesFilter</filter-name>
+        <url-pattern>/login.jsp</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>

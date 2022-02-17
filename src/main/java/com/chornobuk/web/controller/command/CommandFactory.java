@@ -19,6 +19,7 @@ public class CommandFactory {
 		commands.put("logout", new LogoutCommand());
 		commands.put("buyTickets",new BuyTicketsCommand());
 		commands.put("showProfile", new ShowProfileCommand());
+		commands.put("pagination", new SessionsPaginationCommand());
 	}
 
 	public static CommandFactory getInstance() {
