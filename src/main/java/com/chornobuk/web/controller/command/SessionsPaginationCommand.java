@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.model.MovieSessionQueryConstructor;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
 
@@ -17,10 +18,15 @@ public class SessionsPaginationCommand implements ICommand {
 		int page = currentPage;
 		LinkedList<MovieSession> sessions = null;
 		MovieSessionDao movieSessionDao = new MovieSessionDao();
-
+		MovieSessionQueryConstructor constructor = (MovieSessionQueryConstructor) req.getSession().getAttribute("queryConstructor");
+		if (constructor == null) {
+			constructor = new MovieSessionQueryConstructor();
+			constructor.addSortingByTime("ascending");
+			constructor.addSortingByDate("ascending");
+		}
 		if (req.getParameter("page") != null) {
 			page = Integer.parseInt(req.getParameter("page"));
-			sessions = new LinkedList<>(movieSessionDao.getSomeElements((page - 1) * limit, limit));
+			sessions = new LinkedList<>(movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), (page - 1) * limit, limit));
 			req.getSession().setAttribute("availableSessions", sessions);
 			req.getSession().setAttribute("currentPage", page);
 
@@ -29,12 +35,12 @@ public class SessionsPaginationCommand implements ICommand {
 			if (action.equals("nextPage")) {
 				page += 1;
 				if (page <= numberOfPages) {
-					sessions = new LinkedList<>(movieSessionDao.getSomeElements((page - 1) * limit, limit));
+					sessions = new LinkedList<>(movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), (page - 1) * limit, limit));
 				}
 			} else {
 				page -= 1;
 				if (page > 0) {
-					sessions = new LinkedList<>(movieSessionDao.getSomeElements((page - 1) * limit, limit));
+					sessions = new LinkedList<>(movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), (page - 1) * limit, limit));
 				}
 			}
 		}

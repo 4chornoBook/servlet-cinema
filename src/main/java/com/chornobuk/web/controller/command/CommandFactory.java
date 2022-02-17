@@ -20,6 +20,7 @@ public class CommandFactory {
 		commands.put("buyTickets",new BuyTicketsCommand());
 		commands.put("showProfile", new ShowProfileCommand());
 		commands.put("pagination", new SessionsPaginationCommand());
+		commands.put("sessionsSorting", new SessionsSortingCommand());
 	}
 
 	public static CommandFactory getInstance() {

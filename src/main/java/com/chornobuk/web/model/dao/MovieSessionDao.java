@@ -4,6 +4,7 @@ import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.entity.MovieSession;
 
+import javax.print.DocFlavor;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,17 +17,18 @@ public class MovieSessionDao implements IDao<MovieSession> {
 	public static final String INSERT_SESSION = "insert into movie_session values (default,?,?,?,?,?)";
 	public static final String DELETE_SESSION_BY_ID = "delete from movie_session where session_id = ?";
 	public static final String DELETE_TICKETS_BY_SESSION = "delete from ticket where movie_session_id = ?";
-//	todo rewrite as a procedure
+	//	todo rewrite as a procedure
 	public static final String GET_AVAILABLE_MOVIES = "select movie_session.*, movie.* from movie_session"
-			+" inner join movie"
-			+" on movie_session.movie_id = movie.movie_id"
-			+" where movie_session.session_date + movie_session.beginning_time >= now()";
+			+ " inner join movie"
+			+ " on movie_session.movie_id = movie.movie_id"
+			+ " where movie_session.session_date + movie_session.beginning_time >= now()";
 	public static final String GET_N_SESSIONS_FROM_POSITION = "select movie_session.*, movie.* from movie_session"
-			+" inner join movie"
-			+" on movie_session.movie_id = movie.movie_id"
-			+" where movie_session.session_date + movie_session.beginning_time >= now()"
-			+" order by movie_session.session_date, movie_session.beginning_time"
-			+" limit ? offset ?";
+			+ " inner join movie"
+			+ " on movie_session.movie_id = movie.movie_id"
+			+ " where movie_session.session_date + movie_session.beginning_time >= now()"
+			+ " order by movie_session.session_date, movie_session.beginning_time"
+			+ " limit ? offset ?";
+
 	@Override
 	public MovieSession get(long id) {
 		MovieSession movieSession = null;
@@ -99,11 +101,11 @@ public class MovieSessionDao implements IDao<MovieSession> {
 
 	public List<MovieSession> getAvailableSessions() {
 		List<MovieSession> availableSession = new LinkedList<>();
-		try{
+		try {
 			Connection con = DBManager.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(GET_AVAILABLE_MOVIES);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				MovieSession session = getValues(rs);
 				Movie movie = new Movie();
 				movie.setId(session.getMovieId());
@@ -125,13 +127,41 @@ public class MovieSessionDao implements IDao<MovieSession> {
 
 	public List<MovieSession> getSomeElements(int offset, int limit) {
 		List<MovieSession> sessions = new LinkedList<>();
-		try{
+		try {
 			Connection con = DBManager.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(GET_N_SESSIONS_FROM_POSITION);
-			ps.setInt(1,  limit);
+			ps.setInt(1, limit);
 			ps.setInt(2, offset);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
+				MovieSession session = getValues(rs);
+				Movie movie = new Movie();
+				movie.setId(session.getMovieId());
+				movie.setName(rs.getString(8));
+				movie.setReleaseDate(rs.getObject(9, LocalDate.class));
+				movie.setDescription(rs.getString(10));
+				movie.setImageURL(rs.getString(11));
+				movie.setTicketPrice(rs.getInt(12));
+				movie.setLengthInMinutes(rs.getInt(13));
+				session.setMovie(movie);
+				sessions.add(session);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sessions;
+	}
+
+	public List<MovieSession> getSomeElementsByQuery(String query, int offset, int limit) {
+		List<MovieSession> sessions = new LinkedList<>();
+		try {
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, limit);
+			ps.setInt(2, offset);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
 				MovieSession session = getValues(rs);
 				Movie movie = new Movie();
 				movie.setId(session.getMovieId());

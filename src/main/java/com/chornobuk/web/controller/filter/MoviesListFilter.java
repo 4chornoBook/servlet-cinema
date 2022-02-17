@@ -15,26 +15,29 @@ public class MoviesListFilter implements Filter {
 //		todo rewrite filter mapping for more pages (user can make request not only from index page)
 //		todo check if session already have values with sessions,genres etc.
 //		get values from table
-		MovieSessionDao movieSessionDao = new MovieSessionDao();
-		GenreDao genreDao = new GenreDao();
-		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-//		add values to session
-		int numberOfSessions = movieSessionDao.getNumberOfAvailableSessions();
-		int limit = 1;
-		int currentPage = 1;
-		int numberOfPages = numberOfSessions / limit;
-		if (numberOfSessions % limit != 0)
-			numberOfPages += 1;
 
-		List<MovieSession> availableSessions = movieSessionDao.getSomeElements(currentPage - 1, limit);
-		httpServletRequest.getSession().setAttribute("currentPage", currentPage);
-		httpServletRequest.getSession().setAttribute("numberOfPages", numberOfPages);
-		httpServletRequest.getSession().setAttribute("limit", limit);
-		httpServletRequest.getSession().setAttribute("numberOfSessions", numberOfSessions);
-		httpServletRequest.getSession().setAttribute("availableSessions", availableSessions);
-		httpServletRequest.getSession().setAttribute("genres", genreDao.getAll());
-//		get number of all pages
-//		set elements per page
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+		if (httpServletRequest.getSession().getAttribute("availableSessions") == null) {
+			MovieSessionDao movieSessionDao = new MovieSessionDao();
+			GenreDao genreDao = new GenreDao();
+
+//		add values to session
+			int numberOfSessions = movieSessionDao.getNumberOfAvailableSessions();
+			int limit = 1;
+			int currentPage = 1;
+			int numberOfPages = numberOfSessions / limit;
+			if (numberOfSessions % limit != 0)
+				numberOfPages += 1;
+
+			List<MovieSession> availableSessions = movieSessionDao.getSomeElements(currentPage - 1, limit);
+			httpServletRequest.getSession().setAttribute("currentPage", currentPage);
+			httpServletRequest.getSession().setAttribute("numberOfPages", numberOfPages);
+			httpServletRequest.getSession().setAttribute("limit", limit);
+			httpServletRequest.getSession().setAttribute("numberOfSessions", numberOfSessions);
+			httpServletRequest.getSession().setAttribute("availableSessions", availableSessions);
+			httpServletRequest.getSession().setAttribute("genres", genreDao.getAll());
+		}
+//		System.out.println("filter works");
 		chain.doFilter(request, response);
 	}
 }
