@@ -8,7 +8,53 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <h2 style="margin-left: 5%; margin-top: 2%">Розклад показів</h2>
-<c:forEach items="${applicationScope['availableSessions']}" var="session">
+<div>
+	<form action="controller?action=sessionsSorting">
+		<input type="hidden" name="action" value="sessionsSorting">
+		<div class="row" style="margin-left: 5%; width:70% ">
+			<div class="col">
+				<label for="dateSort" class="form-label">Date</label>
+				<select id="dateSort" name="dateSort" class="form-select" aria-label="Default select example">
+					<option value="">Choose</option>
+					<option value="ascending" selected>За зростанням</option>
+					<option value="descending">За спаданням</option>
+				</select>
+			</div>
+			<div class="col">
+				<label for="timeSort" class="form-label">Time</label>
+				<select id="timeSort" name="timeSort" class="form-select" aria-label="Default select example">
+					<option value="">Choose</option>
+					<option value="ascending" selected>За зростанням</option>
+					<option value="descending">За спаданням</option>
+				</select>
+			</div>
+			<div class="col">
+				<label for="ticketsSort" class="form-label">Кількість вільних квитків</label>
+				<select id="ticketsSort" name="ticketsSort" class="form-select" aria-label="Default select example">
+					<option value="" selected>Choose</option>
+					<option value="ascending">За зростанням</option>
+					<option value="descending">За спаданням</option>
+				</select>
+			</div>
+			<div class="col">
+
+				<label for="movieNameSort" class="form-label">За назвою фільму</label>
+				<select id="movieNameSort" name="movieNameSort" class="form-select" aria-label="Default select example">
+					<option value="" selected>Choose</option>
+					<option value="ascending">За зростанням</option>
+					<option value="descending">За спаданням</option>
+				</select>
+			</div>
+			<div class="col">
+				<label for="submitSorting" class="form-label">Сортувати</label>
+				<div class="col-auto">
+					<button type="submit" id="submitSorting" class="btn btn-primary mb-3">Сортувати</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<c:forEach items="${sessionScope['availableSessions']}" var="session">
 	<div class="movie" style="
 	border: 2px black solid; width: auto; display: flex; width: 70%; align-items: center;
 	background-color: #f0f8ff;
@@ -42,3 +88,30 @@
 		</div>
 	</div>
 </c:forEach>
+<form action="controller?action=sessionsPagination" style="margin-top: 20px">
+	<nav aria-label="...">
+		<ul class="pagination justify-content-center">
+			<li class="page-item">
+				<a class="page-link" href="controller?action=pagination&moveTo=prevPage" tabindex="-1"
+				   aria-disabled="true">Previous</a>
+			</li>
+			<c:forEach var="i" begin="1" end="${sessionScope.numberOfPages}">
+				<c:choose>
+					<c:when test="${sessionScope.currentPage == i}">
+						<li class="page-item disabled" aria-current="page">
+							<a class="page-link" href="controller?action=pagination&page=${i}">${i}</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a class="page-link" href="controller?action=pagination&page=${i}">${i}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<li class="page-item">
+				<a class="page-link" href="controller?action=pagination&moveTo=nextPage">Next</a>
+			</li>
+		</ul>
+	</nav>
+</form>

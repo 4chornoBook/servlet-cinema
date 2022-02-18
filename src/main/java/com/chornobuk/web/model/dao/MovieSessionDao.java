@@ -39,6 +39,7 @@ public class MovieSessionDao implements IDao<MovieSession> {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 				movieSession = getValues(rs);
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -61,6 +62,7 @@ public class MovieSessionDao implements IDao<MovieSession> {
 			ResultSet rs = ps.getGeneratedKeys();
 			if (rs.next())
 				movieSession.setId(rs.getLong(1));
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

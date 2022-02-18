@@ -28,7 +28,15 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
-
+    <filter>
+        <filter-name>MoviesFilter</filter-name>
+        <filter-class>com.chornobuk.web.controller.filter.MoviesListFilter</filter-class>
+    </filter>
+<!--    todo edit filter for more efficiency-->
+    <filter-mapping>
+        <filter-name>MoviesFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>

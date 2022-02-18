@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.filter;
 
+import com.chornobuk.web.model.MovieSessionQueryConstructor;
 import com.chornobuk.web.model.dao.GenreDao;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
@@ -20,10 +21,14 @@ public class MoviesListFilter implements Filter {
 		if (httpServletRequest.getSession().getAttribute("availableSessions") == null) {
 			MovieSessionDao movieSessionDao = new MovieSessionDao();
 			GenreDao genreDao = new GenreDao();
-
+			MovieSessionQueryConstructor constructor = new MovieSessionQueryConstructor();
+			constructor.addSortingByTime("ascending");
+			constructor.addSortingByDate("ascending");
+			httpServletRequest.getSession().setAttribute("queryConstructor",constructor);
 //		add values to session
 			int numberOfSessions = movieSessionDao.getNumberOfAvailableSessions();
-			int limit = 1;
+//			if (numberOfSessions > 0) {
+			int limit = 2;
 			int currentPage = 1;
 			int numberOfPages = numberOfSessions / limit;
 			if (numberOfSessions % limit != 0)
@@ -36,6 +41,7 @@ public class MoviesListFilter implements Filter {
 			httpServletRequest.getSession().setAttribute("numberOfSessions", numberOfSessions);
 			httpServletRequest.getSession().setAttribute("availableSessions", availableSessions);
 			httpServletRequest.getSession().setAttribute("genres", genreDao.getAll());
+//			}
 		}
 //		System.out.println("filter works");
 		chain.doFilter(request, response);

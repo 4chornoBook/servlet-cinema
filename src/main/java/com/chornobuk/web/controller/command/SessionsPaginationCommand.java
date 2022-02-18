@@ -15,6 +15,7 @@ public class SessionsPaginationCommand implements ICommand {
 		int currentPage = (int) req.getSession().getAttribute("currentPage");
 		int numberOfPages = (int) req.getSession().getAttribute("numberOfPages");
 		int limit = (int) req.getSession().getAttribute("limit");
+		System.out.println("pagination: " + limit);
 		int page = currentPage;
 		LinkedList<MovieSession> sessions = null;
 		MovieSessionDao movieSessionDao = new MovieSessionDao();

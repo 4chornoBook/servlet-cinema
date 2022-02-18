@@ -51,9 +51,9 @@ public class MovieSessionQueryConstructor {
 	public void addSortingByTickets(String value) {
 		sortByTickets = " 14";
 		if (value.equals("ascending"))
-			sortByTickets += " DESC";
-		else
 			sortByTickets += " ASC";
+		else
+			sortByTickets += " DESC";
 	}
 
 	public void addSortingByMovieName(String value) {

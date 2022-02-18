@@ -83,7 +83,7 @@ public class OrderDao implements IDao<Order> {
 			con.setAutoCommit(false);
 //			set parameters for order
 			insertOder.setLong(1, user.getId());
-			insertOder.setLong(2, 2);
+			insertOder.setLong(2, 4);
 			insertOder.setObject(3, order.getCreationDate());
 			insertOder.execute();
 			ResultSet orderKey = insertOder.getGeneratedKeys();

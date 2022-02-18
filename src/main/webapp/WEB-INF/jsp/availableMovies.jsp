@@ -10,12 +10,12 @@
 <h2 style="margin-left: 5%; margin-top: 2%">Розклад показів</h2>
 <div>
 	<form action="controller?action=sessionsSorting">
-		<input type="hidden"name="action" value="sessionsSorting">
+		<input type="hidden" name="action" value="sessionsSorting">
 		<div class="row" style="margin-left: 5%; width:70% ">
 			<div class="col">
 				<label for="dateSort" class="form-label">Date</label>
 				<select id="dateSort" name="dateSort" class="form-select" aria-label="Default select example">
-					<option value="" selected>Choose</option>
+					<option value="">Choose</option>
 					<option value="ascending" selected>За зростанням</option>
 					<option value="descending">За спаданням</option>
 				</select>
@@ -87,31 +87,31 @@
 			</form>
 		</div>
 	</div>
-	<form action="controller?action=sessionsPagination" style="margin-top: 20px">
-		<nav aria-label="...">
-			<ul class="pagination justify-content-center">
-				<li class="page-item">
-					<a class="page-link" href="controller?action=pagination&moveTo=prevPage" tabindex="-1"
-					   aria-disabled="true">Previous</a>
-				</li>
-				<c:forEach var="i" begin="1" end="${sessionScope.numberOfPages}">
-					<c:choose>
-						<c:when test="${sessionScope.currentPage == i}">
-							<li class="page-item disabled" aria-current="page">
-								<a class="page-link" href="controller?action=pagination&page=${i}">${i}</a>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item">
-								<a class="page-link" href="controller?action=pagination&page=${i}">${i}</a>
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-				<li class="page-item">
-					<a class="page-link" href="controller?action=pagination&moveTo=nextPage">Next</a>
-				</li>
-			</ul>
-		</nav>
-	</form>
 </c:forEach>
+<form action="controller?action=sessionsPagination" style="margin-top: 20px">
+	<nav aria-label="...">
+		<ul class="pagination justify-content-center">
+			<li class="page-item">
+				<a class="page-link" href="controller?action=pagination&moveTo=prevPage" tabindex="-1"
+				   aria-disabled="true">Previous</a>
+			</li>
+			<c:forEach var="i" begin="1" end="${sessionScope.numberOfPages}">
+				<c:choose>
+					<c:when test="${sessionScope.currentPage == i}">
+						<li class="page-item disabled" aria-current="page">
+							<a class="page-link" href="controller?action=pagination&page=${i}">${i}</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a class="page-link" href="controller?action=pagination&page=${i}">${i}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<li class="page-item">
+				<a class="page-link" href="controller?action=pagination&moveTo=nextPage">Next</a>
+			</li>
+		</ul>
+	</nav>
+</form>
