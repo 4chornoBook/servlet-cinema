@@ -12,22 +12,21 @@ import javax.servlet.http.HttpSession;
 public class LoginCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		String result;
+		String errorTag = "is-invalid";
 		String forward = "login.jsp";
-
 		String login = req.getParameter("login");
 		String password = req.getParameter("password");
-		if (login == null || login.isEmpty()) {
-			result = "Error! enter login";
-			return forward;
-		} else if (password == null || password.isEmpty()) {
-			result = "Error! enter password";
+
+		if (login == null || login.isEmpty() || password == null || password.isEmpty()) {
+			req.setAttribute("userLoginError", errorTag);
+//			result = "Error! enter login and password";
 			return forward;
 		} else {
 			UserDao userDao = new UserDao();
 			User user = userDao.getUserByLogin(login);
 			if (user == null || user.getPassword().compareTo(HashingAlgorithm.cryptPassword(password, user.getSalt())) != 0) {
-				result = "Error. wrong password or login";
+				req.setAttribute("userLoginError", errorTag);
+//				result = "Error. wrong password or login";
 				return forward;
 			} else {
 				UserRole userRole = UserRole.getUserRole(user);
@@ -36,8 +35,7 @@ public class LoginCommand implements ICommand {
 				session.setAttribute("role", userRole);
 				if (userRole.equals(UserRole.ADMIN)) {
 					forward = "WEB-INF/jsp/admin/admin.jsp";
-				}
-				else if (userRole.equals(UserRole.USER))
+				} else if (userRole.equals(UserRole.USER))
 					forward = "WEB-INF/jsp/user/user.jsp";
 			}
 		}

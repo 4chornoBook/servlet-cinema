@@ -28,7 +28,7 @@
         max-width: 330px;
         padding: 15px;
         margin: auto;
-		margin-top: 10%;
+        margin-top: 10%;
     }
 
     .form-signin.checkbox {
@@ -57,18 +57,16 @@
 	<form action="controller?action=login" method="post">
 		<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 		<div class="form-floating">
-			<input type="text" name="login" class="form-control" id="floatingInput" placeholder="name@example.com">
+			<input type="text" name="login" minlength="5" maxlength="50" class="form-control ${requestScope.userLoginError}"  aria-describedby="userDataValidation" id="floatingInput" placeholder="name@example.com" required>
 			<label for="floatingInput">Login</label>
 		</div>
 		<div class="form-floating">
-			<input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+			<input type="password" name="password" minlength="5" maxlength="50" class="form-control ${requestScope.userLoginError}" id="floatingPassword" placeholder="Password" required>
 			<label for="floatingPassword">Password</label>
+			<div id="userDataValidation" class="invalid-feedback">
+				Wrong password or login
+			</div>
 		</div>
-		<%--		<div class="checkbox mb-3">--%>
-		<%--			<label>--%>
-		<%--				<input type="checkbox" value="remember-me"> Remember me--%>
-		<%--			</label>--%>
-		<%--		</div>--%>
 		<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 	</form>
 </div>
