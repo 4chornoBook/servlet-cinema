@@ -7,13 +7,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MovieSessionQueryConstructor {
-	private String QueryBody = "select movie_session.*, movie.*, count(ticket.ticket_id) as unavailable_tickets  from movie_session" +
-			" inner join movie" +
-			" on movie_session.movie_id = movie.movie_id" +
-			" inner join ticket" +
-			" on movie_session.session_id = ticket.movie_session_id";
-//			" where movie_session.session_date + movie_session.beginning_time >= now()" +
-//			" group by movie_session.session_id, movie.movie_id";
+	private String QueryBody = "select movie_session.*, movie.*, "
+			+ " (select (movie_session.available_places - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets "
+			+ " from movie_session"
+			+ " inner join movie"
+			+ " on movie_session.movie_id = movie.movie_id";
 
 	private static String where = " where movie_session.session_date + movie_session.beginning_time >= now()";
 	private static String limit = " limit ? offset ?";
