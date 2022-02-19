@@ -30,7 +30,9 @@ public class AddNewMovieCommand implements ICommand {
 			req.setAttribute("movieNameError", errorTag);
 		}
 //		add release date not greater than now
-		else if (releaseDate == null || releaseDate.isAfter(LocalDate.now())) {
+//		|| releaseDate.isAfter(LocalDate.now()) this don't need because cinema
+//		can add session for future movies
+		else if (releaseDate == null) {
 			req.setAttribute("releaseDateError", errorTag);
 		}
 //		length min 20 max 600
