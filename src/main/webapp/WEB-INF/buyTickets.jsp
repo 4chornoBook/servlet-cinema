@@ -19,7 +19,8 @@
 		<div style="display: flex">
 			<div>
 				<img src="${sessionScope.orderSession.getMovie().getImageURL()}"
-					 style="height: 30vh; width:10vw; object-fit: cover;" alt="${sessionScope.orderSession.getMovie().getName()} image">
+					 style="height: 30vh; width:10vw; object-fit: cover;"
+					 alt="${sessionScope.orderSession.getMovie().getName()} image">
 			</div>
 			<div style="font-size: larger; padding-left: 10%">
 				<h2><c:out value="${sessionScope.orderSession.getMovie().getName()}"/></h2>
@@ -46,24 +47,43 @@
 	</div>
 	<div style="width: 25%; margin: 0 auto; align-items: center">
 		<h2>Оплата</h2>
-		<form action="controller?action=buyTickets"method="post">
+		<form action="controller?action=buyTickets" method="post">
 			<div class="mb-3">
 				<label for="cardOwner" class="form-label">Card owner</label>
-				<input type="text" name="cardOwner" class="form-control" id="cardOwner" placeholder="name and surname">
+				<input type="text" name="cardOwner" class="form-control ${requestScope.ownerNameError}" id="cardOwner"
+					   aria-describedby="cardOwnerError" placeholder="name and surname">
+				<div id="cardOwnerError" class="invalid-feedback">
+					Bad owner name
+				</div>
 			</div>
 			<div class="mb-3">
 				<label for="cardNumber" class="form-label">Card number</label>
-				<input type="text" minlength="16" maxlength="16" class="form-control" id="cardNumber"
-					   placeholder="card number">
+				<input type="text"
+				<%--					   minlength="16" maxlength="16" --%>
+					   class="form-control ${requestScope.cardNumberError}"
+					   id="cardNumber" name="cardNumber"
+					   placeholder="card number" aria-describedby="cardNumberError">
+				<div id="cardNumberError" class="invalid-feedback">
+					Bad card number
+				</div>
 			</div>
 			<div class="mb-3">
 				<label for="cardExpirationDate" class="form-label">Card expiration date</label>
-				<input type="email" name="cardExpirationDate" minlength="5" maxlength="5" class="form-control"
-					   id="cardExpirationDate" placeholder="MM/YY">
+				<input type="text" name="cardExpirationDate"
+					   minlength="5" maxlength="5" class="form-control ${requestScope.cardExpirationDateError}"
+					   id="cardExpirationDate" placeholder="MM/YY" aria-describedby="cardExpirationDateError">
+				<div id="cardExpirationDateError" class="invalid-feedback">
+					Bad expiration date
+				</div>
 			</div>
 			<div class="mb-3">
 				<label for="cvvCode" class="form-label">CVV code</label>
-				<input type="email" class="form-control" id="cvvCode" placeholder="name@example.com">
+				<input type="password" maxlength="3" minlength="3" class="form-control ${requestScope.cvvError}"
+					   id="cvvCode" placeholder="xxx" name="cvvCode"
+					   aria-describedby="cvvError" required>
+				<div id="cvvError" class="invalid-feedback">
+					bad CVV code
+				</div>
 			</div>
 			<div class="col-auto">
 				<button type="submit" class="btn btn-primary mb-3">Buy tickets</button>
