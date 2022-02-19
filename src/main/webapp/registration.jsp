@@ -22,27 +22,41 @@
 	margin-top: 5%;">
 	<h2>Registration</h2>
 	<div class="mb-3">
-		<label for="exampleInputEmail1" class="form-label">Login</label>
-		<input type="text" name="login" minlength="5" maxlength="50" class="form-control" id="exampleInputEmail1"
-			   aria-describedby="emailHelp">
+		<label for="userLogin" class="form-label">Login</label>
+		<input type="text" name="login" minlength="5" maxlength="50" class="form-control ${requestScope.loginError}"
+			   id="userLogin" aria-describedby="userLoginError" aria-describedby="notUniqueLoginError" required>
 		<div id="emailHelp" class="form-text">unique at least 5 symbols</div>
+		<div id="userLoginError" class="invalid-feedback">
+			Bad login. Choose unique login
+		</div>
 	</div>
 	<div class="mb-3">
-		<label for="exampleName" class="form-label">Your name</label>
-		<input type="text" name="name" minlength="1" maxlength="300" class="form-control" id="exampleName"
-			   aria-describedby="emailHelp">
+		<label for="userName" class="form-label">Your name</label>
+		<input type="text" name="name" minlength="1" maxlength="300" class="form-control ${requestScope.nameError}"
+			   id="userName" aria-describedby="userNameError" required>
 		<div id="name" class="form-text">at least 1 symbol</div>
+		<div id="userNameError" class="invalid-feedback">
+			Bad user name
+		</div>
 	</div>
 	<div class="mb-3">
-		<label for="exampleSurname" class="form-label">Your surname</label>
-		<input type="text" name="surname" minlength="1" maxlength="300" class="form-control" id="exampleSurname"
-			   aria-describedby="emailHelp">
+		<label for="userSurname" class="form-label">Your surname</label>
+		<input type="text" name="surname"
+			   minlength="1" maxlength="300" class="form-control ${requestScope.surnameError}" id="userSurname"
+			   aria-describedby="userSurnameError" required>
 		<div id="surname" class="form-text">at least 1 symbol</div>
+		<div id="userSurnameError" class="invalid-feedback">
+			Bad user surname
+		</div>
 	</div>
 	<div class="mb-3">
-		<label for="exampleInputPassword1" class="form-label">Password</label>
-		<input type="password" name="password" class="form-control" id="exampleInputPassword1">
+		<label for="userPassword" class="form-label">Password</label>
+		<input type="password" name="password" minlength="5" maxlength="64" class="form-control ${requestScope.passwordError}" id="userPassword"
+			   aria-describedby="userPasswordError" required>
 		<div id="passwordHelp" class="form-text">at least 5 symbols</div>
+		<div id="userPasswordError" class="invalid-feedback">
+			Bad password
+		</div>
 	</div>
 
 	<button type="submit" class="btn btn-primary">Register</button>
