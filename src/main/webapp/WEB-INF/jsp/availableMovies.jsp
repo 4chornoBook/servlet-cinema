@@ -15,34 +15,33 @@
 			<div class="col">
 				<label for="dateSort" class="form-label">Date</label>
 				<select id="dateSort" name="dateSort" class="form-select" aria-label="Default select example">
-					<option value="">Choose</option>
-					<option value="ascending" selected>За зростанням</option>
-					<option value="descending">За спаданням</option>
+					<option value="" ${sessionScope.byDateNone}>Choose</option>
+					<option value="ascending" ${sessionScope.byDateAscending}>За зростанням</option>
+					<option value="descending" ${sessionScope.byDateDescending}>За спаданням</option>
 				</select>
 			</div>
 			<div class="col">
 				<label for="timeSort" class="form-label">Time</label>
 				<select id="timeSort" name="timeSort" class="form-select" aria-label="Default select example">
-					<option value="">Choose</option>
-					<option value="ascending" selected>За зростанням</option>
-					<option value="descending">За спаданням</option>
+					<option value="" ${sessionScope.byTimeNone}>Choose</option>
+					<option value="ascending" ${sessionScope.byTimeAscending}>За зростанням</option>
+					<option value="descending" ${sessionScope.byTimeDescending}>За спаданням</option>
 				</select>
 			</div>
 			<div class="col">
 				<label for="ticketsSort" class="form-label">Кількість вільних квитків</label>
 				<select id="ticketsSort" name="ticketsSort" class="form-select" aria-label="Default select example">
-					<option value="" selected>Choose</option>
-					<option value="ascending">За зростанням</option>
-					<option value="descending">За спаданням</option>
+					<option value="" ${sessionScope.byTicketsNone}>Choose</option>
+					<option value="ascending"${sessionScope.byTicketsAscending}>За зростанням</option>
+					<option value="descending"${sessionScope.byTicketsDescending}>За спаданням</option>
 				</select>
 			</div>
 			<div class="col">
-
 				<label for="movieNameSort" class="form-label">За назвою фільму</label>
 				<select id="movieNameSort" name="movieNameSort" class="form-select" aria-label="Default select example">
-					<option value="" selected>Choose</option>
-					<option value="ascending">За зростанням</option>
-					<option value="descending">За спаданням</option>
+					<option value="" ${sessionScope.byNameNone}>Choose</option>
+					<option value="ascending"${sessionScope.byNameAscending}>За зростанням</option>
+					<option value="descending"${sessionScope.byNameDescending}>За спаданням</option>
 				</select>
 			</div>
 			<div class="col">

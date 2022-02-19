@@ -73,7 +73,9 @@ public class MovieSessionQueryConstructor {
 		List<String> query = Arrays.asList(sortingByDate, sortingByTime, sortByTickets, sortingByMovieName)
 				.stream()
 				.filter(x -> !x.isEmpty()).collect(Collectors.toList());
-		return "order by " + String.join(delimeter, query);
+		if(query.size() != 0)
+			return "order by " + String.join(delimeter, query);
+		else return "";
 	}
 
 	private String getWhere() {

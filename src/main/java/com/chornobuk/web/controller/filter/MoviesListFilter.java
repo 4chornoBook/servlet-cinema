@@ -25,9 +25,7 @@ public class MoviesListFilter implements Filter {
 			constructor.addSortingByTime("ascending");
 			constructor.addSortingByDate("ascending");
 			httpServletRequest.getSession().setAttribute("queryConstructor",constructor);
-//		add values to session
 			int numberOfSessions = movieSessionDao.getNumberOfAvailableSessions();
-//			if (numberOfSessions > 0) {
 			int limit = 2;
 			int currentPage = 1;
 			int numberOfPages = numberOfSessions / limit;
@@ -41,9 +39,9 @@ public class MoviesListFilter implements Filter {
 			httpServletRequest.getSession().setAttribute("numberOfSessions", numberOfSessions);
 			httpServletRequest.getSession().setAttribute("availableSessions", availableSessions);
 			httpServletRequest.getSession().setAttribute("genres", genreDao.getAll());
-//			}
+			httpServletRequest.getSession().setAttribute("byDateAscending", "selected");
+			httpServletRequest.getSession().setAttribute("byTimeDescending", "selected");
 		}
-//		System.out.println("filter works");
 		chain.doFilter(request, response);
 	}
 }
