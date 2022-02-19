@@ -21,20 +21,20 @@
 	margin: 5% auto;
 	">
 	<div>
-		<img src="${session.getMovie().getImageURL()}"
-			 style="height: 60vh; width:20vw; object-fit: cover;" alt="${session.getMovie().getName()} image">
+		<img src="${sessionScope.session.getMovie().getImageURL()}"
+			 style="height: 60vh; width:20vw; object-fit: cover;" alt="${sessionScope.session.getMovie().getName()} image">
 	</div>
 	<div style="font-size: larger; padding-left: 10%">
-		<h2><c:out value="${session.getMovie().getName()}"/></h2>
-		<p>Дата показу: <c:out value="${session.getMovieDate()}"/></p>
-		<p>Час показу: <c:out value="${session.getBeginningTime()}"/> - <c:out
-				value="${session.getEndingTime()}"/></p>
-		<p>Ціна квитка:<c:out value="${session.getMovie().getTicketPrice()}"/>грн.</p>
-		<p>Тривалість: <c:out value="${session.getMovie().getLengthInMinutes()}"/> хв.</p>
+		<h2><c:out value="${sessionScope.session.getMovie().getName()}"/></h2>
+		<p>Дата показу: <c:out value="${sessionScope.session.getMovieDate()}"/></p>
+		<p>Час показу: <c:out value="${sessionScope.session.getBeginningTime()}"/> - <c:out
+				value="${sessionScope.session.getEndingTime()}"/></p>
+		<p>Ціна квитка:<c:out value="${sessionScope.session.getMovie().getTicketPrice()}"/>грн.</p>
+		<p>Тривалість: <c:out value="${sessionScope.session.getMovie().getLengthInMinutes()}"/> хв.</p>
 		<p>Жанр:
 			<%--			todo show genres with delimeter comma (create toString method for genre and
 			in output set list and replace square brackets--%>
-			<c:forEach items="${session.getMovie().getGenres()}" var="genre">
+			<c:forEach items="${sessionScope.session.getMovie().getGenres()}" var="genre">
 				<c:out value="${genre.getName()}"/>;
 			</c:forEach>
 		</p>
@@ -44,11 +44,12 @@
 	</div>
 </div>
 <div>
+	<h2 class="fs-2 text-center">Екран</h2>
 	<c:if test="${!sessionScope.get('role').name().equals('ADMIN')}">
 	<form action="controller?action=submitOrder" id="buyTickets" method="post">
 		<input type="hidden" form="buyTickets" value="${session.getId()}" name="sessionId">
 		</c:if>
-		<table style="margin: 0 auto">
+		<table style="margin: 0 auto" class="${requestScope.noTicketsError}" aria-describedby="noTicketsError">
 			<c:forEach var="i" begin="1" end="100">
 				<c:if test="${(i-1) % 10 == 0}">
 					<tr>
@@ -73,6 +74,9 @@
 				</c:if>
 			</c:forEach>
 		</table>
+		<div id="noTicketsError" class="invalid-feedback text-center fs-3" style="margin: 0 auto">
+			Choose at least one ticket
+		</div>
 		<c:choose>
 		<c:when test="${sessionScope.get('role').name().equals('ADMIN')}">
 			<form action="controller?action=removeMovieSession" id="removeSession" method="post">

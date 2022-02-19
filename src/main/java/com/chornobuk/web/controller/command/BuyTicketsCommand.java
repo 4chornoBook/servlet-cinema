@@ -46,6 +46,7 @@ public class BuyTicketsCommand implements ICommand {
 			req.setAttribute("cvvError", errorTag);
 		} else {
 //			take money from card
+//			todo add checking if tickets already ordered
 			forward = "index.jsp";
 			int[] places = (int[]) req.getSession().getAttribute("orderPlaces");
 			Ticket[] tickets = new Ticket[places.length];

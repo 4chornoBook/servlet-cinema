@@ -14,19 +14,29 @@ import java.util.Arrays;
 public class SubmitOrderCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		String errorTag = "is-invalid";
 		String forward = "WEB-INF/jsp/movie.jsp";//continue operation
 		UserRole role = (UserRole) req.getSession().getAttribute("role");
 		if (role != null) {
-			forward = "/WEB-INF/buyTickets.jsp";
 			MovieSessionDao sessionDao = new MovieSessionDao();
 			MovieDao movieDao = new MovieDao();
 			Long sessionId = Long.parseLong(req.getParameter("sessionId"));
 			MovieSession session = sessionDao.get(sessionId);
 			session.setMovie(movieDao.get(session.getMovieId()));
-			int[] places = Arrays.stream(req.getParameterValues("numberPlace"))
+			String [] placesString = req.getParameterValues("numberPlace");
+			if (placesString == null || placesString.length == 0) {
+				req.setAttribute("noTicketsError",errorTag );
+				System.out.println("error");
+				System.out.println(sessionId);
+				return forward;
+			}
+			int[] places = Arrays.stream(placesString)
 					.mapToInt(Integer::parseInt).toArray();
+
+			forward = "/WEB-INF/buyTickets.jsp";
 			int totalPrice = req.getParameterValues("numberPlace").length * session.getMovie().getTicketPrice();
 
+			req.getSession().removeAttribute("session");
 			req.getSession().setAttribute("orderCreatingTime", LocalDateTime.now());
 			req.getSession().setAttribute("orderSession", session);
 			req.getSession().setAttribute("orderPlaces", places);

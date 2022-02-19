@@ -29,7 +29,7 @@ public class ShowSessionCommand implements ICommand {
 				.collect(Collectors.toCollection(HashSet::new));
 		req.setAttribute("ticketsNumber", ticketsNumbers);
 		session.setMovie(movieDao.get(session.getMovieId()));
-		req.setAttribute("session", session);
+		req.getSession().setAttribute("session", session);
 		return forward;
 	}
 }
