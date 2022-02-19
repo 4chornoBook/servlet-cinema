@@ -11,40 +11,6 @@
 <jsp:include page="/WEB-INF/head.jsp"/>
 <body>
 <jsp:include page="/header.jsp"/>
-<%--<form action="controller?action=addNewMovieSession" method="post">--%>
-<%--	<div class="dropdown">--%>
-<%--		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"--%>
-<%--				data-bs-toggle="dropdown" aria-expanded="false">--%>
-<%--			Select movie--%>
-<%--		</button>--%>
-<%--		<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">--%>
-<%--			<c:forEach items="${applicationScope['movies']}" var="movie">--%>
-<%--				<li>--%>
-<%--					<div class="form-check">--%>
-<%--						<input class="form-check-input" name="movie" type="radio"--%>
-<%--							   value="<c:out value="${movie.getId()}"/>"--%>
-<%--							   id="flexCheckChecked" checked>--%>
-<%--						<label class="form-check-label" for="flexCheckChecked">--%>
-<%--							<c:out value="${movie.getName()}"/>--%>
-<%--						</label>--%>
-<%--					</div>--%>
-<%--				</li>--%>
-<%--			</c:forEach>--%>
-<%--		</ul>--%>
-<%--	</div>--%>
-<%--	<p>Beginning date </p>--%>
-<%--	<input type="date" name="movieDate">--%>
-<%--	<br>--%>
-<%--	<p>Beginning time</p>--%>
-<%--	<input type="time" name="beginningTime" min="09:00" max="22:00">--%>
-<%--	<br>--%>
-<%--	<p>Ending time</p>--%>
-<%--	<input type="time" name="endingTime" required>--%>
-<%--	<br>--%>
-<%--	<br>--%>
-<%--	<input type="submit" name="add new session">--%>
-<%--</form>--%>
-
 <form action="controller?action=addNewMovieSession" method="post"
 	  style="
 	width: 100%;
@@ -52,22 +18,38 @@
 	margin: auto;
 	margin-top: 5%;">
 	<h2>New session</h2>
-	<select class="form-select" name="movie" size="4" aria-label="Default select example">
-		<option selected>Choose movie for session</option>
+	<select name="movie" class="form-select ${requestScope.movieSelectionError}" aria-describedby="movieSelectionError"
+			size="4" aria-label="Default select example">
+		<option value="">Choose movie for session</option>
 		<c:forEach items="${applicationScope['movies']}" var="movie">
 			<option value="<c:out value="${movie.getId()}"/>"><c:out value="${movie.getName()}"/></option>
 		</c:forEach>
 	</select>
+	<div id="movieSelectionError" class="invalid-feedback">
+		Select movie for session
+	</div>
 	<div class="mb-3">
 		<label for="beginningDate" class="form-label">Session date</label>
-		<input type="date" name="movieDate" class="form-control" id="beginningDate"
-			   aria-describedby="movieDateHelp">
+		<input type="date" name="movieDate" class="form-control ${requestScope.movieDateError}"
+			   aria-describedby="movieDateError"
+			   id="beginningDate"
+			   required>
+		<div id="movieDateError" class="invalid-feedback">
+			bad session date
+		</div>
 	</div>
 	<div class="mb-3">
 		<label for="beginningTime" class="form-label">Beginning time</label>
-		<input type="time" name="beginningTime" class="form-control" id="beginningTime"
-			   aria-describedby="movieBeginningTimeHelp">
-		<div id="movieBeginningTimeHelp" class="form-text">Ending time will be set automatically depending on movie length and cleaning time</div>
+		<input type="time" name="beginningTime" min="09:00" max="22:00"
+			   class="form-control ${beginningTimeError} ${requestScope.slotNotAvailableError}"
+			   aria-describedby="beginningTimeError" id="beginningTime"
+			   required>
+		<div id="movieBeginningTimeHelp" class="form-text">Ending time will be set automatically depending on movie
+			length and cleaning time
+		</div>
+		<div id="beginningTimeError" class="invalid-feedback">
+			bad beginning time.(Maybe date is already passed or slot is reserved)
+		</div>
 	</div>
 	<button type="submit" class="btn btn-primary">Add session</button>
 </form>

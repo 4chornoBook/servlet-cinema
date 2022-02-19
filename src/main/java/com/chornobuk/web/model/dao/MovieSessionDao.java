@@ -28,7 +28,7 @@ public class MovieSessionDao implements IDao<MovieSession> {
 			+ " where movie_session.session_date + movie_session.beginning_time >= now()"
 			+ " order by movie_session.session_date, movie_session.beginning_time"
 			+ " limit ? offset ?";
-
+	public static final String IS_TIME_SLOT_AVAILABLE = "select is_slot_available(?,?,?)";
 	@Override
 	public MovieSession get(long id) {
 		MovieSession movieSession = null;
@@ -185,6 +185,25 @@ public class MovieSessionDao implements IDao<MovieSession> {
 
 	public int getNumberOfAvailableSessions() {
 		return getAvailableSessions().size();
+	}
+
+	public boolean isSlotAvailable(MovieSession session) {
+		boolean isFree = false;
+
+		try {
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(IS_TIME_SLOT_AVAILABLE);
+			ps.setObject(1,session.getMovieDate());
+			ps.setObject(2, session.getBeginningTime());
+			ps.setObject(3,session.getEndingTime());
+			ResultSet rs = ps.executeQuery();
+			if(rs.next())
+				isFree = rs.getBoolean(1);
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isFree;
 	}
 
 	private void setParams(PreparedStatement ps, MovieSession movieSession) throws SQLException {
