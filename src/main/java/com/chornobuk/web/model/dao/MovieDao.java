@@ -19,10 +19,14 @@ public class MovieDao implements IDao<Movie> {
 			" on genre.genre_id = movie_genre.genre_id" +
 			" inner join movie on movie_genre.movie_id = movie.movie_id" +
 			" where movie.movie_id = ?;";
+	private static final String GET_AVAILABLE_MOVIES = "select movie.* from movie " +
+			" inner join movie_session " +
+			" on movie.movie_id = movie_session.movie_id " +
+			" where movie_session.session_date + movie_session.beginning_time >= now() " +
+			" group by movie.movie_id ";
 	@Override
 	public Movie get(long id) {
 		Movie movie = null;
-
 		try {
 			Connection con = DBManager.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(GET_MOVIE_BY_ID);
@@ -120,8 +124,22 @@ public class MovieDao implements IDao<Movie> {
 		return genres;
 	}
 
-	private void addMovieGenres(Movie movie) {
-//		must be transaction. if Movie don't add there are no any movieGenres;
+	public List<Movie> getAvailableMovies() {
+		List<Movie> movies = new LinkedList<>();
+		try {
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement(GET_AVAILABLE_MOVIES);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Movie movie = getValues(rs);
+				movie.setGenres(getMovieGenres(movie));
+				movies.add(movie);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return movies;
 	}
 
 	public void setParams(PreparedStatement ps, Movie movie) throws SQLException {

@@ -19,6 +19,7 @@ public class SessionsSortingCommand implements ICommand {
 		String timeSort = req.getParameter("timeSort");
 		String ticketSort = req.getParameter("ticketsSort");
 		String movieNameSort = req.getParameter("movieNameSort");
+		String movieNameFilter = req.getParameter("movieFilter");
 		if (dateSort != null && !dateSort.isEmpty()) {
 			constructor.addSortingByDate(dateSort);
 			if (dateSort.equals("ascending")) {
@@ -83,9 +84,22 @@ public class SessionsSortingCommand implements ICommand {
 			req.getSession().removeAttribute("byNameAscending");
 			req.getSession().removeAttribute("byNameDescending");
 		}
+		if (movieNameFilter != null && !movieNameFilter.isEmpty()) {
+			constructor.addFilteringByMovie(movieNameFilter);
+		}
 		MovieSessionDao movieSessionDao = new MovieSessionDao();
-		req.getSession().setAttribute("currentPage", 1);
+		int currentPage = 1;
 		int limit = (int) req.getSession().getAttribute("limit");
+		int numberOfSessions = movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), 0, Integer.MAX_VALUE).size();
+		System.out.println(numberOfSessions);
+		int numberOfPages = numberOfSessions / limit;
+		if (numberOfSessions % limit != 0)
+			numberOfPages += 1;
+		System.out.println(numberOfPages);
+		req.getSession().setAttribute("currentPage", currentPage);
+		req.getSession().setAttribute("numberOfPages", numberOfPages);
+
+
 		List<MovieSession> sessions = movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), 0, limit);
 		req.getSession().setAttribute("availableSessions", sessions);
 		req.getSession().setAttribute("queryConstructor", constructor);

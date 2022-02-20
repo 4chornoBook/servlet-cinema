@@ -4,7 +4,6 @@ import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.entity.MovieSession;
 
-import javax.print.DocFlavor;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

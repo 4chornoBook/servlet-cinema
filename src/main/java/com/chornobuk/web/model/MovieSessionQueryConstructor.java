@@ -13,7 +13,7 @@ public class MovieSessionQueryConstructor {
 			+ " inner join movie"
 			+ " on movie_session.movie_id = movie.movie_id";
 
-	private static String where = " where movie_session.session_date + movie_session.beginning_time >= now()";
+	private static String where = " movie_session.session_date + movie_session.beginning_time >= now()";
 	private static String limit = " limit ? offset ?";
 
 	private String sortingByTime = "";
@@ -65,7 +65,7 @@ public class MovieSessionQueryConstructor {
 	}
 
 	public void addFilteringByMovie(String movieName) {
-		filmFilter = " movie.movie_name = " + '\'' + movieName + '\'';
+		filmFilter = " movie.name = " + '\'' + movieName + '\'';
 	}
 
 	private String getOrderBy() {
@@ -80,12 +80,8 @@ public class MovieSessionQueryConstructor {
 
 	private String getWhere() {
 		if (!filmFilter.isEmpty())
-			return where + "," + filmFilter;
+			return " where " + where + " and " + filmFilter;
 
-		return where;
+		return " where " + where;
 	}
-//	default must be a query with sorting by creating time
-//	create method which add ordering parameter
-//	method reformat user
-//	public void
 }
