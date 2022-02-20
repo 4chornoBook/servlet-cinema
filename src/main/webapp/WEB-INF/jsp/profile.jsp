@@ -11,28 +11,28 @@
 <jsp:include page="/WEB-INF/head.jsp"/>
 <body>
 <jsp:include page="/header.jsp"/>
-<div>
+<div style="font-size: larger; border: 2px solid darkblue; background-color: lavender; padding: 10px; width:70%;margin: 5% auto; border-radius: 15px; align-items: center">
 	<h2>User info</h2>
 	<p>
-		Login:<c:out value="${sessionScope.user.getLogin()}"/>
+		Login: <c:out value="${sessionScope.user.getLogin()}"/>
 	</p>
 	<p>
-		Name:<c:out value="${sessionScope.user.getName()}"/>
+		Name: <c:out value="${sessionScope.user.getName()}"/>
 	</p>
 	<p>
-		Surname:<c:out value="${sessionScope.user.getSurname()}"/>
+		Surname: <c:out value="${sessionScope.user.getSurname()}"/>
 	</p>
 </div>
 <c:if test="${sessionScope.get('role').name().equals('USER')}">
-	<div>
+	<div style="font-size: larger;  width: 70%; margin: 2% auto">
 		<h2>Orders history</h2>
 		<c:forEach items="${ordersPrices}" var="orderInfo">
-			<div style="padding-bottom: 20px">
-				<p style="float: left">
-					Order <c:out value="${orderInfo.key}"/>
+			<div style="display: flex; justify-content: space-between; border-radius: 15px; border: 2px solid darkblue; background-color: lavender;margin: 20px auto; padding: 10px;">
+				<p>
+					Order# <c:out value="${orderInfo.key}"/>
 				</p>
-				<p style="float: right">
-					Price:<c:out value="${orderInfo.value}"/>uah.
+				<p>
+					Price: <c:out value="${orderInfo.value}"/>uah.
 				</p>
 			</div>
 		</c:forEach>
