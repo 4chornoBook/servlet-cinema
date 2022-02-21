@@ -2,6 +2,9 @@
 <%--
 https://freefrontend.com/500-error-page-html-templates/
 --%>
+<div>
+	<a href="index.jsp" style="font-size:x-large; font-family: Consolas; text-align: center; color: black">Return to main page</a>
+</div>
 <svg id="500_Bill" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-8.5 9.5 560 250">
 	<defs>
 		<clipPath id="circle-mask">
