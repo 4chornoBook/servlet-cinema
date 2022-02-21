@@ -48,7 +48,6 @@
 						<option value="descending"${sessionScope.byNameDescending}>За спаданням</option>
 					</select>
 				</div>
-<%--				<label for="submitSorting" class="form-label">Сортувати</label>--%>
 			</div>
 				<button type="submit" style="margin-top: 30px" id="submitSorting" class="btn btn-primary mb-3">Сортувати</button>
 		</form>
@@ -74,9 +73,7 @@
 					border: 2px darkblue solid; display: flex;
 	 				align-items: center;
 					background-color: #f0f8ff;
-					/*margin-left: 5%;*/
 					margin: 2% 5%;
-					/*margin-top: 3%;*/
 					padding: 15px;
 					border-radius: 15px;
 					">

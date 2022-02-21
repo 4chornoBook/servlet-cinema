@@ -1,6 +1,7 @@
 package com.chornobuk.web.controller.command;
 
 import com.chornobuk.web.model.dao.OrderDao;
+import com.chornobuk.web.model.dao.TicketDao;
 import com.chornobuk.web.model.entity.MovieSession;
 import com.chornobuk.web.model.entity.Order;
 import com.chornobuk.web.model.entity.Ticket;
@@ -47,17 +48,22 @@ public class BuyTicketsCommand implements ICommand {
 		} else {
 //			take money from card
 //			todo add checking if tickets already ordered
-			forward = "index.jsp";
 			int[] places = (int[]) req.getSession().getAttribute("orderPlaces");
 			Ticket[] tickets = new Ticket[places.length];
 			MovieSession session = (MovieSession) req.getSession().getAttribute("orderSession");
+			TicketDao ticketDao = new TicketDao();
 			User user = (User) req.getSession().getAttribute("user");
 //			creating tickets
 			for (int i = 0; i < tickets.length; i++) {
 				tickets[i] = new Ticket();
 				tickets[i].setPlaceNumber(places[i]);
 				tickets[i].setSessionId(session.getId());
+				if(!ticketDao.isTicketAvailable(tickets[i],session )) {
+					req.setAttribute("ticketsAlreadyReservedError", errorTag);
+					return forward;
+				}
 			}
+			forward = "index.jsp";
 //			create order
 			Order order = new Order();
 			order.setCreationDate((LocalDateTime) req.getSession().getAttribute("orderCreatingTime"));

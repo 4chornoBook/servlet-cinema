@@ -10,11 +10,7 @@
 <html>
 <jsp:include page="/WEB-INF/head.jsp"/>
 <jsp:include page="/header.jsp"/>
-<%--<head>--%>
-<%--    <title>Cinema user</title>--%>
-<%--</head>--%>
 <body>
-    <h2>Hello user</h2>
     <jsp:include page="/WEB-INF/jsp/availableMovies.jsp"/>
 </body>
 </html>

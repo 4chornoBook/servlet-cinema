@@ -58,11 +58,10 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
-    <!--    todo uncomment this block in the end-->
-    <!--    <error-page>-->
-    <!--        <exception-type>java.lang.Throwable</exception-type>-->
-    <!--        <location>/WEB-INF/errorPage.jsp</location>-->
-    <!--    </error-page>-->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/500Error.jsp</location>
+    </error-page>
 
     <error-page>
         <error-code>404</error-code>

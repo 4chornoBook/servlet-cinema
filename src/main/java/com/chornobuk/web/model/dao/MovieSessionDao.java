@@ -12,22 +12,22 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MovieSessionDao implements IDao<MovieSession> {
-	public static final String GET_SESSION_BY_ID = "select * from movie_session where session_id = ?";
-	public static final String INSERT_SESSION = "insert into movie_session values (default,?,?,?,?,?)";
-	public static final String DELETE_SESSION_BY_ID = "delete from movie_session where session_id = ?";
-	public static final String DELETE_TICKETS_BY_SESSION = "delete from ticket where movie_session_id = ?";
+	private static final String GET_SESSION_BY_ID = "select * from movie_session where session_id = ?";
+	private static final String INSERT_SESSION = "insert into movie_session values (default,?,?,?,?,?)";
+	private static final String DELETE_SESSION_BY_ID = "delete from movie_session where session_id = ?";
+	private static final String DELETE_TICKETS_BY_SESSION = "delete from ticket where movie_session_id = ?";
 	//	todo rewrite as a procedure
-	public static final String GET_AVAILABLE_MOVIES = "select movie_session.*, movie.* from movie_session"
+	private static final String GET_AVAILABLE_MOVIES = "select movie_session.*, movie.* from movie_session"
 			+ " inner join movie"
 			+ " on movie_session.movie_id = movie.movie_id"
 			+ " where movie_session.session_date + movie_session.beginning_time >= now()";
-	public static final String GET_N_SESSIONS_FROM_POSITION = "select movie_session.*, movie.* from movie_session"
+	private static final String GET_N_SESSIONS_FROM_POSITION = "select movie_session.*, movie.* from movie_session"
 			+ " inner join movie"
 			+ " on movie_session.movie_id = movie.movie_id"
 			+ " where movie_session.session_date + movie_session.beginning_time >= now()"
 			+ " order by movie_session.session_date, movie_session.beginning_time"
 			+ " limit ? offset ?";
-	public static final String IS_TIME_SLOT_AVAILABLE = "select is_slot_available(?,?,?)";
+	private static final String IS_TIME_SLOT_AVAILABLE = "select is_slot_available(?,?,?)";
 	@Override
 	public MovieSession get(long id) {
 		MovieSession movieSession = null;

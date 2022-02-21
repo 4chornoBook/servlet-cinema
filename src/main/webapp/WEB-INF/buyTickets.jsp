@@ -40,9 +40,13 @@
 			</div>
 			<hr>
 		</c:forEach>
-		<div style="padding-bottom: 20px; font-size: large">
+		<div style="padding-bottom: 20px; font-size: large"  class="${requestScope.ticketsAlreadyReservedError}"
+			 aria-describedby="ticketsAlreadyReservedError" >
 			<p style="float: left">Total price:</p>
 			<p style="float: right"><c:out value="${sessionScope.totalPrice}"/> грн.</p>
+		</div>
+		<div style="margin: 30px auto; text-align: center; font-size: larger;" id="ticketsAlreadyReservedError" class="invalid-feedback">
+			<p>Tickets already ordered. Return to main page and select available ones</p>
 		</div>
 	</div>
 	<div style="width: 25%; margin: 0 auto; align-items: center">
@@ -58,8 +62,7 @@
 			</div>
 			<div class="mb-3">
 				<label for="cardNumber" class="form-label">Card number</label>
-				<input type="text"
-				<%--					   minlength="16" maxlength="16" --%>
+				<input type="text" minlength="16" maxlength="16"
 					   class="form-control ${requestScope.cardNumberError}"
 					   id="cardNumber" name="cardNumber"
 					   placeholder="card number" aria-describedby="cardNumberError">
