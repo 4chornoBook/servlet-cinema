@@ -93,6 +93,7 @@ public class TicketDao implements IDao<Ticket>{
 			if(!rs.next()) {
 				isAvailable = true;
 			}
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
