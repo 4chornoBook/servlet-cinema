@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="/WEB-INF/head.jspf" %>
 <html>
 <%--todo set tittle--%>
 <jsp:include page="/WEB-INF/head.jsp"/>
@@ -22,18 +24,17 @@
 	">
 	<div>
 		<img src="${sessionScope.session.getMovie().getImageURL()}"
-			 style="height: 60vh; width:20vw; object-fit: cover;" alt="${sessionScope.session.getMovie().getName()} image">
+			 style="height: 60vh; width:20vw; object-fit: cover;"
+			 alt="${sessionScope.session.getMovie().getName()} image">
 	</div>
 	<div style="font-size: larger; padding-left: 10%">
 		<h2><c:out value="${sessionScope.session.getMovie().getName()}"/></h2>
-		<p>Дата показу: <c:out value="${sessionScope.session.getMovieDate()}"/></p>
-		<p>Час показу: <c:out value="${sessionScope.session.getBeginningTime()}"/> - <c:out
-				value="${sessionScope.session.getEndingTime()}"/></p>
-		<p>Ціна квитка:<c:out value="${sessionScope.session.getMovie().getTicketPrice()}"/>грн.</p>
-		<p>Тривалість: <c:out value="${sessionScope.session.getMovie().getLengthInMinutes()}"/> хв.</p>
-		<p>Жанр:
-			<%--			todo show genres with delimeter comma (create toString method for genre and
-			in output set list and replace square brackets--%>
+		<p><fmt:message key="movie.session.date"/> <c:out value="${sessionScope.session.getMovieDate()}"/></p>
+		<p><fmt:message key="movie.session.time"/> <c:out value="${sessionScope.session.getBeginningTime()}"/></p>
+		<p><fmt:message key="movie.session.ticket.price"/> <c:out value="${sessionScope.session.getMovie().getTicketPrice()}"/> <fmt:message key="movie.session.currency"/></p>
+		<p><fmt:message key="movie.session.length"/> <c:out value="${sessionScope.session.getMovie().getLengthInMinutes()}"/> <fmt:message key="movie.session.time.unit"/></p>
+		<p><fmt:message key="movie.session.genre"/>
+			<%--				todo show genres with delimeter comma (create toString method for genre and--%>
 			<c:forEach items="${sessionScope.session.getMovie().getGenres()}" var="genre">
 				<c:out value="${genre.getName()}"/>;
 			</c:forEach>
@@ -44,7 +45,7 @@
 	</div>
 </div>
 <div>
-	<h2 class="fs-2 text-center">Екран</h2>
+	<h2 class="fs-2 text-center"><fmt:message key="movie.screen"/></h2>
 	<c:if test="${!sessionScope.get('role').name().equals('ADMIN')}">
 	<form action="controller?action=submitOrder" id="buyTickets" method="post">
 		<input type="hidden" form="buyTickets" value="${session.getId()}" name="sessionId">
@@ -59,13 +60,13 @@
 						<c:when test="${ticketsNumber.contains(i)}">
 							<input type="checkbox" name="numberPlace" disabled class="btn-check" id="btn-check${i}"
 								   autocomplete="off"/>
-							<label class="btn btn-secondary" for="btn-check${i}"><c:out value="${i}"/><br>місце</label>
+							<label class="btn btn-secondary" for="btn-check${i}"><c:out value="${i}"/><br><fmt:message key="movie.place"/></label>
 						</c:when>
 						<c:otherwise>
 							<input type="checkbox" name="numberPlace" value="${i}" class="btn-check" id="btn-check${i}"
 								   autocomplete="off"/>
 							<label class="btn btn-outline-primary" for="btn-check${i}"><c:out
-									value="${i}"/><br>місце</label>
+									value="${i}"/><br><fmt:message key="movie.place"/></label>
 						</c:otherwise>
 					</c:choose>
 				</td>
@@ -75,7 +76,7 @@
 			</c:forEach>
 		</table>
 		<div id="noTicketsError" class="invalid-feedback text-center fs-3" style="margin: 0 auto">
-			Choose at least one ticket
+			<fmt:message key="movie.tickets.error"/>
 		</div>
 		<c:choose>
 		<c:when test="${sessionScope.get('role').name().equals('ADMIN')}">
@@ -84,23 +85,23 @@
 					<button type="button" form="removeSession" class="w-50 btn btn-outline-danger"
 							data-bs-toggle="modal"
 							data-bs-target="#myModal">
-						Delete Session
+						<fmt:message key="movie.delete.session"/>
 					</button>
 					<div class="modal" id="myModal" tabindex="-1">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Попередження!</h5>
+									<h5 class="modal-title"><fmt:message key="movie.modal.title"/></h5>
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 											aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
-									<p>Ви дійсно хочете видалити показ фільму. Квитки всіх клієнтів буде відмінено</p>
+									<p><fmt:message key="movie.modal.message"/></p>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><fmt:message key="movie.modal.close"/>
 									</button>
-									<button type="submit" form="removeSession" class="btn btn-primary">Save changes
+									<button type="submit" form="removeSession" class="btn btn-primary"><fmt:message key="movie.modal.delete"/>
 									</button>
 								</div>
 							</div>
@@ -112,7 +113,10 @@
 		</c:when>
 		<c:otherwise>
 		<div class="text-center">
-			<input form="buyTickets" class="w-50 btn btn-outline-success mx-auto" type="submit" value="order tickets">
+			<button form="buyTickets" class="w-50 btn btn-outline-success mx-auto" type="submit" value="order tickets">
+				<fmt:message key="movie.order.tickets"/>
+			</button>
+				<%--			<input form="buyTickets" class="w-50 btn btn-outline-success mx-auto" type="submit" value="order tickets">--%>
 		</div>
 	</form>
 	</c:otherwise>
