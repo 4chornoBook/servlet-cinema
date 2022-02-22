@@ -8,7 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<jsp:include page="/WEB-INF/head.jsp"/>
+<%@ include file="/WEB-INF/head.jspf"%>
+<%--<jsp:include page="/WEB-INF/head.jsp"/>--%>
 <body>
 <jsp:include page="/header.jsp"/>
 <form action="controller?action=addNewMovieSession" method="post"
@@ -17,41 +18,42 @@
 	max-width: 500px;
 	margin: auto;
 	margin-top: 5%;">
-	<h2>New session</h2>
-	<select name="movie" class="form-select ${requestScope.movieSelectionError}" aria-describedby="movieSelectionError"
+	<h2><fmt:message key="new.session.title"/></h2>
+	<label for="movie" class="form-label"><fmt:message key="new.session.movie"/></label>
+	<select id="movie" name="movie" class="form-select ${requestScope.movieSelectionError}" aria-describedby="movieSelectionError"
 			size="4" aria-label="Default select example">
-		<option value="">Choose movie for session</option>
+		<option value=""><fmt:message key="new.session.choose.movie"/></option>
 		<c:forEach items="${applicationScope['movies']}" var="movie">
 			<option value="<c:out value="${movie.getId()}"/>"><c:out value="${movie.getName()}"/></option>
 		</c:forEach>
 	</select>
 	<div id="movieSelectionError" class="invalid-feedback">
-		Select movie for session
+		<fmt:message key="new.session.choose.movie.error"/>
 	</div>
 	<div class="mb-3">
-		<label for="beginningDate" class="form-label">Session date</label>
+		<label for="beginningDate" class="form-label"><fmt:message key="new.session.date"/></label>
 		<input type="date" name="movieDate" class="form-control ${requestScope.movieDateError}"
 			   aria-describedby="movieDateError"
 			   id="beginningDate"
 			   required>
 		<div id="movieDateError" class="invalid-feedback">
-			bad session date
+			<fmt:message key="new.session.date.error"/>
 		</div>
 	</div>
 	<div class="mb-3">
-		<label for="beginningTime" class="form-label">Beginning time</label>
+		<label for="beginningTime" class="form-label"><fmt:message key="new.session.beginning.time"/></label>
 		<input type="time" name="beginningTime" min="09:00" max="22:00"
 			   class="form-control ${beginningTimeError} ${requestScope.slotNotAvailableError}"
 			   aria-describedby="beginningTimeError" id="beginningTime"
 			   required>
-		<div id="movieBeginningTimeHelp" class="form-text">Ending time will be set automatically depending on movie
-			length and cleaning time
+		<div id="movieBeginningTimeHelp" class="form-text">
+				<fmt:message key="new.session.ending.time.help"/>
 		</div>
 		<div id="beginningTimeError" class="invalid-feedback">
-			bad beginning time.(Maybe date is already passed or slot is reserved)
+					<fmt:message key="new.session.beginning.time.error"/>
 		</div>
 	</div>
-	<button type="submit" class="btn btn-primary">Add session</button>
+	<button type="submit" class="btn btn-primary"><fmt:message key="new.session.add.session.button"/></button>
 </form>
 <jsp:include page="/footer.jsp"/>
 </body>
