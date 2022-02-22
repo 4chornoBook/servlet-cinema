@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<jsp:include page="/WEB-INF/head.jsp"/>
+<%@ include file="/WEB-INF/head.jspf"%>
 <head>
 	<title>registration</title>
 </head>
@@ -20,46 +20,43 @@
 	max-width: 500px;
 	margin: auto;
 	margin-top: 5%;">
-	<h2>Registration</h2>
+	<h2><fmt:message key="registration.title"/></h2>
 	<div class="mb-3">
-		<label for="userLogin" class="form-label">Login</label>
+		<label for="userLogin" class="form-label"><fmt:message key="registration.login"/></label>
 		<input type="text" name="login" minlength="5" maxlength="50" class="form-control ${requestScope.loginError}"
 			   id="userLogin" aria-describedby="userLoginError" aria-describedby="notUniqueLoginError" required>
-		<div id="emailHelp" class="form-text">unique at least 5 symbols</div>
+		<div id="emailHelp" class="form-text"><fmt:message key="registration.login.comment"/></div>
 		<div id="userLoginError" class="invalid-feedback">
-			Bad login. Choose unique login
+			<fmt:message key="registration.login.error"/>
 		</div>
 	</div>
 	<div class="mb-3">
-		<label for="userName" class="form-label">Your name</label>
+		<label for="userName" class="form-label"><fmt:message key="registration.name"/></label>
 		<input type="text" name="name" minlength="1" maxlength="300" class="form-control ${requestScope.nameError}"
 			   id="userName" aria-describedby="userNameError" required>
-		<div id="name" class="form-text">at least 1 symbol</div>
 		<div id="userNameError" class="invalid-feedback">
-			Bad user name
+			<fmt:message key="registration.name.error"/>
 		</div>
 	</div>
 	<div class="mb-3">
-		<label for="userSurname" class="form-label">Your surname</label>
+		<label for="userSurname" class="form-label"><fmt:message key="registration.surname"/> </label>
 		<input type="text" name="surname"
 			   minlength="1" maxlength="300" class="form-control ${requestScope.surnameError}" id="userSurname"
 			   aria-describedby="userSurnameError" required>
-		<div id="surname" class="form-text">at least 1 symbol</div>
 		<div id="userSurnameError" class="invalid-feedback">
-			Bad user surname
+			<fmt:message key="registration.surname.error"/>
 		</div>
 	</div>
 	<div class="mb-3">
-		<label for="userPassword" class="form-label">Password</label>
+		<label for="userPassword" class="form-label"><fmt:message key="registration.password"/></label>
 		<input type="password" name="password" minlength="5" maxlength="64" class="form-control ${requestScope.passwordError}" id="userPassword"
 			   aria-describedby="userPasswordError" required>
-		<div id="passwordHelp" class="form-text">at least 5 symbols</div>
+		<div id="passwordHelp" class="form-text"><fmt:message key="registration.password.comment"/></div>
 		<div id="userPasswordError" class="invalid-feedback">
-			Bad password
+			<fmt:message key="registration.password.error"/>
 		</div>
 	</div>
-
-	<button type="submit" class="btn btn-primary">Register</button>
+	<button type="submit" class="btn btn-primary"><fmt:message key="registration.register"/></button>
 </form>
 </body>
 </html>
