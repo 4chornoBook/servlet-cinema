@@ -5,11 +5,8 @@
   Time: 21:35
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <%@ include file="/WEB-INF/head.jspf"%>
-<%--<jsp:include page="/WEB-INF/head.jsp"/>--%>
 <body>
 <jsp:include page="/header.jsp"/>
 <form action="controller?action=addNewMovieSession" method="post"

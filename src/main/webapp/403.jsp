@@ -1,3 +1,5 @@
+<%@ include file="/WEB-INF/head.jspf"%>
+
 <div>
 	<a href="index.jsp" style="font-size:x-large;margin-top: 2%; text-align: center; color: white">Return to main page</a>
 </div>

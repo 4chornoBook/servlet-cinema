@@ -8,7 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<jsp:include page="/WEB-INF/head.jsp"/>
+<%@ include file="/WEB-INF/head.jspf"%>
+
+<%--<jsp:include page="/WEB-INF/head.jsp"/>--%>
 <jsp:include page="/header.jsp"/>
 <body>
     <jsp:include page="/WEB-INF/jsp/availableMovies.jsp"/>

@@ -16,11 +16,10 @@ public class SecurityFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		if(isAllowed(request)) {
-			chain.doFilter(request,response);
-		}
-		else {
-			request.getRequestDispatcher("/403.jsp").forward(request,response);
+		if (isAllowed(request)) {
+			chain.doFilter(request, response);
+		} else {
+			request.getRequestDispatcher("/403.jsp").forward(request, response);
 		}
 	}
 
@@ -30,7 +29,6 @@ public class SecurityFilter implements Filter {
 		accessMap.put(UserRole.ADMIN, getParametersAsList(filterConfig.getInitParameter("adminCommands")));
 		accessMap.put(UserRole.USER, getParametersAsList(filterConfig.getInitParameter("userCommands")));
 		outOfControl = getParametersAsList(filterConfig.getInitParameter("outOfControlCommands"));
-//		Filter.super.init(filterConfig);
 	}
 
 	@Override
@@ -41,26 +39,20 @@ public class SecurityFilter implements Filter {
 	public boolean isAllowed(ServletRequest request) {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String command = httpRequest.getParameter("action");
-		System.out.println(command);
 		if (command == null || command.isEmpty()) {
 			return false;
 		}
-		System.out.println("1");
 		if (outOfControl.contains(command)) {
 			return true;
 		}
-		System.out.println(2);
 		HttpSession session = httpRequest.getSession(false);
 		if (session == null) {
 			return false;
 		}
-		System.out.println(3);
 		UserRole role = (UserRole) session.getAttribute("role");
-		if(role == null) {
+		if (role == null) {
 			return false;
 		}
-		System.out.println(common.contains(command));
-		System.out.println(accessMap.get(role).contains(command));
 		return accessMap.get(role).contains(command) || common.contains(command);
 	}
 

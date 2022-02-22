@@ -21,6 +21,7 @@ public class CommandFactory {
 		commands.put("showProfile", new ShowProfileCommand());
 		commands.put("pagination", new SessionsPaginationCommand());
 		commands.put("sessionsSorting", new SessionsSortingCommand());
+		commands.put("lang", new ChangeLanguageCommand());
 	}
 
 	public static CommandFactory getInstance() {

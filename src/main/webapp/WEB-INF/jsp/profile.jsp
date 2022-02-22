@@ -30,7 +30,7 @@
 					<fmt:message key="profile.orders.order.number"/> <c:out value="${orderInfo.key}"/>
 				</p>
 				<p>
-					<fmt:message key="profile.orders.order.price"/> <c:out value="${orderInfo.value}"/>uah.
+					<fmt:message key="profile.orders.order.price"/> <c:out value="${orderInfo.value}"/> <fmt:message key="profile.orders.price.currency"/>
 				</p>
 			</div>
 		</c:forEach>

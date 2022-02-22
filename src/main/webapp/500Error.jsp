@@ -2,6 +2,8 @@
 <%--
 https://freefrontend.com/500-error-page-html-templates/
 --%>
+<%@ include file="/WEB-INF/head.jspf"%>
+
 <div>
 	<a href="index.jsp" style="font-size:x-large; font-family: Consolas; text-align: center; color: black">Return to main page</a>
 </div>
