@@ -5,95 +5,113 @@
   Time: 11:38
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<h2 style="margin-left: 5%; margin-top: 2%">Розклад показів</h2>
-<div>
-	<form action="controller?action=sessionsSorting">
-		<input type="hidden" name="action" value="sessionsSorting">
-		<div class="row" style="margin-left: 5%; width:70% ">
-			<div class="col">
-				<label for="dateSort" class="form-label">Date</label>
-				<select id="dateSort" name="dateSort" class="form-select" aria-label="Default select example">
-					<option value="">Choose</option>
-					<option value="ascending" selected>За зростанням</option>
-					<option value="descending">За спаданням</option>
-				</select>
-			</div>
-			<div class="col">
-				<label for="timeSort" class="form-label">Time</label>
-				<select id="timeSort" name="timeSort" class="form-select" aria-label="Default select example">
-					<option value="">Choose</option>
-					<option value="ascending" selected>За зростанням</option>
-					<option value="descending">За спаданням</option>
-				</select>
-			</div>
-			<div class="col">
-				<label for="ticketsSort" class="form-label">Кількість вільних квитків</label>
-				<select id="ticketsSort" name="ticketsSort" class="form-select" aria-label="Default select example">
-					<option value="" selected>Choose</option>
-					<option value="ascending">За зростанням</option>
-					<option value="descending">За спаданням</option>
-				</select>
-			</div>
-			<div class="col">
-
-				<label for="movieNameSort" class="form-label">За назвою фільму</label>
-				<select id="movieNameSort" name="movieNameSort" class="form-select" aria-label="Default select example">
-					<option value="" selected>Choose</option>
-					<option value="ascending">За зростанням</option>
-					<option value="descending">За спаданням</option>
-				</select>
-			</div>
-			<div class="col">
-				<label for="submitSorting" class="form-label">Сортувати</label>
-				<div class="col-auto">
-					<button type="submit" id="submitSorting" class="btn btn-primary mb-3">Сортувати</button>
+<%@ include file="/WEB-INF/head.jspf"%>
+<h2 style="margin-left: 5%; margin-top: 2%"><fmt:message key="sessions.schedule"/></h2>
+<div style="display: flex; border: 2px solid darkblue; border-radius: 15px; background-color:  #f0f8ff;	margin: 0 5%">
+	<div style="width: 65%; margin-left: 5%; padding: 10px; ">
+		<h3><fmt:message key="sessions.sorting"/></h3>
+		<form id="filterAndSorting" action="controller?action=sessionsSorting">
+			<input type="hidden" name="action" value="sessionsSorting">
+			<div class="row">
+				<div class="col">
+					<label for="dateSort" class="form-label"><fmt:message key="sessions.filter.date"/></label>
+					<select id="dateSort" name="dateSort" class="form-select" aria-label="Default select example">
+						<option value="" ${sessionScope.byDateNone}><fmt:message key="sessions.filter.choose"/></option>
+						<option value="ascending" ${sessionScope.byDateAscending}><fmt:message key="sessions.filter.ascending"/></option>
+						<option value="descending" ${sessionScope.byDateDescending}><fmt:message key="sessions.filter.descending"/></option>
+					</select>
+				</div>
+				<div class="col">
+					<label for="timeSort" class="form-label"><fmt:message key="sessions.filter.time"/></label>
+					<select id="timeSort" name="timeSort" class="form-select" aria-label="Default select example">
+						<option value="" ${sessionScope.byTimeNone}><fmt:message key="sessions.filter.choose"/></option>
+						<option value="ascending" ${sessionScope.byTimeAscending}><fmt:message key="sessions.filter.ascending"/></option>
+						<option value="descending" ${sessionScope.byTimeDescending}><fmt:message key="sessions.filter.descending"/></option>
+					</select>
+				</div>
+				<div class="col">
+					<label for="ticketsSort" class="form-label"><fmt:message key="sessions.filter.available.tickets"/></label>
+					<select id="ticketsSort" name="ticketsSort" class="form-select"
+							aria-label="Default select example">
+						<option value="" ${sessionScope.byTicketsNone}><fmt:message key="sessions.filter.choose"/></option>
+						<option value="ascending"${sessionScope.byTicketsAscending}><fmt:message key="sessions.filter.ascending"/></option>
+						<option value="descending"${sessionScope.byTicketsDescending}><fmt:message key="sessions.filter.descending"/></option>
+					</select>
+				</div>
+				<div class="col">
+					<label for="movieNameSort" class="form-label"><fmt:message key="sessions.filter.movie.name"/></label>
+					<select id="movieNameSort" name="movieNameSort" class="form-select"
+							aria-label="Default select example">
+						<option value="" ${sessionScope.byNameNone}><fmt:message key="sessions.filter.choose"/></option>
+						<option value="ascending"${sessionScope.byNameAscending}><fmt:message key="sessions.filter.ascending"/></option>
+						<option value="descending"${sessionScope.byNameDescending}><fmt:message key="sessions.filter.descending"/></option>
+					</select>
 				</div>
 			</div>
-		</div>
-	</form>
-</div>
-<c:forEach items="${sessionScope['availableSessions']}" var="session">
-	<div class="movie" style="
-	border: 2px black solid; width: auto; display: flex; width: 70%; align-items: center;
-	background-color: #f0f8ff;
-	margin-left: 5%;
-	/*margin-top: 10%;*/
-	margin-top: 5%;
-	/*#80c4de;*/
-	">
-		<div>
-			<img src="${session.getMovie().getImageURL()}"
-				 style="height: 50vh; width:16.6vw; object-fit: cover;" alt="${session.getMovie().getName()} image">
-		</div>
-		<div style="font-size: larger; padding-left: 10%">
-			<h2><c:out value="${session.getMovie().getName()}"/></h2>
-			<p>Дата показу: <c:out value="${session.getMovieDate()}"/></p>
-			<p>Час показу: <c:out value="${session.getBeginningTime()}"/> - <c:out
-					value="${session.getEndingTime()}"/></p>
-			<p>Ціна квитка:<c:out value="${session.getMovie().getTicketPrice()}"/>грн.</p>
-			<p>Тривалість: <c:out value="${session.getMovie().getLengthInMinutes()}"/> хв.</p>
-			<form action="controller?action=showMovieSession" method="post">
-				<input type="hidden" value="${session.getId()}" name="sessionId">
-				<c:choose>
-					<c:when test="${sessionScope.get('role').name().equals('ADMIN')}">
-						<input class="btn btn-primary btn-lg" type="submit" value="details">
-					</c:when>
-					<c:otherwise>
-						<input class="btn btn-primary btn-lg" type="submit" value="buy ticket">
-					</c:otherwise>
-				</c:choose>
-			</form>
-		</div>
+				<button type="submit" style="margin-top: 30px" id="submitSorting" class="btn btn-primary mb-3"><fmt:message key="sessions.sort"/></button>
+		</form>
 	</div>
-</c:forEach>
+	<div style="background-color:  #f0f8ff;
+	/*border: 2px darkblue solid; border-radius: 15px;*/
+	 width: 20%; height: 25%; margin-left: 5%; padding: 15px; ">
+		<h3><fmt:message key="sessions.filter"/></h3>
+		<select name="movieFilter" class="form-select"
+				form="filterAndSorting"
+				aria-describedby="movieSelectionError"
+				size="4" aria-label="Default select example">
+			<c:forEach items="${sessionScope.availableMovies}" var="movie">
+				<option value="<c:out value="${movie.getName()}"/>"> <c:out value="${movie.getName()}"/></option>
+			</c:forEach>
+		</select>
+		<button style="margin-top: 10px" form="filterAndSorting" type="submit" id="userFilter" class="btn btn-primary mb-3"><fmt:message key="sessions.filter.button"/></button>
+	</div>
+</div>
+<div>
+	<c:forEach items="${sessionScope['availableSessions']}" var="session">
+		<div class="movie" style="
+					border: 2px darkblue solid; display: flex;
+	 				align-items: center;
+					background-color: #f0f8ff;
+					margin: 2% 5%;
+					padding: 15px;
+					border-radius: 15px;
+					">
+			<div>
+				<img src="${session.getMovie().getImageURL()}"
+					 style="height: 50vh; width:16.6vw; object-fit: cover;"
+					 alt="${session.getMovie().getName()} image">
+			</div>
+			<div style="font-size: larger; padding-left: 10%">
+				<h2><c:out value="${session.getMovie().getName()}"/></h2>
+				<p><fmt:message key="sessions.session.date"/> <c:out value="${session.getMovieDate()}"/></p>
+				<p><fmt:message key="sessions.session.time"/> <c:out value="${session.getBeginningTime()}"/> - <c:out
+						value="${session.getEndingTime()}"/></p>
+				<p><fmt:message key="sessions.session.ticket.price"/> <c:out value="${session.getMovie().getTicketPrice()}"/> <fmt:message key="sessions.session.currency"/></p>
+				<p><fmt:message key="sessions.session.length"/> <c:out value="${session.getMovie().getLengthInMinutes()}"/> <fmt:message key="sessions.session.time.unit"/></p>
+				<form action="controller?action=showMovieSession" method="post">
+					<input type="hidden" value="${session.getId()}" name="sessionId">
+					<c:choose>
+						<c:when test="${sessionScope.get('role').name().equals('ADMIN')}">
+							<button class="btn btn-primary btn-lg" type="submit" value="details"><fmt:message key="sessions.session.details"/></button>
+<%--							<input class="btn btn-primary btn-lg" type="submit" value="details">--%>
+						</c:when>
+						<c:otherwise>
+							<button class="btn btn-primary btn-lg" type="submit" value="buy ticket"><fmt:message key="sessions.session.buy.tickets"/></button>
+<%--							<input class="btn btn-primary btn-lg" type="submit" value="buy ticket">--%>
+						</c:otherwise>
+					</c:choose>
+				</form>
+			</div>
+		</div>
+	</c:forEach>
+</div>
+</div>
 <form action="controller?action=sessionsPagination" style="margin-top: 20px">
 	<nav aria-label="...">
 		<ul class="pagination justify-content-center">
 			<li class="page-item">
 				<a class="page-link" href="controller?action=pagination&moveTo=prevPage" tabindex="-1"
-				   aria-disabled="true">Previous</a>
+				   aria-disabled="true"><fmt:message key="sessions.pagination.previous.page"/></a>
 			</li>
 			<c:forEach var="i" begin="1" end="${sessionScope.numberOfPages}">
 				<c:choose>
@@ -110,7 +128,7 @@
 				</c:choose>
 			</c:forEach>
 			<li class="page-item">
-				<a class="page-link" href="controller?action=pagination&moveTo=nextPage">Next</a>
+				<a class="page-link" href="controller?action=pagination&moveTo=nextPage"><fmt:message key="sessions.pagination.next.page"/></a>
 			</li>
 		</ul>
 	</nav>

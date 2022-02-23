@@ -1,5 +1,6 @@
 <%--this template from --%>
 <%--https://freefrontend.com/html-css-404-page-templates/--%>
+<%@ include file="/WEB-INF/head.jspf"%>
 <html>
 <head>
 	<title>Error page</title>

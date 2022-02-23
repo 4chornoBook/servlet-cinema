@@ -5,10 +5,8 @@
   Time: 14:50
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<jsp:include page="/WEB-INF/head.jsp"/>
+<%@ include file="/WEB-INF/head.jspf" %>
 <style>
     html,
     body {
@@ -16,10 +14,7 @@
     }
 
     body {
-        /*display: flex;*/
         align-items: center;
-        /*padding-top: 40px;*/
-        /*padding-bottom: 40px;*/
         background-color: #f5f5f5;
     }
 
@@ -28,7 +23,7 @@
         max-width: 330px;
         padding: 15px;
         margin: auto;
-		margin-top: 10%;
+        margin-top: 10%;
     }
 
     .form-signin.checkbox {
@@ -55,21 +50,23 @@
 <jsp:include page="header.jsp"/>
 <div class="form-signin">
 	<form action="controller?action=login" method="post">
-		<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+		<h1 class="h3 mb-3 fw-normal"><fmt:message key="login.title"/></h1>
 		<div class="form-floating">
-			<input type="text" name="login" class="form-control" id="floatingInput" placeholder="name@example.com">
-			<label for="floatingInput">Login</label>
+			<input type="text" name="login" minlength="5" maxlength="50"
+				   class="form-control ${requestScope.userLoginError}" aria-describedby="userDataValidation"
+				   id="floatingInput" placeholder="name@example.com" required>
+			<label for="floatingInput"><fmt:message key="login.login"/></label>
 		</div>
 		<div class="form-floating">
-			<input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-			<label for="floatingPassword">Password</label>
+			<input type="password" name="password" minlength="5" maxlength="50"
+				   class="form-control ${requestScope.userLoginError}" id="floatingPassword" placeholder="Password"
+				   required>
+			<label for="floatingPassword"><fmt:message key="login.password"/></label>
+			<div id="userDataValidation" class="invalid-feedback">
+				<fmt:message key="login.authorization.error"/>
+			</div>
 		</div>
-		<%--		<div class="checkbox mb-3">--%>
-		<%--			<label>--%>
-		<%--				<input type="checkbox" value="remember-me"> Remember me--%>
-		<%--			</label>--%>
-		<%--		</div>--%>
-		<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+		<button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="login.login.button"/></button>
 	</form>
 </div>
 <jsp:include page="/footer.jsp"/>
