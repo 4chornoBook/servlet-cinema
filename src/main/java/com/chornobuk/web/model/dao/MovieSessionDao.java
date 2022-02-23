@@ -28,6 +28,11 @@ public class MovieSessionDao implements IDao<MovieSession> {
 			+ " order by movie_session.session_date, movie_session.beginning_time"
 			+ " limit ? offset ?";
 	private static final String IS_TIME_SLOT_AVAILABLE = "select is_slot_available(?,?,?)";
+	private static final String DELETE_ORDERS_BY_SESSION = "delete from tickets_order" +
+			" where exists" +
+			" (select 1 from ticket" +
+			" where ticket.order_id = tickets_order.order_id\n" +
+			" and ticket.movie_session_id = ?)";
 	@Override
 	public MovieSession get(long id) {
 		MovieSession movieSession = null;
@@ -80,10 +85,14 @@ public class MovieSessionDao implements IDao<MovieSession> {
 			con.setAutoCommit(false);
 			PreparedStatement deleteTickets = con.prepareStatement(DELETE_TICKETS_BY_SESSION);
 			PreparedStatement deleteSession = con.prepareStatement(DELETE_SESSION_BY_ID);
+			PreparedStatement deleteOrders = con.prepareStatement(DELETE_ORDERS_BY_SESSION);
 			deleteTickets.setLong(1, movieSession.getId());
 			deleteSession.setLong(1, movieSession.getId());
+			deleteOrders.setLong(1,movieSession.getId());
+
 			deleteTickets.execute();
 			deleteSession.execute();
+			deleteOrders.execute();
 			con.commit();
 			con.setAutoCommit(true);
 			con.close();
