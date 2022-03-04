@@ -19,7 +19,7 @@ public class BuyTicketsCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
-		String forward = "WEB-INF/buyTickets.jsp";
+		String forward = "WEB-INF/jsp/user/buyTickets.jsp";
 		String ownerNameRegex = "[\\p{Upper}]+ [\\p{Upper}]+";
 		String cardNumberRegex = "[\\d]{16}";
 		DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MM/yy");

@@ -12,6 +12,7 @@ public class NewSessionCommand implements ICommand {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		MovieDao movieDao = new MovieDao();
 		LinkedList<Movie> movies = new LinkedList<>(movieDao.getAll());
+//		todo get movies from database and set as an attribute
 		req.getServletContext().setAttribute("movies", movies);
 		return "WEB-INF/jsp/admin/newSession.jsp";
 	}

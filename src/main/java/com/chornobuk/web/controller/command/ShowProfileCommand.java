@@ -7,12 +7,11 @@ import com.chornobuk.web.model.entity.UserRole;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class ShowProfileCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		String redirect = "WEB-INF/jsp/profile.jsp";
+		String forward = "WEB-INF/jsp/common/profile.jsp";
 		OrderDao orderDao = new OrderDao();
 		UserRole role = (UserRole) req.getSession().getAttribute("role");
 
@@ -21,6 +20,6 @@ public class ShowProfileCommand implements ICommand {
 			HashMap<Long, Integer> orderIdPriceMap = new HashMap<>(orderDao.getOrdersPricesByUser(user));
 			req.setAttribute("ordersPrices", orderIdPriceMap);
 		}
-		return redirect;
+		return forward;
 	}
 }

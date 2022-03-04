@@ -5,7 +5,7 @@
   Time: 11:38
   To change this template use File | Settings | File Templates.
 --%>
-<%@ include file="/WEB-INF/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf"%>
 <h2 style="margin-left: 5%; margin-top: 2%"><fmt:message key="sessions.schedule"/></h2>
 <div style="display: flex; border: 2px solid darkblue; border-radius: 15px; background-color:  #f0f8ff;	margin: 0 5%">
 	<div style="width: 65%; margin-left: 5%; padding: 10px; ">

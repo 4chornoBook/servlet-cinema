@@ -6,10 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <html>
-<%@ include file="/WEB-INF/head.jspf"%>
-<%--<jsp:include page="/WEB-INF/head.jsp"/>--%>
+<%@ include file="/WEB-INF/tags/head.jspf"%>
 <body>
-<jsp:include page="/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
 <form action="controller?action=addNewMovie" method="post"
 	  style="
 	width: 100%;
@@ -95,6 +94,6 @@
 		</div>
 	</div>
 	<button type="submit" class="btn btn-primary"><fmt:message key="new.movie.add.movie.button"/> </button>
-	<jsp:include page="/footer.jsp"/>
+	<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </body>
 </html>

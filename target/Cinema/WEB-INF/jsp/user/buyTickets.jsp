@@ -5,10 +5,10 @@
   Time: 23:03
   To change this template use File | Settings | File Templates.
 --%>
-<%@ include file="/WEB-INF/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf"%>
 <html>
 <body style="background-color: #f0f8ff;">
-<jsp:include page="/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
 <div style="display: flex; margin-top: 5%">
 	<div style="width: 65%; margin: 0 auto">
 		<h2><fmt:message key="buy.tickets.title"/></h2>
@@ -97,5 +97,5 @@
 	</div>
 </div>
 </body>
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </html>

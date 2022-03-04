@@ -6,11 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <html>
-<%@ include file="/WEB-INF/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf"%>
 <body>
-<jsp:include page="/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
 </form>
-<jsp:include page="/WEB-INF/jsp/availableMovies.jsp"/>
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="/WEB-INF/jsp/common/availableMovies.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </body>
 </html>

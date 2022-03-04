@@ -5,12 +5,11 @@
   Time: 15:54
   To change this template use File | Settings | File Templates.
 --%>
-<%@ include file="/WEB-INF/head.jspf" %>
+<%@ include file="/WEB-INF/tags/head.jspf" %>
 <html>
 <%--todo set tittle--%>
-<jsp:include page="/WEB-INF/head.jsp"/>
 <body>
-<jsp:include page="/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
 <div class="movie" style="
 	border: 2px darkblue solid; width: auto; display: flex; width: 70%; align-items: center;
 	background-color: #f0f8ff;
@@ -119,6 +118,6 @@
 	</c:otherwise>
 	</c:choose>
 </div>
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class SubmitOrderCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
-		String forward = "WEB-INF/jsp/movie.jsp";//continue operation
+		String forward = "WEB-INF/jsp/common/movie.jsp";//continue operation
 		UserRole role = (UserRole) req.getSession().getAttribute("role");
 		if (role != null) {
 			MovieSessionDao sessionDao = new MovieSessionDao();
@@ -26,14 +26,12 @@ public class SubmitOrderCommand implements ICommand {
 			String [] placesString = req.getParameterValues("numberPlace");
 			if (placesString == null || placesString.length == 0) {
 				req.setAttribute("noTicketsError",errorTag );
-				System.out.println("error");
-				System.out.println(sessionId);
 				return forward;
 			}
 			int[] places = Arrays.stream(placesString)
 					.mapToInt(Integer::parseInt).toArray();
 
-			forward = "/WEB-INF/buyTickets.jsp";
+			forward = "/WEB-INF/jsp/user/buyTickets.jsp";
 			int totalPrice = req.getParameterValues("numberPlace").length * session.getMovie().getTicketPrice();
 
 			req.getSession().removeAttribute("session");

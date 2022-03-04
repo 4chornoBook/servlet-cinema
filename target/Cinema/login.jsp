@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <html>
-<%@ include file="/WEB-INF/head.jspf" %>
+<%@ include file="/WEB-INF/tags/head.jspf" %>
 <style>
     html,
     body {
@@ -47,7 +47,7 @@
     }
 </style>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="WEB-INF/common_elements/header.jsp"/>
 <div class="form-signin">
 	<form action="controller?action=login" method="post">
 		<h1 class="h3 mb-3 fw-normal"><fmt:message key="login.title"/></h1>
@@ -69,6 +69,6 @@
 		<button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="login.login.button"/></button>
 	</form>
 </div>
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </body>
 </html>

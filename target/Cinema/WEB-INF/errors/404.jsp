@@ -1,6 +1,6 @@
 <%--this template from --%>
 <%--https://freefrontend.com/html-css-404-page-templates/--%>
-<%@ include file="/WEB-INF/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf"%>
 <html>
 <head>
 	<title>Error page</title>
@@ -92,7 +92,7 @@
 		<h1>404</h1>
 		<h2>PAGE NOT FOUND</h2>
 		<h3>BACK TO HOME?</h3>
-		<a href="/index.jsp" class="yes">YES</a>
+		<a href="${pageContext.request.contextPath}/index.jsp" class="yes">YES</a>
 		<a href="https://www.youtube.com/watch?v=G3AfIvJBcGo">NO</a>
 	</div>
 </section>

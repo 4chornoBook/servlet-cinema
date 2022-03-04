@@ -6,12 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <html>
-<%@ include file="/WEB-INF/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf"%>
 <head>
 	<title>registration</title>
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="WEB-INF/common_elements/header.jsp"/>
 <form action="controller?action=registration" method="post"
 	  style="
 	width: 100%;

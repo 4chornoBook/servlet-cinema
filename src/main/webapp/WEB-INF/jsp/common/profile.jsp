@@ -6,9 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <html>
-<%@ include file="/WEB-INF/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf"%>
 <body>
-<jsp:include page="/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
 <div style="font-size: larger; border: 2px solid darkblue; background-color: lavender; padding: 10px; width:70%;margin: 5% auto; border-radius: 15px; align-items: center">
 	<h2><fmt:message key="profile.user.info"/></h2>
 	<p>
@@ -37,5 +37,5 @@
 	</div>
 </c:if>
 </body>
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </html>

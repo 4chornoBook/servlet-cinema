@@ -5,7 +5,7 @@
   Time: 20:32
   To change this template use File | Settings | File Templates.
 --%>
-<%@ include file="/WEB-INF/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf"%>
 <head>
 	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -16,7 +16,7 @@
 </head>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="index.jsp">Cinema</a>
+		<a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp">Cinema</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
 				aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -51,8 +51,8 @@
 			<c:when test="${sessionScope.user == null}">
 				<div class="collapse navbar-collapse justify-content-end" id="3navbarNavAltMarkup">
 					<div class="navbar-nav">
-						<a class="nav-link active" href="registration.jsp"><fmt:message key="header.menu.register"/></a>
-						<a class="nav-link active" href="login.jsp"><fmt:message key="header.menu.login"/></a>
+						<a class="nav-link active" href="${pageContext.request.contextPath}/registration.jsp"><fmt:message key="header.menu.register"/></a>
+						<a class="nav-link active" href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="header.menu.login"/></a>
 					</div>
 				</div>
 			</c:when>

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ShowSessionCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		String forward = "WEB-INF/jsp/movie.jsp";
+		String forward = "WEB-INF/jsp/common/movie.jsp";
 		long sessionId = Long.parseLong(req.getParameter("sessionId"));
 		UserRole role = (UserRole) req.getSession().getAttribute("role");
 		MovieSessionDao sessionDao = new MovieSessionDao();

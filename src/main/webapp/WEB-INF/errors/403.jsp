@@ -1,7 +1,7 @@
-<%@ include file="/WEB-INF/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf"%>
 
 <div>
-	<a href="index.jsp" style="font-size:x-large;margin-top: 2%; text-align: center; color: white">Return to main page</a>
+	<a href="${pageContext.request.contextPath}/index.jsp" style="font-size:x-large;margin-top: 2%; text-align: center; color: white">Return to main page</a>
 </div>
 <div id="container">
 
