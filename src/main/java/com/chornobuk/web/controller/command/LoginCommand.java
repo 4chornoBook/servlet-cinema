@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.dao.UserDao;
 import com.chornobuk.web.model.entity.User;
 import com.chornobuk.web.model.entity.UserRole;
@@ -13,7 +14,7 @@ public class LoginCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
-		String forward = "login.jsp";
+		String forward = Path.LOGIN_PAGE;
 		String login = req.getParameter("login");
 		String password = req.getParameter("password");
 
@@ -33,7 +34,7 @@ public class LoginCommand implements ICommand {
 				HttpSession session = req.getSession();
 				session.setAttribute("user", user);
 				session.setAttribute("role", userRole);
-				forward = "index.jsp";
+				forward = Path.INDEX_PAGE;
 			}
 		}
 		return forward;

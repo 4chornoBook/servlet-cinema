@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.dao.OrderDao;
 import com.chornobuk.web.model.dao.TicketDao;
 import com.chornobuk.web.model.entity.MovieSession;
@@ -19,7 +20,7 @@ public class BuyTicketsCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
-		String forward = "WEB-INF/jsp/user/buyTickets.jsp";
+		String forward = Path.BUY_TICKETS_PAGE;
 		String ownerNameRegex = "[\\p{Upper}]+ [\\p{Upper}]+";
 		String cardNumberRegex = "[\\d]{16}";
 		DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MM/yy");
@@ -63,7 +64,7 @@ public class BuyTicketsCommand implements ICommand {
 					return forward;
 				}
 			}
-			forward = "index.jsp";
+			forward = Path.INDEX_PAGE;
 //			create order
 			Order order = new Order();
 			order.setCreationDate((LocalDateTime) req.getSession().getAttribute("orderCreatingTime"));

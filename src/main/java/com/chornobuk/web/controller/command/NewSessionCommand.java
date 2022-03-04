@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.entity.Movie;
 
@@ -14,6 +15,6 @@ public class NewSessionCommand implements ICommand {
 		LinkedList<Movie> movies = new LinkedList<>(movieDao.getAll());
 //		todo get movies from database and set as an attribute
 		req.getServletContext().setAttribute("movies", movies);
-		return "WEB-INF/jsp/admin/newSession.jsp";
+		return Path.ADD_NEW_SESSION_PAGE;
 	}
 }

@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public class RemoveSessionCommand implements ICommand{
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		String forward = "index.jsp";
+		String forward = Path.INDEX_PAGE;
 		MovieSession movieSession;
 		MovieSessionDao movieSessionDao = new MovieSessionDao();
 		long id = Long.parseLong( req.getParameter("sessionId"));

@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.MovieSessionQueryConstructor;
 import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.dao.MovieSessionDao;
@@ -17,7 +18,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
-		String forward = "WEB-INF/jsp/admin/newSession.jsp";
+		String forward = Path.ADD_NEW_SESSION_PAGE;
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 		String movieDateString = req.getParameter("movieDate");
 		String beginningTimeS = req.getParameter("beginningTime");
@@ -54,7 +55,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 			if (!movieSessionDao.isSlotAvailable(movieSession)) {
 				req.setAttribute("slotNotAvailableError", errorTag);
 			} else {
-				forward = "index.jsp";
+				forward = Path.INDEX_PAGE;
 				movieSessionDao.add(movieSession);
 				MovieSessionQueryConstructor constructor = (MovieSessionQueryConstructor) req.getSession().getAttribute("queryConstructor");
 				int limit = (int) req.getSession().getAttribute("limit");

@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.HashingAlgorithm;
 import com.chornobuk.web.model.dao.UserDao;
 import com.chornobuk.web.model.entity.User;
@@ -11,7 +12,7 @@ public class RegistrationCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
-		String forward = "registration.jsp";
+		String forward = Path.REGISTRATION_PAGE;
 
 		String login = req.getParameter("login");
 		String name = req.getParameter("name");
@@ -30,7 +31,7 @@ public class RegistrationCommand implements ICommand {
 			UserDao userDao = new UserDao();
 			User user = userDao.getUserByLogin(login);
 			if (user == null) {
-				forward = "login.jsp";
+				forward = Path.INDEX_PAGE;
 				user = new User();
 				user.setLogin(login);
 				user.setName(name);

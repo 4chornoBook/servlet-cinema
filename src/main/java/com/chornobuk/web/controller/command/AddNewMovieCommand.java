@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.dao.GenreDao;
 import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.entity.Genre;
@@ -17,7 +18,7 @@ public class AddNewMovieCommand implements ICommand {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
 		String name = req.getParameter("name");
-		String forward = "WEB-INF/jsp/admin/newMovie.jsp";
+		String forward = Path.ADD_NEW_MOVIE_PAGE;
 		String releaseDateString = req.getParameter("releaseDate");
 		LocalDate releaseDate = (releaseDateString == null || releaseDateString.isEmpty()) ? null : LocalDate.parse(releaseDateString);
 		int lengthInMinutes = Integer.parseInt(req.getParameter("length"));
@@ -55,7 +56,7 @@ public class AddNewMovieCommand implements ICommand {
 		else if (description == null || description.isEmpty()) {
 			req.setAttribute("descriptionError", errorTag);
 		} else {
-			forward = "index.jsp";
+			forward = Path.INDEX_PAGE;
 			Movie movie = new Movie();
 			MovieDao movieDao = new MovieDao();
 			GenreDao genreDao = new GenreDao();

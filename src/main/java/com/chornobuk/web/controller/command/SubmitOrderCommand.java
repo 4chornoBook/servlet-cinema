@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
@@ -15,7 +16,7 @@ public class SubmitOrderCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
-		String forward = "WEB-INF/jsp/common/movie.jsp";//continue operation
+		String forward = Path.SESSION_PAGE;//continue operation
 		UserRole role = (UserRole) req.getSession().getAttribute("role");
 		if (role != null) {
 			MovieSessionDao sessionDao = new MovieSessionDao();

@@ -1,5 +1,6 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.MovieSessionQueryConstructor;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
@@ -11,7 +12,7 @@ import java.util.LinkedList;
 public class SessionsPaginationCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		String forward = "index.jsp";
+		String forward = Path.INDEX_PAGE;
 		int currentPage = (int) req.getSession().getAttribute("currentPage");
 		int numberOfPages = (int) req.getSession().getAttribute("numberOfPages");
 		int limit = (int) req.getSession().getAttribute("limit");
