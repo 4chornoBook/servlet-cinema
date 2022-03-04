@@ -55,7 +55,7 @@ public class AddNewMovieCommand implements ICommand {
 		else if (description == null || description.isEmpty()) {
 			req.setAttribute("descriptionError", errorTag);
 		} else {
-			forward = "WEB-INF/jsp/admin/admin.jsp";
+			forward = "index.jsp";
 			Movie movie = new Movie();
 			MovieDao movieDao = new MovieDao();
 			GenreDao genreDao = new GenreDao();

@@ -10,7 +10,7 @@ import java.util.List;
 public class RemoveSessionCommand implements ICommand{
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		String forward = "WEB-INF/jsp/admin/admin.jsp";
+		String forward = "index.jsp";
 		MovieSession movieSession;
 		MovieSessionDao movieSessionDao = new MovieSessionDao();
 		long id = Long.parseLong( req.getParameter("sessionId"));

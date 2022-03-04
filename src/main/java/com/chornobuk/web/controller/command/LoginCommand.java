@@ -33,10 +33,7 @@ public class LoginCommand implements ICommand {
 				HttpSession session = req.getSession();
 				session.setAttribute("user", user);
 				session.setAttribute("role", userRole);
-				if (userRole.equals(UserRole.ADMIN)) {
-					forward = "WEB-INF/jsp/admin/admin.jsp";
-				} else if (userRole.equals(UserRole.USER))
-					forward = "WEB-INF/jsp/user/user.jsp";
+				forward = "index.jsp";
 			}
 		}
 		return forward;

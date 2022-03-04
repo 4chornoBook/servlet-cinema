@@ -54,7 +54,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 			if (!movieSessionDao.isSlotAvailable(movieSession)) {
 				req.setAttribute("slotNotAvailableError", errorTag);
 			} else {
-				forward = "WEB-INF/jsp/admin/admin.jsp";
+				forward = "index.jsp";
 				movieSessionDao.add(movieSession);
 				MovieSessionQueryConstructor constructor = (MovieSessionQueryConstructor) req.getSession().getAttribute("queryConstructor");
 				int limit = (int) req.getSession().getAttribute("limit");
