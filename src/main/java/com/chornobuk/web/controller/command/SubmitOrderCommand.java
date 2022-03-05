@@ -41,9 +41,9 @@ public class SubmitOrderCommand implements ICommand {
 			req.getSession().setAttribute("orderPlaces", places);
 			req.getSession().setAttribute("totalPrice", totalPrice);
 		} else {
-			forward = "redirect";
+			forward = Path.REDIRECT_COMMAND;
 			try {
-				resp.sendRedirect("login.jsp");
+				resp.sendRedirect(Path.LOGIN_PAGE);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
