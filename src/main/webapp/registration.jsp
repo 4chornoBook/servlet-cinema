@@ -5,13 +5,16 @@
   Time: 22:45
   To change this template use File | Settings | File Templates.
 --%>
+<!DOCTYPE html>
 <html>
 <%@ include file="/WEB-INF/tags/head.jspf"%>
 <head>
 	<title>registration</title>
 </head>
 <body>
-<jsp:include page="WEB-INF/common_elements/header.jsp"/>
+<jsp:include page="WEB-INF/common_elements/header.jsp">
+	<jsp:param name="title" value="registration"/>
+</jsp:include>
 <form action="controller?action=registration" method="post"
 	  style="
 	width: 100%;

@@ -8,7 +8,9 @@
 <html>
 <%@ include file="/WEB-INF/tags/head.jspf"%>
 <body>
-<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp">
+	<jsp:param name="title" value="new movie"/>
+</jsp:include>
 <form action="controller?action=addNewMovie" method="post"
 	  style="
 	width: 100%;

@@ -8,7 +8,9 @@
 <html>
 <%@ include file="/WEB-INF/tags/head.jspf"%>
 <body>
-<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp">
+	<jsp:param name="title" value="new session"/>
+</jsp:include>
 <form action="controller?action=addNewMovieSession" method="post"
 	  style="
 	width: 100%;

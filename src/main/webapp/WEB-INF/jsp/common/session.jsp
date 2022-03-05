@@ -9,7 +9,9 @@
 <html>
 <%--todo set tittle--%>
 <body>
-<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp">
+	<jsp:param name="title" value="session"/>
+</jsp:include>
 <div class="movie" style="
 	border: 2px darkblue solid; width: auto; display: flex; width: 70%; align-items: center;
 	background-color: #f0f8ff;

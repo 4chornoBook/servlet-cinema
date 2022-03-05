@@ -8,7 +8,9 @@
 <%@ include file="/WEB-INF/tags/head.jspf"%>
 <html>
 <body style="background-color: #f0f8ff;">
-<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp">
+	<jsp:param name="title" value="buy tickets"/>
+</jsp:include>
 <div style="display: flex; margin-top: 5%">
 	<div style="width: 65%; margin: 0 auto">
 		<h2><fmt:message key="buy.tickets.title"/></h2>

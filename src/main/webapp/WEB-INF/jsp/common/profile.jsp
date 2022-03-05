@@ -8,7 +8,9 @@
 <html>
 <%@ include file="/WEB-INF/tags/head.jspf"%>
 <body>
-<jsp:include page="/WEB-INF/common_elements/header.jsp"/>
+<jsp:include page="/WEB-INF/common_elements/header.jsp">
+	<jsp:param name="title" value="profile"/>
+</jsp:include>
 <div style="font-size: larger; border: 2px solid darkblue; background-color: lavender; padding: 10px; width:70%;margin: 5% auto; border-radius: 15px; align-items: center">
 	<h2><fmt:message key="profile.user.info"/></h2>
 	<p>

@@ -5,6 +5,7 @@
   Time: 14:50
   To change this template use File | Settings | File Templates.
 --%>
+<!DOCTYPE html>
 <html>
 <%@ include file="/WEB-INF/tags/head.jspf" %>
 <style>
@@ -47,7 +48,9 @@
     }
 </style>
 <body>
-<jsp:include page="WEB-INF/common_elements/header.jsp"/>
+<jsp:include page="WEB-INF/common_elements/header.jsp">
+	<jsp:param name="title" value="login"/>
+</jsp:include>
 <div class="form-signin">
 	<form action="controller?action=login" method="post">
 		<h1 class="h3 mb-3 fw-normal"><fmt:message key="login.title"/></h1>
