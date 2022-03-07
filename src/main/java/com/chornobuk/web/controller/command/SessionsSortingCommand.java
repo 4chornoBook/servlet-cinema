@@ -92,11 +92,9 @@ public class SessionsSortingCommand implements ICommand {
 		int currentPage = 1;
 		int limit = (int) req.getSession().getAttribute("limit");
 		int numberOfSessions = movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), 0, Integer.MAX_VALUE).size();
-		System.out.println(numberOfSessions);
 		int numberOfPages = numberOfSessions / limit;
 		if (numberOfSessions % limit != 0)
 			numberOfPages += 1;
-		System.out.println(numberOfPages);
 		req.getSession().setAttribute("currentPage", currentPage);
 		req.getSession().setAttribute("numberOfPages", numberOfPages);
 

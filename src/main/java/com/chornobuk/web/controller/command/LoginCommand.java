@@ -20,14 +20,12 @@ public class LoginCommand implements ICommand {
 
 		if (login == null || login.isEmpty() || password == null || password.isEmpty()) {
 			req.setAttribute("userLoginError", errorTag);
-//			result = "Error! enter login and password";
 			return forward;
 		} else {
 			UserDao userDao = new UserDao();
 			User user = userDao.getUserByLogin(login);
 			if (user == null || user.getPassword().compareTo(HashingAlgorithm.cryptPassword(password, user.getSalt())) != 0) {
 				req.setAttribute("userLoginError", errorTag);
-//				result = "Error. wrong password or login";
 				return forward;
 			} else {
 				UserRole userRole = UserRole.getUserRole(user);

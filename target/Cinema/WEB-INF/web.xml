@@ -59,7 +59,12 @@
 <!--    todo edit filter for more efficiency-->
     <filter-mapping>
         <filter-name>MoviesFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/index.jsp</url-pattern>
+        <url-pattern>/controller?action=submitOrder</url-pattern>
+        <url-pattern>/controller?action=login</url-pattern>
+        <url-pattern>/controller?action=addNewMovieSession</url-pattern>
+        <url-pattern>/controller?action=addNewMovie</url-pattern>
+        <url-pattern>/controller?action=removeMovieSession</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
