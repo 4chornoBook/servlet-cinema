@@ -128,7 +128,7 @@
 <form action="controller?action=sessionsPagination" style="margin-top: 20px">
 	<nav aria-label="...">
 		<ul class="pagination justify-content-center">
-			<li class="page-item">
+			<li class="page-item <c:out value="${currentPage == 1 ? 'disabled' : ''}"/>">
 				<a class="page-link" href="controller?action=pagination&moveTo=prevPage" tabindex="-1"
 				   aria-disabled="true"><fmt:message key="sessions.pagination.previous.page"/></a>
 			</li>
@@ -148,7 +148,7 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			<li class="page-item">
+			<li class="page-item <c:out value="${currentPage == numberOfPages ? 'disabled' : ''}"/>">
 				<a class="page-link" href="controller?action=pagination&moveTo=nextPage"><fmt:message
 						key="sessions.pagination.next.page"/></a>
 			</li>
