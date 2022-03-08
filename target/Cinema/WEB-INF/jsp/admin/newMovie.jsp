@@ -51,7 +51,7 @@
 		<hr>
 		<div id="genres" class="${requestScope.genresError}" aria-describedby="genresError"
 			 style="height: 20%; overflow: auto;">
-			<c:forEach items="${applicationScope['genres']}" var="genre">
+			<c:forEach items="${genres}" var="genre">
 				<div class="form-check">
 					<input class="form-check-input" name="genre" type="checkbox"
 						   value="<c:out value="${genre.getName()}"/>"

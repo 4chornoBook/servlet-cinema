@@ -1,10 +1,8 @@
 package com.chornobuk.web.controller.filter;
 
 import com.chornobuk.web.model.MovieSessionQueryConstructor;
-import com.chornobuk.web.model.dao.GenreDao;
 import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.dao.MovieSessionDao;
-import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.entity.MovieSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

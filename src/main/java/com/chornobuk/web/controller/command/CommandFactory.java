@@ -1,5 +1,12 @@
 package com.chornobuk.web.controller.command;
 
+import com.chornobuk.web.controller.command.admin.*;
+import com.chornobuk.web.controller.command.common.LogoutCommand;
+import com.chornobuk.web.controller.command.common.ShowProfileCommand;
+import com.chornobuk.web.controller.command.uncontrolled.*;
+import com.chornobuk.web.controller.command.user.BuyTicketsCommand;
+import com.chornobuk.web.controller.command.user.SubmitOrderCommand;
+
 import java.util.HashMap;
 
 public class CommandFactory {
@@ -9,7 +16,7 @@ public class CommandFactory {
 	private CommandFactory() {
 		commands.put("login", new LoginCommand());
 		commands.put("registration", new RegistrationCommand());
-		commands.put("newMovieForm", new NewMovieFormCommand());
+		commands.put("newMovieForm", new NewMovieCommand());
 		commands.put("addNewMovie", new AddNewMovieCommand());
 		commands.put("newMovieSession", new NewSessionCommand());
 		commands.put("addNewMovieSession", new AddNewMovieSessionCommand());

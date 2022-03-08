@@ -21,7 +21,6 @@
 	<label for="movie" class="form-label"><fmt:message key="new.session.movie"/></label>
 	<select id="movie" name="movie" class="form-select ${requestScope.movieSelectionError}" aria-describedby="movieSelectionError"
 			size="4" aria-label="Default select example">
-		<option value=""><fmt:message key="new.session.choose.movie"/></option>
 		<c:forEach items="${applicationScope['movies']}" var="movie">
 			<option value="<c:out value="${movie.getId()}"/>"><c:out value="${movie.getName()}"/></option>
 		</c:forEach>

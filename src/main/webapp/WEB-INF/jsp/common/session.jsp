@@ -64,14 +64,14 @@
 				<td>
 					<c:choose>
 						<c:when test="${ticketsNumber.contains(i)}">
-							<input type="checkbox" name="numberPlace" disabled class="btn-check" id="btn-check${i}"
-								   autocomplete="off"/>
+							<input type="checkbox" name="numberPlace" class="btn-check" id="btn-check${i}"
+								   autocomplete="off" disabled <c:out value="${role.name().equals('ADMIN') ? 'checked' :''}"/>/>
 							<label class="btn btn-secondary" for="btn-check${i}"><c:out value="${i}"/><br><fmt:message
 									key="movie.place"/></label>
 						</c:when>
 						<c:otherwise>
 							<input type="checkbox" name="numberPlace" value="${i}" class="btn-check" id="btn-check${i}"
-								   autocomplete="off"/>
+								   autocomplete="off" <c:out value="${role.name().equals('ADMIN') ? 'disabled' :''}"/>/>
 							<label class="btn btn-outline-primary" for="btn-check${i}"><c:out
 									value="${i}"/><br><fmt:message key="movie.place"/></label>
 						</c:otherwise>

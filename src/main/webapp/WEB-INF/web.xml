@@ -73,9 +73,6 @@
         </jsp-property-group>
     </jsp-config>
 
-    <listener>
-        <listener-class>com.chornobuk.web.controller.ContextListener</listener-class>
-    </listener>
     <resource-ref>
         <res-ref-name>jdbc/cinema</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>

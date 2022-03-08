@@ -29,17 +29,25 @@
 		<h2><c:out value="${sessionScope.session.getMovie().getName()}"/></h2>
 		<p><fmt:message key="movie.session.date"/> <c:out value="${sessionScope.session.getMovieDate()}"/></p>
 		<p><fmt:message key="movie.session.time"/> <c:out value="${sessionScope.session.getBeginningTime()}"/></p>
-		<p><fmt:message key="movie.session.ticket.price"/> <c:out value="${sessionScope.session.getMovie().getTicketPrice()}"/> <fmt:message key="movie.session.currency"/></p>
-		<p><fmt:message key="movie.session.length"/> <c:out value="${sessionScope.session.getMovie().getLengthInMinutes()}"/> <fmt:message key="movie.session.time.unit"/></p>
+		<p><fmt:message key="movie.session.ticket.price"/> <c:out
+				value="${sessionScope.session.getMovie().getTicketPrice()}"/> <fmt:message
+				key="movie.session.currency"/></p>
+		<p><fmt:message key="movie.session.length"/> <c:out
+				value="${sessionScope.session.getMovie().getLengthInMinutes()}"/> <fmt:message
+				key="movie.session.time.unit"/></p>
 		<p><fmt:message key="movie.session.genre"/>
 			<%--				todo show genres with delimeter comma (create toString method for genre and--%>
 			<c:forEach items="${sessionScope.session.getMovie().getGenres()}" var="genre">
 				<c:out value="${genre.getName()}"/>;
 			</c:forEach>
 		</p>
-		<p>
-			<c:out value="${session.getMovie().getDescription()}"/>
-		</p>
+		<div>
+			<hr>
+			<p style="max-height: 30vh; overflow: auto;">
+				<c:out value="${session.getMovie().getDescription()}"/>
+			</p>
+			<hr>
+		</div>
 	</div>
 </div>
 <div>
@@ -56,13 +64,14 @@
 				<td>
 					<c:choose>
 						<c:when test="${ticketsNumber.contains(i)}">
-							<input type="checkbox" name="numberPlace" disabled class="btn-check" id="btn-check${i}"
-								   autocomplete="off"/>
-							<label class="btn btn-secondary" for="btn-check${i}"><c:out value="${i}"/><br><fmt:message key="movie.place"/></label>
+							<input type="checkbox" name="numberPlace" class="btn-check" id="btn-check${i}"
+								   autocomplete="off" disabled <c:out value="${role.name().equals('ADMIN') ? 'checked' :''}"/>/>
+							<label class="btn btn-secondary" for="btn-check${i}"><c:out value="${i}"/><br><fmt:message
+									key="movie.place"/></label>
 						</c:when>
 						<c:otherwise>
 							<input type="checkbox" name="numberPlace" value="${i}" class="btn-check" id="btn-check${i}"
-								   autocomplete="off"/>
+								   autocomplete="off" <c:out value="${role.name().equals('ADMIN') ? 'disabled' :''}"/>/>
 							<label class="btn btn-outline-primary" for="btn-check${i}"><c:out
 									value="${i}"/><br><fmt:message key="movie.place"/></label>
 						</c:otherwise>
@@ -97,9 +106,11 @@
 									<p><fmt:message key="movie.modal.message"/></p>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><fmt:message key="movie.modal.close"/>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><fmt:message
+											key="movie.modal.close"/>
 									</button>
-									<button type="submit" form="removeSession" class="btn btn-primary"><fmt:message key="movie.modal.delete"/>
+									<button type="submit" form="removeSession" class="btn btn-primary"><fmt:message
+											key="movie.modal.delete"/>
 									</button>
 								</div>
 							</div>
