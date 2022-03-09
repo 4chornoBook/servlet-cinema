@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <html>
-<%@ include file="/WEB-INF/tags/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf" %>
 <body>
 <jsp:include page="/WEB-INF/common_elements/header.jsp">
 	<jsp:param name="title" value="new session"/>
@@ -19,7 +19,8 @@
 	margin-top: 5%;">
 	<h2><fmt:message key="new.session.title"/></h2>
 	<label for="movie" class="form-label"><fmt:message key="new.session.movie"/></label>
-	<select id="movie" name="movie" class="form-select ${requestScope.movieSelectionError}" aria-describedby="movieSelectionError"
+	<select id="movie" name="movie" class="form-select ${requestScope.movieSelectionError}"
+			aria-describedby="movieSelectionError"
 			size="4" aria-label="Default select example">
 		<c:forEach items="${applicationScope['movies']}" var="movie">
 			<option value="<c:out value="${movie.getId()}"/>"><c:out value="${movie.getName()}"/></option>
@@ -45,14 +46,14 @@
 			   aria-describedby="beginningTimeError" id="beginningTime"
 			   required>
 		<div id="movieBeginningTimeHelp" class="form-text">
-				<fmt:message key="new.session.ending.time.help"/>
+			<fmt:message key="new.session.ending.time.help"/>
 		</div>
 		<div id="beginningTimeError" class="invalid-feedback">
-					<fmt:message key="new.session.beginning.time.error"/>
+			<fmt:message key="new.session.beginning.time.error"/>
 		</div>
 	</div>
 	<button type="submit" class="btn btn-primary"><fmt:message key="new.session.add.session.button"/></button>
 </form>
-<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </body>
+<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </html>

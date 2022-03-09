@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <html>
-<%@ include file="/WEB-INF/tags/head.jspf"%>
+<%@ include file="/WEB-INF/tags/head.jspf" %>
 <body>
 <jsp:include page="/WEB-INF/common_elements/header.jsp">
 	<jsp:param name="title" value="new movie"/>
@@ -19,7 +19,8 @@
 	margin-top: 5%;">
 	<h2><fmt:message key="new.movie.title"/></h2>
 	<div class="mb-3">
-		<label for="exampleInputName" class="form-label ${requestScope.movieNameError}"><fmt:message key="new.movie.movie.name"/></label>
+		<label for="exampleInputName" class="form-label ${requestScope.movieNameError}"><fmt:message
+				key="new.movie.movie.name"/></label>
 		<input type="text" name="name" minlength="1" maxlength="50" class="form-control" id="exampleInputName"
 			   aria-describedby="userError" required>
 		<div id="userError" class="invalid-feedback">
@@ -95,7 +96,7 @@
 			<fmt:message key="new.movie.description.error"/>
 		</div>
 	</div>
-	<button type="submit" class="btn btn-primary"><fmt:message key="new.movie.add.movie.button"/> </button>
-	<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
+	<button type="submit" class="btn btn-primary"><fmt:message key="new.movie.add.movie.button"/></button>
 </body>
+<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </html>

@@ -72,6 +72,6 @@
 		<button class="w-100 btn btn-lg btn-primary" type="submit"><fmt:message key="login.login.button"/></button>
 	</form>
 </div>
-<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </body>
+<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </html>

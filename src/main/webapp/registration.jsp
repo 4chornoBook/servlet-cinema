@@ -60,4 +60,5 @@
 	<button type="submit" class="btn btn-primary"><fmt:message key="registration.register"/></button>
 </form>
 </body>
+<jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
 </html>
