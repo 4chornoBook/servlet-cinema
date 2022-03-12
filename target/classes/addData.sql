@@ -101,7 +101,10 @@ values ();
 insert into order_status
 values
     (default,'Створено'),
-    (default,'Оплачено');
+    (default,'Оплачено'),
+    (default,''),
+    (default,'');
+    (default,'Виконано')
 
 insert into ticket
 values ();

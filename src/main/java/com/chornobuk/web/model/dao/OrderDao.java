@@ -1,10 +1,7 @@
 package com.chornobuk.web.model.dao;
 
 import com.chornobuk.web.model.database.DBManager;
-import com.chornobuk.web.model.entity.MovieSession;
-import com.chornobuk.web.model.entity.Order;
-import com.chornobuk.web.model.entity.Ticket;
-import com.chornobuk.web.model.entity.User;
+import com.chornobuk.web.model.entity.*;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -15,6 +12,7 @@ public class OrderDao implements IDao<Order> {
 	private final static String INSERT_ORDER = "insert into tickets_order values(default,?,?,?)";
 	private final static String INSERT_TICKET = "insert into ticket values(default, ?, ?, ?)";
 	private final static String GET_ORDERS_BY_USER = "select * from tickets_order where user_id = ?";
+	private final static String GET_PAID_ORDER_STATUS = "select * from order_status where status_name = ?";
 	private final static String GET_ORDER_ID_PRICE_MAP_BY_USER = "select ticket.order_id, sum(ticket_price) from ticket" +
 			" inner join tickets_order" +
 			" on ticket.order_id = tickets_order.order_id" +
@@ -80,10 +78,11 @@ public class OrderDao implements IDao<Order> {
 		try {
 			PreparedStatement insertOder = con.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS);
 			PreparedStatement insertTicket = con.prepareStatement(INSERT_TICKET, Statement.RETURN_GENERATED_KEYS);
+			OrderStatus orderStatus = getStatusByName("Оплачено");
 			con.setAutoCommit(false);
 //			set parameters for order
 			insertOder.setLong(1, user.getId());
-			insertOder.setLong(2, 4);
+			insertOder.setLong(2, orderStatus.getId());
 			insertOder.setObject(3, order.getCreationDate());
 			insertOder.execute();
 			ResultSet orderKey = insertOder.getGeneratedKeys();
@@ -114,6 +113,23 @@ public class OrderDao implements IDao<Order> {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private OrderStatus getStatusByName(String name) {
+		OrderStatus orderStatus = new OrderStatus();
+		try {
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement getOrderStatus= con.prepareStatement(GET_PAID_ORDER_STATUS);
+			getOrderStatus.setString(1, name);
+			ResultSet rs = getOrderStatus.executeQuery();
+			if(rs.next()) {
+				orderStatus.setId(rs.getLong(1));
+				orderStatus.setName(rs.getString(2));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return orderStatus;
 	}
 
 	public Map<Long, Integer> getOrdersPricesByUser(User user) {
