@@ -10,7 +10,7 @@ values (default, 'user1,', 'Don', 'Acardion', '�b��~D�K�!�d�]5', 
 
 insert into genre
 values (default, 'Комедія'),
-       1(default, 'Романтика'),
+    1(default, 'Романтика'),
        2(default, 'Наукова фантастика'),
        3(default, 'Жахи'),
        4(default, 'Документальний фільм'),
@@ -83,28 +83,45 @@ values (default,
         1);
 
 insert into movie_genre
-values (7,20),--jujutsu kaisen  - Фантастика
-       (7,10),--jujutsu kaisen - Аніме
-       (3,7),--Bohemian rhapsody - Драма
-       (6,2),--dune - Наукова фантастика
-       (2,8),-- green book - комедія
-       (4,2),-- interstellar - наукова фантастика
-       (4,18),-- interstellar - космос
-       (5,20),--tenet - фантастика
-       (5,6),--tenet - триллер
-       (1,2)--back in future
+values (7, 20),--jujutsu kaisen  - Фантастика
+       (7, 10),--jujutsu kaisen - Аніме
+       (3, 7),--Bohemian rhapsody - Драма
+       (6, 2),--dune - Наукова фантастика
+       (2, 8),-- green book - комедія
+       (4, 2),-- interstellar - наукова фантастика
+       (4, 18),-- interstellar - космос
+       (5, 20),--tenet - фантастика
+       (5, 6),--tenet - триллер
+       (1, 2)--back in future
 ;
 
 insert into movie_session
-values ();
+values (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),
+       (default, -1, -1, current_date +, time1, time2),;
 
 insert into order_status
-values
-    (default,'Створено'),
-    (default,'Оплачено'),
-    (default,''),
-    (default,'');
-    (default,'Виконано')
+values (default, 'Створено'),
+       (default, 'Оплачено');
 
 insert into ticket
 values ();
