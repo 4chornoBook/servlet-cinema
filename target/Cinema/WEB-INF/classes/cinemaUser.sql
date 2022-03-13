@@ -1,2 +1,2 @@
-create user cinema_user with encrypted password '84YU4GY@5!6R9dgDfwNT';
+create user cinema_user with encrypted password 'user';
 grant all privileges on database cinema to cinema_user;

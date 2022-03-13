@@ -5,9 +5,11 @@
         auth="Container"
         type="javax.sql.DataSource"
         maxActive="100" maxIdle="30" maxWait="10000"
-        username="postgres"
-        password="BCf*oENZ3gtjWT&amp;"
+        username="cinema_user"
+        password="user"
         driverClassName="org.postgresql.Driver"
         url="jdbc:postgresql://localhost/cinema"
     />
 </Context>
+<!--        password="BCf*oENZ3gtjWT&amp;"-->
+<!--        username="postgres"-->

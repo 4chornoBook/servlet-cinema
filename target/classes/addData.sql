@@ -96,35 +96,57 @@ values (7, 20),--jujutsu kaisen  - Фантастика
 ;
 
 insert into movie_session
-values (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),
-       (default, -1, -1, current_date +, time1, time2),;
+values (default, 1, 100, current_date, '09:00:00', '12:00:00'),
+        (default, 2, 100, current_date, '12:00:00', '15:00:00'),
+        (default, 3, 100, current_date, '15:00:00', '18:00:00'),
+        (default, 5, 100, current_date, '18:00:00', '19:00:00'),
+        (default, 4, 100, current_date, '21:00:00', '01:09:00'),
+
+        (default, 3, 100, current_date + 1, '09:00:00', '12:00:00'),
+        (default, 2, 100, current_date + 1, '12:00:00', '15:00:00'),
+        (default, 2, 100, current_date + 1, '15:00:00', '18:00:00'),
+        (default, 2, 100, current_date + 1, '18:00:00', '19:00:00'),
+        (default, 4, 100, current_date + 1, '21:00:00', '01:09:00'),
+
+        (default, 6, 100, current_date + 2, '09:00:00', '12:00:00'),
+        (default, 7, 100, current_date + 2, '12:00:00', '15:00:00'),
+        (default, 7, 100, current_date + 2, '15:00:00', '18:00:00'),
+        (default, 6, 100, current_date + 2, '18:00:00', '19:00:00'),
+        (default, 4, 100, current_date + 2, '21:00:00', '01:09:00'),
+
+        (default, 7, 100, current_date + 3, '09:00:00', '12:00:00'),
+        (default, 7, 100, current_date + 3, '12:00:00', '15:00:00'),
+        (default, 7, 100, current_date + 3, '15:00:00', '18:00:00'),
+        (default, 7, 100, current_date + 3, '18:00:00', '19:00:00'),
+        (default, 7, 100, current_date + 3, '21:00:00', '01:09:00'),
+
+        (default, 6, 100, current_date + 4, '09:00:00', '12:00:00'),
+        (default, 6, 100, current_date + 4, '12:00:00', '15:00:00'),
+        (default, 6, 100, current_date + 4, '15:00:00', '18:00:00'),
+        (default, 6, 100, current_date + 4, '18:00:00', '19:00:00'),
+        (default, 6, 100, current_date + 4, '21:00:00', '01:09:00'),
+
+        (default, 5, 100, current_date + 5, '09:00:00', '12:00:00'),
+        (default, 5, 100, current_date + 5, '12:00:00', '15:00:00'),
+        (default, 5, 100, current_date + 5, '15:00:00', '18:00:00'),
+        (default, 5, 100, current_date + 5, '18:00:00', '19:00:00'),
+        (default, 5, 100, current_date + 5, '21:00:00', '01:09:00'),
+
+
+        (default, 7, 100, current_date + 6, '09:00:00', '12:00:00'),
+        (default, 7, 100, current_date + 6, '12:00:00', '15:00:00'),
+        (default, 7, 100, current_date + 6, '15:00:00', '18:00:00'),
+        (default, 7, 100, current_date + 6, '18:00:00', '19:00:00'),
+        (default, 7, 100, current_date + 6, '21:00:00', '01:09:00')
+;
 
 insert into order_status
 values (default, 'Створено'),
        (default, 'Оплачено');
 
-insert into ticket
-values ();
 
-insert into ticket_order
-values ();
+-- insert into ticket
+-- values ();
+
+-- insert into ticket_order
+-- values ();
