@@ -60,7 +60,7 @@ public class BuyTicketsCommand implements ICommand {
 				tickets[i] = new Ticket();
 				tickets[i].setPlaceNumber(places[i]);
 				tickets[i].setSessionId(session.getId());
-				if(!ticketDao.isTicketAvailable(tickets[i],session )) {
+				if(ticketDao.getTicketBySession(tickets[i],session) != null) {
 					req.setAttribute("ticketsAlreadyReservedError", errorTag);
 					return forward;
 				}

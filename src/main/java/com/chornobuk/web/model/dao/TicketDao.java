@@ -2,7 +2,6 @@ package com.chornobuk.web.model.dao;
 
 import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.MovieSession;
-import com.chornobuk.web.model.entity.Order;
 import com.chornobuk.web.model.entity.Ticket;
 
 import java.sql.*;
@@ -82,22 +81,25 @@ public class TicketDao implements IDao<Ticket>{
 		return tickets;
 	}
 
-	public boolean isTicketAvailable(Ticket ticket, MovieSession session) {
-		boolean isAvailable = false;
+	public Ticket getTicketBySession(Ticket ticket, MovieSession session) {
+		Ticket existedTicket = null;
 		try {
 			Connection con = DBManager.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(GET_TICKET_BY_SESSION_AND_PLACE_NUMBER);
 			ps.setInt(1,ticket.getPlaceNumber());
 			ps.setLong(2,session.getId());
 			ResultSet rs = ps.executeQuery();
-			if(!rs.next()) {
-				isAvailable = true;
+			if(rs.next()) {
+				existedTicket.setId(rs.getLong(1));
+				existedTicket.setPlaceNumber(rs.getInt(2));
+				existedTicket.setOrderId(rs.getLong(3));
+				existedTicket.setSessionId(rs.getLong(4));
 			}
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return isAvailable;
+		return existedTicket;
 	}
 
 	private void setParams(PreparedStatement ps, Ticket ticket) throws SQLException{
