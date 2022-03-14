@@ -33,7 +33,7 @@ public class SubmitOrderCommand implements ICommand {
 			int[] places = Arrays.stream(placesString)
 					.mapToInt(Integer::parseInt).toArray();
 
-			forward = "/WEB-INF/jsp/user/buyTickets.jsp";
+			forward = Path.BUY_TICKETS_PAGE;
 			int totalPrice = req.getParameterValues("numberPlace").length * session.getMovie().getTicketPrice();
 
 			req.getSession().removeAttribute("session");
