@@ -13,8 +13,8 @@ public class TicketDao implements IDao<Ticket>{
 	private final static String INSERT_TICKET = "insert into ticket values (default ,?,?,?)";
 	private final static String GET_TICKETS_BY_MOVIE = "select * from ticket where movie_session_id = ?";
 	private final static String GET_TICKETS_BY_ORDER = "select * from ticket where order_id = ?";
-	private final static String GET_TICKET_BY_SESSION_AND_PLACE_NUMBER = "select * from ticket, movie_session " +
-			"where ticket.place_number = ? and ticket.movie_session_id = ?";
+	private final static String GET_TICKET_BY_SESSION_AND_PLACE_NUMBER = "select * from ticket " +
+			"where place_number = ? and movie_session_id = ?";
 	@Override
 	public Ticket get(long id) {
 		Ticket ticket = null;
@@ -90,6 +90,7 @@ public class TicketDao implements IDao<Ticket>{
 			ps.setLong(2,session.getId());
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
+				existedTicket = new Ticket();
 				existedTicket.setId(rs.getLong(1));
 				existedTicket.setPlaceNumber(rs.getInt(2));
 				existedTicket.setOrderId(rs.getLong(3));
