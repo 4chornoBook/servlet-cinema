@@ -6,9 +6,12 @@ import com.chornobuk.web.model.dao.GenreDao;
 import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.entity.Genre;
 import com.chornobuk.web.model.entity.Movie;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class AddNewMovieCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		Logger log = LogManager.getLogger(AddNewMovieCommand.class);
 		String errorTag = "is-invalid";
 		String name = req.getParameter("name");
 		String forward = Path.ADD_NEW_MOVIE_PAGE;
@@ -57,7 +61,7 @@ public class AddNewMovieCommand implements ICommand {
 		else if (description == null || description.isEmpty()) {
 			req.setAttribute("descriptionError", errorTag);
 		} else {
-			forward = Path.INDEX_PAGE;
+			forward = Path.REDIRECT_COMMAND;
 			Movie movie = new Movie();
 			MovieDao movieDao = new MovieDao();
 			GenreDao genreDao = new GenreDao();
@@ -74,6 +78,12 @@ public class AddNewMovieCommand implements ICommand {
 			movie.setLengthInMinutes(lengthInMinutes);
 			movie.setReleaseDate(releaseDate);
 			movieDao.add(movie);
+
+			try {
+				resp.sendRedirect(Path.INDEX_PAGE);
+			} catch (IOException e) {
+				log.error("redirect error", e);
+			}
 		}
 		return forward;
 	}

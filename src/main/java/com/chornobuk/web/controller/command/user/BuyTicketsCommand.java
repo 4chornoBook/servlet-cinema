@@ -2,15 +2,19 @@ package com.chornobuk.web.controller.command.user;
 
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
+import com.chornobuk.web.controller.command.common.LogOutCommand;
 import com.chornobuk.web.model.dao.OrderDao;
 import com.chornobuk.web.model.dao.TicketDao;
 import com.chornobuk.web.model.entity.MovieSession;
 import com.chornobuk.web.model.entity.Order;
 import com.chornobuk.web.model.entity.Ticket;
 import com.chornobuk.web.model.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -20,6 +24,7 @@ import java.util.regex.Pattern;
 public class BuyTicketsCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		Logger log = LogManager.getLogger(BuyTicketsCommand.class);
 		String errorTag = "is-invalid";
 		String forward = Path.BUY_TICKETS_PAGE;
 		String ownerNameRegex = "[\\p{Upper}]+ [\\p{Upper}]+";
@@ -49,7 +54,6 @@ public class BuyTicketsCommand implements ICommand {
 			req.setAttribute("cvvError", errorTag);
 		} else {
 //			take money from card
-//			todo add checking if tickets already ordered
 			int[] places = (int[]) req.getSession().getAttribute("orderPlaces");
 			Ticket[] tickets = new Ticket[places.length];
 			MovieSession session = (MovieSession) req.getSession().getAttribute("orderSession");
@@ -65,7 +69,7 @@ public class BuyTicketsCommand implements ICommand {
 					return forward;
 				}
 			}
-			forward = Path.INDEX_PAGE;
+			forward = Path.REDIRECT_COMMAND;
 //			create order
 			Order order = new Order();
 			order.setCreationDate((LocalDateTime) req.getSession().getAttribute("orderCreatingTime"));
@@ -80,6 +84,13 @@ public class BuyTicketsCommand implements ICommand {
 			req.getSession().removeAttribute("totalPrice");
 
 			orderDao.addOrderWithTickets(order, user, session, tickets);
+
+			try {
+				resp.sendRedirect(Path.INDEX_PAGE);
+			} catch (IOException e) {
+				log.error("redirect error", e);
+				e.printStackTrace();
+			}
 		}
 		return forward;
 	}

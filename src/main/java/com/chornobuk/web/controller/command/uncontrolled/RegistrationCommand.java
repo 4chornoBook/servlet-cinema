@@ -5,13 +5,18 @@ import com.chornobuk.web.controller.command.ICommand;
 import com.chornobuk.web.model.HashingAlgorithm;
 import com.chornobuk.web.model.dao.UserDao;
 import com.chornobuk.web.model.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class RegistrationCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		Logger log = LogManager.getLogger(RegistrationCommand.class);
+
 		String errorTag = "is-invalid";
 		String forward = Path.REGISTRATION_PAGE;
 
@@ -32,7 +37,7 @@ public class RegistrationCommand implements ICommand {
 			UserDao userDao = new UserDao();
 			User user = userDao.getUserByLogin(login);
 			if (user == null) {
-				forward = Path.INDEX_PAGE;
+				forward = Path.REDIRECT_COMMAND;
 				user = new User();
 				user.setLogin(login);
 				user.setName(name);
@@ -41,6 +46,12 @@ public class RegistrationCommand implements ICommand {
 				user.setRoleId(2);
 				user.setPassword(HashingAlgorithm.cryptPassword(password, user.getSalt()));
 				userDao.add(user);
+
+				try {
+					resp.sendRedirect(Path.LOGIN_PAGE);
+				} catch (IOException e) {
+					log.error("redirect error", e);
+				}
 			} else {
 				req.setAttribute("loginError", errorTag);
 			}

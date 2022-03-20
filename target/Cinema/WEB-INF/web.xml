@@ -90,10 +90,10 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
-<!--    <error-page>-->
-<!--        <exception-type>java.lang.Throwable</exception-type>-->
-<!--        <location>/WEB-INF/errors/500.jsp</location>-->
-<!--    </error-page>-->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/errors/500.jsp</location>
+    </error-page>
     <error-page>
         <error-code>403</error-code>
         <location>/WEB-INF/errors/403.jsp</location>

@@ -2,13 +2,17 @@ package com.chornobuk.web.controller.command.admin;
 
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
+import com.chornobuk.web.controller.command.user.BuyTicketsCommand;
 import com.chornobuk.web.model.MovieSessionQueryConstructor;
 import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -18,6 +22,7 @@ import java.util.List;
 public class AddNewMovieSessionCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		Logger log = LogManager.getLogger(AddNewMovieSessionCommand.class);
 		String errorTag = "is-invalid";
 		String forward = Path.ADD_NEW_SESSION_PAGE;
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -35,7 +40,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 			req.setAttribute("movieDateError", errorTag);
 		} else if (beginningTime == null
 				|| beginningTime.isBefore(LocalTime.of(9, 0))
-				|| beginningTime.isAfter(LocalTime.of(22,0))
+				|| beginningTime.isAfter(LocalTime.of(22, 0))
 				|| LocalDateTime.of(movieDate, beginningTime).isBefore(LocalDateTime.now())) {
 			req.setAttribute("beginningTimeError", errorTag);
 		} else {
@@ -58,7 +63,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 			if (!movieSessionDao.isSlotAvailable(movieSession)) {
 				req.setAttribute("slotNotAvailableError", errorTag);
 			} else {
-				forward = Path.INDEX_PAGE;
+				forward = Path.REDIRECT_COMMAND;
 				movieSessionDao.add(movieSession);
 				MovieSessionQueryConstructor constructor = (MovieSessionQueryConstructor) req.getSession().getAttribute("queryConstructor");
 				int limit = (int) req.getSession().getAttribute("limit");
@@ -69,6 +74,12 @@ public class AddNewMovieSessionCommand implements ICommand {
 				List<MovieSession> availableSessions = movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), 0, limit);
 				req.getSession().setAttribute("availableSessions", availableSessions);
 				req.getSession().setAttribute("numberOfPages", numberOfPages);
+
+				try {
+					resp.sendRedirect(Path.INDEX_PAGE);
+				} catch (IOException e) {
+					log.error("redirect error", e);
+				}
 			}
 		}
 		return forward;
