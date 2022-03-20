@@ -1,7 +1,7 @@
 package com.chornobuk.web.controller.command;
 
 import com.chornobuk.web.controller.command.admin.*;
-import com.chornobuk.web.controller.command.common.LogoutCommand;
+import com.chornobuk.web.controller.command.common.LogOutCommand;
 import com.chornobuk.web.controller.command.common.ShowProfileCommand;
 import com.chornobuk.web.controller.command.uncontrolled.*;
 import com.chornobuk.web.controller.command.user.BuyTicketsCommand;
@@ -23,7 +23,7 @@ public class CommandFactory {
 		commands.put("removeMovieSession", new RemoveSessionCommand());
 		commands.put("showMovieSession", new ShowSessionCommand());
 		commands.put("submitOrder", new SubmitOrderCommand());
-		commands.put("logout", new LogoutCommand());
+		commands.put("logout", new LogOutCommand());
 		commands.put("buyTickets",new BuyTicketsCommand());
 		commands.put("showProfile", new ShowProfileCommand());
 		commands.put("pagination", new SessionsPaginationCommand());

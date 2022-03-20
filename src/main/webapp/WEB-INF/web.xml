@@ -52,6 +52,10 @@
             <param-value>login lang submitOrder registration showMovieSession pagination sessionsSorting</param-value>
         </init-param>
     </filter>
+    <filter>
+        <filter-name>UserLoggedInFilter</filter-name>
+        <filter-class>com.chornobuk.web.controller.filter.UserLoggedInFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
         <servlet-name>Controller</servlet-name>
@@ -65,7 +69,14 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
+    <filter-mapping>
+        <filter-name>UserLoggedInFilter</filter-name>
+        <url-pattern>/login.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>UserLoggedInFilter</filter-name>
+        <url-pattern>/registration.jsp</url-pattern>
+    </filter-mapping>
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

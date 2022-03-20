@@ -11,5 +11,3 @@
         url="jdbc:postgresql://localhost/cinema"
     />
 </Context>
-<!--        password="BCf*oENZ3gtjWT&amp;"-->
-<!--        username="postgres"-->
