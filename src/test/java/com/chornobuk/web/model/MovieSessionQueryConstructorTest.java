@@ -1,0 +1,125 @@
+package com.chornobuk.web.model;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class MovieSessionQueryConstructorTest {
+
+	@Test
+	public void defaultQuery() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		String query = "select movie_session.*, movie.*,"
+				+ " (select (movie_session.available_places - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
+				+ " from movie_session inner join movie on movie_session.movie_id = movie.movie_id where"
+				+ " movie_session.session_date + movie_session.beginning_time >= now() group by movie_session.session_id, movie.movie_id" +
+				" limit ? offset ?";
+		assertEquals(query, movieSessionQueryConstructor.getQuery());
+	}
+
+	@Test
+	public void queryWithFilter() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		movieSessionQueryConstructor.setFilmFilter("Форест Гамп");
+		String query = "select movie_session.*, movie.*,"
+				+ " (select (movie_session.available_places - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
+				+ " from movie_session inner join movie on movie_session.movie_id = movie.movie_id where"
+				+ " movie_session.session_date + movie_session.beginning_time >= now() and movie.name ='Форест Гамп' group by movie_session.session_id, movie.movie_id" +
+				" limit ? offset ?";
+
+		assertEquals(query, movieSessionQueryConstructor.getQuery());
+	}
+
+
+	@Test
+	public void getOrderByWithoutSorting() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		String orderBy = "";
+		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
+	}
+
+	@Test
+	public void getOrderByWithAllDescendingSorting() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		movieSessionQueryConstructor.setSortingByDate("ascending");
+		movieSessionQueryConstructor.setSortingByTime("ascending");
+		movieSessionQueryConstructor.setSortingByTickets("ascending");
+		movieSessionQueryConstructor.setSortingByMovieName("ascending");
+
+		String orderBy = "order by movie_session.session_date ASC, movie_session.beginning_time ASC, 14 ASC, movie.name ASC";
+		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
+	}
+
+	@Test
+	public void getOrderByWithWrongSorting() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		movieSessionQueryConstructor.setSortingByDate("d");
+		movieSessionQueryConstructor.setSortingByTime("");
+		movieSessionQueryConstructor.setSortingByTickets("dkdkd");
+		movieSessionQueryConstructor.setSortingByMovieName(";lksajfd");
+
+		String orderBy = "order by movie_session.session_date DESC, movie_session.beginning_time DESC, 14 DESC, movie.name DESC";
+		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
+	}
+
+	@Test
+	public void getOrderByWithMixedSorting() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		movieSessionQueryConstructor.setSortingByDate("ascending");
+		movieSessionQueryConstructor.setSortingByTime("descending");
+		movieSessionQueryConstructor.setSortingByTickets("ascending");
+		movieSessionQueryConstructor.setSortingByMovieName("descending");
+
+		String orderBy = "order by movie_session.session_date ASC, movie_session.beginning_time DESC, 14 ASC, movie.name DESC";
+		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
+	}
+
+	@Test
+	public void gerOrderByWithOneSortingField() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		movieSessionQueryConstructor.setSortingByDate("ascending");
+
+		String orderBy = "order by movie_session.session_date ASC";
+		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
+	}
+
+	@Test
+	public void getOrderByWithTwoSortingFields() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		movieSessionQueryConstructor.setSortingByDate("descending");
+		movieSessionQueryConstructor.setSortingByMovieName("descending");
+
+		String orderBy = "order by movie_session.session_date DESC, movie.name DESC";
+		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
+	}
+
+	@Test
+	public void getOrderByWithThreeSortingFields() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		movieSessionQueryConstructor.setSortingByTime("ascending");
+		movieSessionQueryConstructor.setSortingByTickets("ascending");
+		movieSessionQueryConstructor.setSortingByMovieName("ascending");
+
+		String orderBy = "order by movie_session.beginning_time ASC, 14 ASC, movie.name ASC";
+		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
+	}
+
+	@Test
+	public void getWhereWithoutFilmFilter() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		String where = "where movie_session.session_date + movie_session.beginning_time >= now()";
+		assertEquals(where, movieSessionQueryConstructor.getWhere());
+	}
+
+	@Test
+	public void getWhereWithFilmFilter() {
+		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
+		movieSessionQueryConstructor.setFilmFilter("Зелена книга");
+		String where = "where movie_session.session_date + movie_session.beginning_time >= now() and movie.name =\'Зелена книга\'";
+		assertEquals(where, movieSessionQueryConstructor.getWhere());
+	}
+//	I can test methods which return String
+//		getOrderBy
+//		getWhere
+//	I can test some situations in getQuery method
+}
