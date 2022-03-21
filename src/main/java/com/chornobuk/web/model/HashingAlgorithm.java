@@ -1,8 +1,5 @@
 package com.chornobuk.web.model;
 
-import com.chornobuk.web.model.dao.UserDao;
-import com.chornobuk.web.model.entity.User;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -12,7 +9,12 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
 public class HashingAlgorithm {
+//	todo check empty string
+//	todo check empty salt value
+//	todo add changer in class using
 	public static String cryptPassword(String password, String salt) {
+		if(password == null || salt == null || password.isEmpty() || salt.isEmpty())
+			return null;
 		byte[] hash = null;
 		try {
 			KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 128);
