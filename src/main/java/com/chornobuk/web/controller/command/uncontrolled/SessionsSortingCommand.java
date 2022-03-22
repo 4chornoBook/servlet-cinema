@@ -23,7 +23,7 @@ public class SessionsSortingCommand implements ICommand {
 		String movieNameSort = req.getParameter("movieNameSort");
 		String movieNameFilter = req.getParameter("movieFilter");
 		if (dateSort != null && !dateSort.isEmpty()) {
-			constructor.addSortingByDate(dateSort);
+			constructor.setSortingByDate(dateSort);
 			if (dateSort.equals("ascending")) {
 				req.getSession().setAttribute("byDateAscending", selected);
 				req.getSession().removeAttribute("byDateDescending");
@@ -39,7 +39,7 @@ public class SessionsSortingCommand implements ICommand {
 			req.getSession().removeAttribute("byDateDescending");
 		}
 		if (timeSort != null && !timeSort.isEmpty()) {
-			constructor.addSortingByTime(timeSort);
+			constructor.setSortingByTime(timeSort);
 			if (timeSort.equals("ascending")) {
 				req.getSession().setAttribute("byTimeAscending", selected);
 				req.getSession().removeAttribute("byTimeDescending");
@@ -55,7 +55,7 @@ public class SessionsSortingCommand implements ICommand {
 			req.getSession().removeAttribute("byTimeDescending");
 		}
 		if (ticketSort != null && !ticketSort.isEmpty()) {
-			constructor.addSortingByTickets(ticketSort);
+			constructor.setSortingByTickets(ticketSort);
 			if (ticketSort.equals("ascending")) {
 				req.getSession().setAttribute("byTicketsAscending", selected);
 				req.getSession().removeAttribute("byTicketsDescending");
@@ -71,7 +71,7 @@ public class SessionsSortingCommand implements ICommand {
 			req.getSession().removeAttribute("byTicketsDescending");
 		}
 		if (movieNameSort != null && !movieNameSort.isEmpty()) {
-			constructor.addSortingByMovieName(movieNameSort);
+			constructor.setSortingByMovieName(movieNameSort);
 			if (movieNameSort.equals("ascending")) {
 				req.getSession().setAttribute("byNameAscending", selected);
 				req.getSession().removeAttribute("byNameDescending");
@@ -87,7 +87,7 @@ public class SessionsSortingCommand implements ICommand {
 			req.getSession().removeAttribute("byNameDescending");
 		}
 		if (movieNameFilter != null && !movieNameFilter.isEmpty()) {
-			constructor.addFilteringByMovie(movieNameFilter);
+			constructor.setFilmFilter(movieNameFilter);
 		}
 		MovieSessionDao movieSessionDao = new MovieSessionDao();
 		int currentPage = 1;

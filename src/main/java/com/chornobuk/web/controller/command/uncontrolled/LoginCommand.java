@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LoginCommand implements ICommand {
+	UserDao userDao = new UserDao();
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		Logger log = LogManager.getLogger(LoginCommand.class);
@@ -26,7 +27,6 @@ public class LoginCommand implements ICommand {
 			req.setAttribute("userLoginError", errorTag);
 			return forward;
 		} else {
-			UserDao userDao = new UserDao();
 			User user = userDao.getUserByLogin(login);
 			if (user == null || user.getPassword().compareTo(HashingAlgorithm.cryptPassword(password, user.getSalt())) != 0) {
 				req.setAttribute("userLoginError", errorTag);

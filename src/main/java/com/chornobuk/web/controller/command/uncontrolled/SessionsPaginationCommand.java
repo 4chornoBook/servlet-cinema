@@ -23,8 +23,8 @@ public class SessionsPaginationCommand implements ICommand {
 		MovieSessionQueryConstructor constructor = (MovieSessionQueryConstructor) req.getSession().getAttribute("queryConstructor");
 		if (constructor == null) {
 			constructor = new MovieSessionQueryConstructor();
-			constructor.addSortingByTime("ascending");
-			constructor.addSortingByDate("ascending");
+			constructor.setSortingByTime("ascending");
+			constructor.setSortingByDate("ascending");
 		}
 		if (req.getParameter("page") != null) {
 			page = Integer.parseInt(req.getParameter("page"));
