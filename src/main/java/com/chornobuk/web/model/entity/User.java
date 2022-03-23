@@ -6,7 +6,7 @@ public class User {
 	private String name;
 	private String surname;
 	private String password;
-	private long roleId;
+	private int roleId;
 	private String salt;
 
 	public long getId() {
@@ -49,11 +49,11 @@ public class User {
 		this.password = password;
 	}
 
-	public long getRoleId() {
+	public int getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(long roleId) {
+	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
 

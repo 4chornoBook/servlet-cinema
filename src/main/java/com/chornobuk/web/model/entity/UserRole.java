@@ -1,14 +1,10 @@
 package com.chornobuk.web.model.entity;
 
 public enum UserRole {
-	ADMIN, USER, GUEST;
+	ADMIN, USER;
 
 	public static UserRole getUserRole(User user) {
-		if (user.getRoleId() == 1)
-			return ADMIN;
-		else if (user.getRoleId() == 2)
-			return USER;
-		else
-			return GUEST;
+		int roleId= user.getRoleId();
+		return UserRole.values()[--roleId];
 	}
 }
