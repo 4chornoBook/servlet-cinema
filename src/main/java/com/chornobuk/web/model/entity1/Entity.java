@@ -5,6 +5,10 @@ import java.io.Serializable;
 public abstract class Entity implements Serializable {
 	private long id;
 
+	public Entity() {
+
+	}
+
 	public Entity(long id) {
 		this.id = id;
 	}
