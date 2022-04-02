@@ -2,10 +2,10 @@ package com.chornobuk.web.controller.command.uncontrolled;
 
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
-import com.chornobuk.web.model.dao.UserDao;
-import com.chornobuk.web.model.entity.User;
-import com.chornobuk.web.model.entity.UserRole;
+import com.chornobuk.web.model.entity1.User;
+import com.chornobuk.web.model.entity1.UserRole;
 import com.chornobuk.web.model.HashingAlgorithm;
+import com.chornobuk.web.model.repository.implementation.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LoginCommand implements ICommand {
-	UserDao userDao = new UserDao();
+	UserRepository userRepository = new UserRepository();
+//	UserDao userDao = new UserDao();
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		Logger log = LogManager.getLogger(LoginCommand.class);
@@ -27,12 +28,13 @@ public class LoginCommand implements ICommand {
 			req.setAttribute("userLoginError", errorTag);
 			return forward;
 		} else {
-			User user = userDao.getUserByLogin(login);
+//			User user = userDao.getUserByLogin(login);
+			User user = userRepository.getByLogin(login);
 			if (user == null || user.getPassword().compareTo(HashingAlgorithm.cryptPassword(password, user.getSalt())) != 0) {
 				req.setAttribute("userLoginError", errorTag);
 				return forward;
 			} else {
-				UserRole userRole = UserRole.getUserRole(user);
+				UserRole userRole = UserRole.getRole(user);
 				HttpSession session = req.getSession();
 				session.setAttribute("user", user);
 				session.setAttribute("role", userRole);

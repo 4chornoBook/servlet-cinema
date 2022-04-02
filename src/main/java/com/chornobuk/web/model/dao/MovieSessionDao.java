@@ -12,18 +12,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MovieSessionDao implements IDao<MovieSession> {
-	private static final String GET_SESSION_BY_ID = "select * from movie_session where session_id = ?";
+	private static final String GET_SESSION_BY_ID = "select * from movie_session where id = ?";
 	private static final String INSERT_SESSION = "insert into movie_session values (default,?,?,?,?,?)";
-	private static final String DELETE_SESSION_BY_ID = "delete from movie_session where session_id = ?";
+	private static final String DELETE_SESSION_BY_ID = "delete from movie_session where id = ?";
 	private static final String DELETE_TICKETS_BY_SESSION = "delete from ticket where movie_session_id = ?";
 	//	todo rewrite as a procedure
 	private static final String GET_AVAILABLE_MOVIES = "select movie_session.*, movie.* from movie_session"
 			+ " inner join movie"
-			+ " on movie_session.movie_id = movie.movie_id"
+			+ " on movie_session.movie_id = movie.id"
 			+ " where movie_session.session_date + movie_session.beginning_time >= now()";
 	private static final String GET_N_SESSIONS_FROM_POSITION = "select movie_session.*, movie.* from movie_session"
 			+ " inner join movie"
-			+ " on movie_session.movie_id = movie.movie_id"
+			+ " on movie_session.movie_id = movie.id"
 			+ " where movie_session.session_date + movie_session.beginning_time >= now()"
 			+ " order by movie_session.session_date, movie_session.beginning_time"
 			+ " limit ? offset ?";
@@ -31,7 +31,7 @@ public class MovieSessionDao implements IDao<MovieSession> {
 	private static final String DELETE_ORDERS_BY_SESSION = "delete from tickets_order" +
 			" where exists" +
 			" (select 1 from ticket" +
-			" where ticket.order_id = tickets_order.order_id\n" +
+			" where ticket.order_id = tickets_order.id" +
 			" and ticket.movie_session_id = ?)";
 	@Override
 	public MovieSession get(long id) {

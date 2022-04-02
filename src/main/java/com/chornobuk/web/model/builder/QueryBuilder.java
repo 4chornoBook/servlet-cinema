@@ -21,29 +21,29 @@ public abstract class QueryBuilder<T extends Entity> {
 //	method for calling function in database
 //	method for calling a procedure
 
-	public abstract T getObject(ResultSet rs);
+	public abstract T getObject(ResultSet rs) throws SQLException;
 
 	public long getNextId(DBManager instance, String query) {
 		long nextId = -1;
-		Connection connection =  instance.getConnection();
-		try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+		Connection connection = instance.getConnection();
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			ResultSet resultSet = preparedStatement.executeQuery();
-			while(resultSet.next()) {
+			while (resultSet.next()) {
 				nextId = resultSet.getLong(1);
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return nextId;
 	}
 
-	public List<T> getValues(DBManager instance, String query, Object... args){
+	public List<T> getValues(DBManager instance, String query, Object... args) {
 		List<T> objects = new LinkedList<>();
 		Connection connection = instance.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			setArgsForPrepareStatement(preparedStatement, args);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			while(resultSet.next()) {
+			while (resultSet.next()) {
 				objects.add(getObject(resultSet));
 			}
 		} catch (SQLException e) {
@@ -59,8 +59,8 @@ public abstract class QueryBuilder<T extends Entity> {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			setArgsForPrepareStatement(preparedStatement, args);
 			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next())
 				object = getObject(resultSet);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

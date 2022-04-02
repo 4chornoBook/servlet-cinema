@@ -10,20 +10,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MovieDao implements IDao<Movie> {
-	private static final String GET_MOVIE_BY_ID = "select * from movie where movie_id = ?";
+	private static final String GET_MOVIE_BY_ID = "select * from movie where id = ?";
 	private static final String INSERT_MOVIE = "insert into movie values(default, ?,?,?,?,?,?)";
 	private static final String INSERT_MOVIE_GENRE = "insert into movie_genre values(?, ?)";
 	private static final String GET_ALL_MOVIES = "select * from movie";
 	private static  final String GET_MOVIE_GENRES = "select genre.* from genre" +
 			" inner join movie_genre" +
-			" on genre.genre_id = movie_genre.genre_id" +
-			" inner join movie on movie_genre.movie_id = movie.movie_id" +
-			" where movie.movie_id = ?;";
+			" on genre.id = movie_genre.genre_id" +
+			" inner join movie on movie_genre.movie_id = movie.id" +
+			" where movie.id = ?;";
 	private static final String GET_AVAILABLE_MOVIES = "select movie.* from movie " +
 			" inner join movie_session " +
-			" on movie.movie_id = movie_session.movie_id " +
+			" on movie.id = movie_session.movie_id " +
 			" where movie_session.session_date + movie_session.beginning_time >= now() " +
-			" group by movie.movie_id ";
+			" group by movie.id ";
 	@Override
 	public Movie get(long id) {
 		Movie movie = null;
