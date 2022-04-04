@@ -10,6 +10,7 @@ public class DBManager {
 
 	private static DBManager instance;
 	private DataSource dataSource;
+
 	private DBManager() {
 		try {
 			InitialContext initialContext = new InitialContext();
@@ -21,7 +22,7 @@ public class DBManager {
 
 	//todo add synchronized
 	public static synchronized DBManager getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new DBManager();
 		}
 		return instance;
@@ -29,11 +30,19 @@ public class DBManager {
 
 	public Connection getConnection() {
 		Connection connection = null;
-		try{
+		try {
 			connection = dataSource.getConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return connection;
+	}
+
+	public void closeConnection(Connection connection) {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -3,8 +3,8 @@ package com.chornobuk.web.controller.command.uncontrolled;
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
 import com.chornobuk.web.model.HashingAlgorithm;
-import com.chornobuk.web.model.dao.UserDao;
-import com.chornobuk.web.model.entity.User;
+import com.chornobuk.web.model.entity1.User;
+import com.chornobuk.web.model.repository.implementation.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,8 +34,10 @@ public class RegistrationCommand implements ICommand {
 		} else if (password == null || password.length() < 5 || password.length() > 64) {
 			req.setAttribute("passwordError", errorTag);
 		} else {
-			UserDao userDao = new UserDao();
-			User user = userDao.getUserByLogin(login);
+//			UserDao userDao = new UserDao();
+			UserRepository userRepository = new UserRepository();
+//			User user = userDao.getUserByLogin(login);
+			User user = userRepository.getByLogin(login);
 			if (user == null) {
 				forward = Path.REDIRECT_COMMAND;
 				user = new User();
@@ -45,8 +47,8 @@ public class RegistrationCommand implements ICommand {
 				user.setSalt(HashingAlgorithm.getSalt());
 				user.setRoleId(2);
 				user.setPassword(HashingAlgorithm.cryptPassword(password, user.getSalt()));
-				userDao.add(user);
-
+//				userDao.add(user);
+				userRepository.add(user);
 				try {
 					resp.sendRedirect(Path.LOGIN_PAGE);
 				} catch (IOException e) {

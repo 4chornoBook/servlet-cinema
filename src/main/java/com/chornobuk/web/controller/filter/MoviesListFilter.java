@@ -28,8 +28,8 @@ public class MoviesListFilter implements Filter {
 			log.debug("user don't have available sessions");
 			MovieSessionDao movieSessionDao = new MovieSessionDao();
 			MovieSessionQueryConstructor constructor = new MovieSessionQueryConstructor();
-			constructor.addSortingByTime("ascending");
-			constructor.addSortingByDate("ascending");
+			constructor.setSortingByTime("ascending");
+			constructor.setSortingByDate("ascending");
 			httpServletRequest.getSession().setAttribute("queryConstructor",constructor);
 			int numberOfSessions = movieSessionDao.getNumberOfAvailableSessions();
 			int limit = 2;
