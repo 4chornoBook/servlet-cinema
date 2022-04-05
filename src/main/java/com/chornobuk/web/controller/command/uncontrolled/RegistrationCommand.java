@@ -3,7 +3,7 @@ package com.chornobuk.web.controller.command.uncontrolled;
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
 import com.chornobuk.web.model.HashingAlgorithm;
-import com.chornobuk.web.model.entity1.User;
+import com.chornobuk.web.model.entity.User;
 import com.chornobuk.web.model.repository.implementation.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,6 +1,6 @@
 package com.chornobuk.web.model.builder;
 
-import com.chornobuk.web.model.entity1.User;
+import com.chornobuk.web.model.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

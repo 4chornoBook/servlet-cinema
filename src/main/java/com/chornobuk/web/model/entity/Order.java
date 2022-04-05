@@ -2,18 +2,24 @@ package com.chornobuk.web.model.entity;
 
 import java.time.LocalDateTime;
 
-public class Order {
-	private long id;
+public class Order extends Entity{
 	private long userId;
 	private long statusId;
 	private LocalDateTime creationDate;
 
-	public long getId() {
-		return id;
+	public Order(long id, long userId, long statusId, LocalDateTime creationDate) {
+		super(id);
+		this.userId = userId;
+		this.statusId = statusId;
+		this.creationDate = creationDate;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public Order(long id) {
+		super(id);
+	}
+
+	public Order() {
+
 	}
 
 	public long getUserId() {

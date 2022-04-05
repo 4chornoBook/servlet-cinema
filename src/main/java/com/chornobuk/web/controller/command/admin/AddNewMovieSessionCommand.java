@@ -2,11 +2,12 @@ package com.chornobuk.web.controller.command.admin;
 
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
-import com.chornobuk.web.controller.command.user.BuyTicketsCommand;
 import com.chornobuk.web.model.MovieSessionQueryConstructor;
 import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
+import com.chornobuk.web.model.entity.Movie;
+import com.chornobuk.web.model.repository.implementation.MovieRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,13 +47,15 @@ public class AddNewMovieSessionCommand implements ICommand {
 		} else {
 			MovieSessionDao movieSessionDao = new MovieSessionDao();
 			MovieDao movieDao = new MovieDao();
+			MovieRepository movieRepository = new MovieRepository();
 
 			MovieSession movieSession = new MovieSession();
 			movieSession.setMovieId(movieId);
 			movieSession.setMovieDate(movieDate);
 			movieSession.setBeginningTime(beginningTime);
 			movieSession.setAvailablePlaces(100);
-			movieSession.setMovie(movieDao.get(movieSession.getMovieId()));
+//			movieSession.setMovie(movieDao.get(movieSession.getMovieId()));
+			movieSession.setMovie(movieRepository.get(new Movie(movieSession.getMovieId())));
 			int cleaningTime = 20;
 
 //			add to beginning time length of movie rounded to the next 10 and add cleaning time

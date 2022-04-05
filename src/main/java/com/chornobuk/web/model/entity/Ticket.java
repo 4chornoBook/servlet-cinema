@@ -1,19 +1,23 @@
 package com.chornobuk.web.model.entity;
 
-import java.time.LocalDateTime;
-
-public class Ticket {
-	private long id;
+public class Ticket extends Entity {
 	private int placeNumber;
 	private long orderId;
 	private long sessionId;
 
-	public long getId() {
-		return id;
+	public Ticket(long id, int placeNumber, long orderId, long sessionId) {
+		super(id);
+		this.placeNumber = placeNumber;
+		this.orderId = orderId;
+		this.sessionId = sessionId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public Ticket(long id) {
+		super(id);
+	}
+
+	public Ticket() {
+
 	}
 
 	public int getPlaceNumber() {

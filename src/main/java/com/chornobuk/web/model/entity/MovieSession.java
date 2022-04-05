@@ -3,8 +3,7 @@ package com.chornobuk.web.model.entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class MovieSession {
-	private long id;
+public class MovieSession extends Entity {
 	private long movieId;
 	private LocalDate movieDate;
 	private LocalTime beginningTime;
@@ -13,12 +12,22 @@ public class MovieSession {
 
 	private Movie movie;
 
-	public long getId() {
-		return id;
+	public MovieSession(long id, long movieId, LocalDate movieDate, LocalTime beginningTime, LocalTime endingTime, int availablePlaces, Movie movie) {
+		super(id);
+		this.movieId = movieId;
+		this.movieDate = movieDate;
+		this.beginningTime = beginningTime;
+		this.endingTime = endingTime;
+		this.availablePlaces = availablePlaces;
+		this.movie = movie;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public MovieSession(long id) {
+		super(id);
+	}
+
+	public MovieSession() {
+
 	}
 
 	public long getMovieId() {

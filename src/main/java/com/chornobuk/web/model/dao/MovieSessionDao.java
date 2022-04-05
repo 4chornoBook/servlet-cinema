@@ -6,7 +6,6 @@ import com.chornobuk.web.model.entity.MovieSession;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;

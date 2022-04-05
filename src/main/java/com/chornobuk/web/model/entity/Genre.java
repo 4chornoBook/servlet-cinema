@@ -1,23 +1,18 @@
 package com.chornobuk.web.model.entity;
 
-public class Genre {
-	private long id;
+public class Genre extends Entity {
 	private String name;
 
 	public Genre(long id, String name) {
-		this.id = id;
+		super(id);
 		this.name = name;
 	}
 
 	public Genre() {
-
-	}
-	public long getId() {
-		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public Genre(long id) {
+		super(id);
 	}
 
 	public String getName() {

@@ -1,4 +1,4 @@
-package com.chornobuk.web.controller.filter;
+package com.chornobuk.web.model.dao.filter;
 
 import com.chornobuk.web.model.MovieSessionQueryConstructor;
 import com.chornobuk.web.model.dao.MovieDao;

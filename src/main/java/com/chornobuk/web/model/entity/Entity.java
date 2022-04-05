@@ -1,4 +1,4 @@
-package com.chornobuk.web.model.entity1;
+package com.chornobuk.web.model.entity;
 
 import java.io.Serializable;
 

@@ -2,7 +2,6 @@ package com.chornobuk.web.controller.command.admin;
 
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
-import com.chornobuk.web.controller.command.common.LogOutCommand;
 import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
 import org.apache.logging.log4j.LogManager;

@@ -1,23 +1,18 @@
 package com.chornobuk.web.model.entity;
 
-public class OrderStatus {
-	private long id;
+public class OrderStatus extends Entity {
 	private String name;
 
 	public OrderStatus() {
 	}
 
 	public OrderStatus(long id, String name) {
-		this.id = id;
+		super(id);
 		this.name = name;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
+	public OrderStatus(String name) {
+		this.name = name;
 	}
 
 	public String getName() {

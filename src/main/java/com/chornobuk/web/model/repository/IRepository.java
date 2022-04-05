@@ -1,6 +1,6 @@
 package com.chornobuk.web.model.repository;
 
-import com.chornobuk.web.model.entity1.Entity;
+import com.chornobuk.web.model.entity.Entity;
 
 public interface IRepository<T extends Entity> {
 	T get(T entity);

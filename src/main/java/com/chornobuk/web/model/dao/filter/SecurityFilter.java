@@ -1,4 +1,4 @@
-package com.chornobuk.web.controller.filter;
+package com.chornobuk.web.model.dao.filter;
 
 import com.chornobuk.web.model.entity.UserRole;
 import org.apache.logging.log4j.LogManager;

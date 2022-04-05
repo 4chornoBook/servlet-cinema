@@ -1,7 +1,6 @@
 package com.chornobuk.web.model.entity;
 
-public class User {
-	private long id;
+public class User extends Entity {
 	private String login;
 	private String name;
 	private String surname;
@@ -9,12 +8,21 @@ public class User {
 	private int roleId;
 	private String salt;
 
-	public long getId() {
-		return id;
+	public User() {
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public User(long id, String login, String name, String surname, String password, int roleId, String salt) {
+		super(id);
+		this.login = login;
+		this.name = name;
+		this.surname = surname;
+		this.password = password;
+		this.roleId = roleId;
+		this.salt = salt;
+	}
+
+	public User(long id) {
+		super(id);
 	}
 
 	public String getLogin() {

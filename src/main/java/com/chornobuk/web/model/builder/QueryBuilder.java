@@ -1,7 +1,7 @@
 package com.chornobuk.web.model.builder;
 
 import com.chornobuk.web.model.database.DBManager;
-import com.chornobuk.web.model.entity1.Entity;
+import com.chornobuk.web.model.entity.Entity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

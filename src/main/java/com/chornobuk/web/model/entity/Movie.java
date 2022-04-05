@@ -2,10 +2,8 @@ package com.chornobuk.web.model.entity;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
-import java.util.Set;
 
-public class Movie {
-	private long id;
+public class Movie extends Entity{
 	private String name;
 	private LocalDate releaseDate;
 	private String description;
@@ -14,12 +12,23 @@ public class Movie {
 	private int lengthInMinutes;
 	private LinkedList<Genre> genres;
 
-	public long getId() {
-		return id;
+	public Movie(long id, String name, LocalDate releaseDate, String description, String imageURL, int ticketPrice, int lengthInMinutes, LinkedList<Genre> genres) {
+		super(id);
+		this.name = name;
+		this.releaseDate = releaseDate;
+		this.description = description;
+		this.imageURL = imageURL;
+		this.ticketPrice = ticketPrice;
+		this.lengthInMinutes = lengthInMinutes;
+		this.genres = genres;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public Movie(long id) {
+		super(id);
+	}
+
+	public Movie() {
+
 	}
 
 	public String getName() {

@@ -2,7 +2,7 @@ package com.chornobuk.web.model.repository.implementation;
 
 import com.chornobuk.web.model.builder.UserQueryBuilder;
 import com.chornobuk.web.model.database.DBManager;
-import com.chornobuk.web.model.entity1.User;
+import com.chornobuk.web.model.entity.User;
 import com.chornobuk.web.model.repository.IRepository;
 
 //todo test execute query without parameters
