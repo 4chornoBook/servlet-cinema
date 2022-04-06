@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 //todo query as final
 public abstract class QueryBuilder<T extends Entity> {
@@ -87,6 +88,42 @@ public abstract class QueryBuilder<T extends Entity> {
 		} finally {
 			instance.closeConnection(connection);
 		}
+	}
+
+	public void executeTransaction(DBManager instance, Map<String,Object[]> queries) {
+		PreparedStatement [] statements = new PreparedStatement[queries.size()];
+		Connection connection = instance.getConnection();
+		try {
+			connection.setAutoCommit(false);
+			int i = 0;
+			for (Map.Entry<String, Object[]> entry : queries.entrySet()) {
+				statements[i] = connection.prepareStatement(entry.getKey());
+				setArgsForPrepareStatement(statements[i], entry.getValue());
+				i++;
+			}
+			for (int j = 0; j < statements.length; j++) {
+				statements[i].executeUpdate();
+			}
+			connection.commit();
+			connection.setAutoCommit(true);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		finally {
+			instance.closeConnection(connection);
+		}
+//		create array of prepare statement
+//		unable autocommit for the database
+//		set args for every statement
+//		execute all queries in cycle
+//		commit changes
+//		error checking
 	}
 
 	private void setArgsForPrepareStatement(PreparedStatement ps, Object... args) throws SQLException {

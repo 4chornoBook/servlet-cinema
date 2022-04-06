@@ -10,7 +10,7 @@ public class MovieSessionQueryConstructorTest {
 	public void defaultQuery() {
 		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
 		String query = "select movie_session.*, movie.*,"
-				+ " (select (movie_session.available_places - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
+				+ " (select (10 - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
 				+ " from movie_session inner join movie on movie_session.movie_id = movie.movie_id where"
 				+ " movie_session.session_date + movie_session.beginning_time >= now() group by movie_session.session_id, movie.movie_id" +
 				" limit ? offset ?";
@@ -22,7 +22,7 @@ public class MovieSessionQueryConstructorTest {
 		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
 		movieSessionQueryConstructor.setFilmFilter("Форест Гамп");
 		String query = "select movie_session.*, movie.*,"
-				+ " (select (movie_session.available_places - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
+				+ " (select (100 - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
 				+ " from movie_session inner join movie on movie_session.movie_id = movie.movie_id where"
 				+ " movie_session.session_date + movie_session.beginning_time >= now() and movie.name ='Форест Гамп' group by movie_session.session_id, movie.movie_id" +
 				" limit ? offset ?";

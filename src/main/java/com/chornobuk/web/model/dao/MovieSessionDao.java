@@ -215,7 +215,6 @@ public class MovieSessionDao implements IDao<MovieSession> {
 
 	private void setParams(PreparedStatement ps, MovieSession movieSession) throws SQLException {
 		ps.setLong(1, movieSession.getMovieId());
-		ps.setInt(2, movieSession.getAvailablePlaces());
 		ps.setObject(3, movieSession.getMovieDate());
 		ps.setObject(4, movieSession.getBeginningTime());
 		ps.setObject(5, movieSession.getEndingTime());
@@ -225,7 +224,6 @@ public class MovieSessionDao implements IDao<MovieSession> {
 		MovieSession movieSession = new MovieSession();
 		movieSession.setId(rs.getLong(1));
 		movieSession.setMovieId(rs.getLong(2));
-		movieSession.setAvailablePlaces(rs.getInt(3));
 		movieSession.setMovieDate(rs.getObject(4, LocalDate.class));
 		movieSession.setBeginningTime(rs.getObject(5, LocalTime.class));
 		movieSession.setEndingTime(rs.getObject(6, LocalTime.class));

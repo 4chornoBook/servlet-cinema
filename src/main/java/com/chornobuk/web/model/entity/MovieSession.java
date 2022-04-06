@@ -8,7 +8,6 @@ public class MovieSession extends Entity {
 	private LocalDate movieDate;
 	private LocalTime beginningTime;
 	private LocalTime endingTime;
-	private int availablePlaces;
 
 	private Movie movie;
 
@@ -18,7 +17,6 @@ public class MovieSession extends Entity {
 		this.movieDate = movieDate;
 		this.beginningTime = beginningTime;
 		this.endingTime = endingTime;
-		this.availablePlaces = availablePlaces;
 		this.movie = movie;
 	}
 
@@ -36,14 +34,6 @@ public class MovieSession extends Entity {
 
 	public void setMovieId(long movieId) {
 		this.movieId = movieId;
-	}
-
-	public int getAvailablePlaces() {
-		return availablePlaces;
-	}
-
-	public void setAvailablePlaces(int availablePlaces) {
-		this.availablePlaces = availablePlaces;
 	}
 
 	public LocalDate getMovieDate() {

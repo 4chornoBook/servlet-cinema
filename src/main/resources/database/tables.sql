@@ -47,7 +47,6 @@ create table if not exists movie_session
 (
     id       serial primary key,
     movie_id         integer references movie (id),
-    available_places integer default 100,
     session_date     date                   not null,
     beginning_time   time without time zone not null,
     ending_time      time without time zone not null

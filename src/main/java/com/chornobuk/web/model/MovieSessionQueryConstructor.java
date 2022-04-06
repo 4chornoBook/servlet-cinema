@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 public class MovieSessionQueryConstructor {
 	private static String queryBody = "select movie_session.*, movie.*,"
-			+ " (select (movie_session.available_places - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
+			+ " (select (100 - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
 			+ " from movie_session"
 			+ " inner join movie"
 			+ " on movie_session.movie_id = movie.movie_id";
