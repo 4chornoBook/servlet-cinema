@@ -2,8 +2,8 @@ package com.chornobuk.web.controller.command.admin;
 
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
-import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
+import com.chornobuk.web.model.repository.implementation.MovieSessionRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,11 +18,11 @@ public class RemoveSessionCommand implements ICommand {
 		Logger logger = LogManager.getLogger(RemoveSessionCommand.class);
 		String forward = Path.REDIRECT_COMMAND;
 		MovieSession movieSession;
-		MovieSessionDao movieSessionDao = new MovieSessionDao();
+		MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
 		long id = Long.parseLong( req.getParameter("sessionId"));
-		movieSession = movieSessionDao.get(id);
-		movieSessionDao.delete(movieSession);
-		List<MovieSession> availableSessions = movieSessionDao.getAvailableSessions();
+		movieSession = movieSessionRepository.get(new MovieSession(id));
+		movieSessionRepository.delete(movieSession);
+		List<MovieSession> availableSessions = movieSessionRepository.getAvailable();
 		req.getSession().setAttribute("availableSessions", availableSessions);
 
 		try {

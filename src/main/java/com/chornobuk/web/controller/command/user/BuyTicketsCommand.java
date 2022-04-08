@@ -2,12 +2,12 @@ package com.chornobuk.web.controller.command.user;
 
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
-import com.chornobuk.web.model.dao.OrderDao;
-import com.chornobuk.web.model.dao.TicketDao;
 import com.chornobuk.web.model.entity.MovieSession;
 import com.chornobuk.web.model.entity.Order;
 import com.chornobuk.web.model.entity.Ticket;
 import com.chornobuk.web.model.entity.User;
+import com.chornobuk.web.model.repository.implementation.OrderRepository;
+import com.chornobuk.web.model.repository.implementation.TicketRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,14 +56,14 @@ public class BuyTicketsCommand implements ICommand {
 			int[] places = (int[]) req.getSession().getAttribute("orderPlaces");
 			Ticket[] tickets = new Ticket[places.length];
 			MovieSession session = (MovieSession) req.getSession().getAttribute("orderSession");
-			TicketDao ticketDao = new TicketDao();
+			TicketRepository ticketRepository= new TicketRepository();
 			User user = (User) req.getSession().getAttribute("user");
 //			creating tickets
 			for (int i = 0; i < tickets.length; i++) {
 				tickets[i] = new Ticket();
 				tickets[i].setPlaceNumber(places[i]);
 				tickets[i].setSessionId(session.getId());
-				if(ticketDao.getTicketBySession(tickets[i],session) != null) {
+				if(ticketRepository.getBySession(tickets[i], session) != null) {
 					req.setAttribute("ticketsAlreadyReservedError", errorTag);
 					return forward;
 				}
@@ -74,16 +74,15 @@ public class BuyTicketsCommand implements ICommand {
 			order.setCreationDate((LocalDateTime) req.getSession().getAttribute("orderCreatingTime"));
 			order.setUserId(user.getId());
 //			put them in database using transaction
-			OrderDao orderDao = new OrderDao();
-
+			OrderRepository orderRepository = new OrderRepository();
 //			remove order attributes from session
 			req.getSession().removeAttribute("orderCreatingTime");
 			req.getSession().removeAttribute("orderSession");
 			req.getSession().removeAttribute("orderPlaces");
 			req.getSession().removeAttribute("totalPrice");
 
-			orderDao.addOrderWithTickets(order, user, session, tickets);
-
+//			orderDao.addOrderWithTickets(order, user, session, tickets);
+			orderRepository.add(order, tickets);
 			try {
 				resp.sendRedirect(Path.INDEX_PAGE);
 			} catch (IOException e) {

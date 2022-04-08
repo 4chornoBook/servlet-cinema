@@ -20,15 +20,15 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 	private static final String GET_BY_ID = "select * from movie_session where id = ?";
 	private static final String INSERT = "insert into movie_session values (?, ?, ?, ?, ?)";
 	private static final String DELETE_BY_ID = "delete from movie_session where id = ?";
-	private static final String UPDATE = "update movie_session set movie_id = ?, session_date = ?, beginning_time = ?, ending_time = ? where id = ?";
+	private static final String UPDATE = "update movie_session set movie_id = ?, session_date = ?, beginning_time = ?, ending_time = ?, ticket_price = ? where id = ?";
 	private static final String GET_LIMITED_WITH_OFFSET = "select * from movie_session where movie_session.session_date + movie_session.beginning_time >= now() limit ? offset ?";
 	private static final String DELETE_TICKETS_BY_SESSION = "delete from ticket where movie_session_id = ?";
+	private static final String GET_AVAILABLE = "select movie_session.* from movie_session where session_date + beginning_time >= now()";
 	private static final String DELETE_ORDERS_BY_SESSION = "delete from tickets_order" +
 			" where exists" +
 			" (select 1 from ticket" +
 			" where ticket.order_id = tickets_order.id" +
 			" and ticket.movie_session_id = ?)";
-//	private static final String FUNCTION_IS_TIME_SLOT_AVAILABLE = "select is_slot_available(?, ?, ?)";
 	private static final String GET_SESSIONS_BY_TIME = "select * from movie_session"+
 	" where session_date = ?"+
 	" and ( (? <= ending_time and ? > beginning_time ) or"+
@@ -75,11 +75,15 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 		);
 	}
 
-	public List<MovieSession> getLimitedWithOffset(int limit, int offset) {
-		return movieSessionQueryBuilder.getValues(instance, GET_LIMITED_WITH_OFFSET, limit, offset);
+	public List<MovieSession> getLimitedWithOffset(String query, int limit, int offset) {
+		return movieSessionQueryBuilder.getValues(instance, query, limit, offset);
 	}
 
 	public List<MovieSession> getByTime(LocalDate date, LocalTime beginning, LocalTime ending) {
 		return movieSessionQueryBuilder.getValues(instance, GET_SESSIONS_BY_TIME, date, ending, beginning, ending, beginning);
+	}
+
+	public List<MovieSession> getAvailable() {
+		return movieSessionQueryBuilder.getValues(instance, GET_AVAILABLE);
 	}
 }

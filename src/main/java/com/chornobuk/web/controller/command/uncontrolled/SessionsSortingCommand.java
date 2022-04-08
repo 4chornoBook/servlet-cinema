@@ -3,8 +3,8 @@ package com.chornobuk.web.controller.command.uncontrolled;
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
 import com.chornobuk.web.model.MovieSessionQueryConstructor;
-import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
+import com.chornobuk.web.model.repository.implementation.MovieSessionRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,10 +89,10 @@ public class SessionsSortingCommand implements ICommand {
 		if (movieNameFilter != null && !movieNameFilter.isEmpty()) {
 			constructor.setFilmFilter(movieNameFilter);
 		}
-		MovieSessionDao movieSessionDao = new MovieSessionDao();
+		MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
 		int currentPage = 1;
 		int limit = (int) req.getSession().getAttribute("limit");
-		int numberOfSessions = movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), 0, Integer.MAX_VALUE).size();
+		int numberOfSessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), 0, Integer.MAX_VALUE).size();
 		int numberOfPages = numberOfSessions / limit;
 		if (numberOfSessions % limit != 0)
 			numberOfPages += 1;
@@ -100,7 +100,7 @@ public class SessionsSortingCommand implements ICommand {
 		req.getSession().setAttribute("numberOfPages", numberOfPages);
 
 
-		List<MovieSession> sessions = movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), 0, limit);
+		List<MovieSession> sessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), 0, limit);
 		req.getSession().setAttribute("availableSessions", sessions);
 		req.getSession().setAttribute("queryConstructor", constructor);
 		return forward;

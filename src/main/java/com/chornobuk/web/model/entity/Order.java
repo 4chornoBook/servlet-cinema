@@ -1,17 +1,21 @@
 package com.chornobuk.web.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Order extends Entity{
 	private long userId;
-	private long statusId;
 	private LocalDateTime creationDate;
+	private int totalPrice;
+	private List<Ticket> tickets;
 
-	public Order(long id, long userId, long statusId, LocalDateTime creationDate) {
+	public Order(long id, long userId, LocalDateTime creationDate, int totalPrice) {
 		super(id);
 		this.userId = userId;
-		this.statusId = statusId;
 		this.creationDate = creationDate;
+		this.totalPrice = totalPrice;
+		this.tickets = new LinkedList<>();
 	}
 
 	public Order(long id) {
@@ -30,19 +34,27 @@ public class Order extends Entity{
 		this.userId = userId;
 	}
 
-	public long getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(long statusId) {
-		this.statusId = statusId;
-	}
-
 	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
 	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 }

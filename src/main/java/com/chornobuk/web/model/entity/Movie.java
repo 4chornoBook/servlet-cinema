@@ -8,17 +8,15 @@ public class Movie extends Entity{
 	private LocalDate releaseDate;
 	private String description;
 	private String imageURL;
-	private int ticketPrice;
 	private int lengthInMinutes;
 	private LinkedList<Genre> genres;
 
-	public Movie(long id, String name, LocalDate releaseDate, String description, String imageURL, int ticketPrice, int lengthInMinutes, LinkedList<Genre> genres) {
+	public Movie(long id, String name, LocalDate releaseDate, String description, String imageURL, int lengthInMinutes, LinkedList<Genre> genres) {
 		super(id);
 		this.name = name;
 		this.releaseDate = releaseDate;
 		this.description = description;
 		this.imageURL = imageURL;
-		this.ticketPrice = ticketPrice;
 		this.lengthInMinutes = lengthInMinutes;
 		this.genres = genres;
 	}
@@ -61,14 +59,6 @@ public class Movie extends Entity{
 
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
-	}
-
-	public int getTicketPrice() {
-		return ticketPrice;
-	}
-
-	public void setTicketPrice(int ticketPrice) {
-		this.ticketPrice = ticketPrice;
 	}
 
 	public int getLengthInMinutes() {

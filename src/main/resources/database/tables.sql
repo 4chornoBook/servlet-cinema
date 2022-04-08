@@ -30,7 +30,6 @@ create table if not exists movie
     release_date      date         not null,
     description       text         not null,
     image_url         text         not null,
-    ticket_price      numeric      not null,
     length_in_minutes integer      not null
 );
 
@@ -49,23 +48,16 @@ create table if not exists movie_session
     movie_id         integer references movie (id),
     session_date     date                   not null,
     beginning_time   time without time zone not null,
-    ending_time      time without time zone not null
+    ending_time      time without time zone not null,
+    ticket_price integer not null
 );
-
-
-create table if not exists order_status
-(
-    id   serial primary key,
-    name varchar(100) not null
-);
-
 
 create table if not exists tickets_order
 (
     id      serial primary key,
     user_id       integer references cinema_user (id),
-    order_status_id  integer references order_status (id),
-    creation_date timestamp not null
+    creation_date timestamp not null,
+    total_price integer not null
 );
 
 

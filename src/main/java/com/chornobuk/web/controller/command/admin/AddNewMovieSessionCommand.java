@@ -3,11 +3,10 @@ package com.chornobuk.web.controller.command.admin;
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
 import com.chornobuk.web.model.MovieSessionQueryConstructor;
-import com.chornobuk.web.model.dao.MovieDao;
-import com.chornobuk.web.model.dao.MovieSessionDao;
 import com.chornobuk.web.model.entity.MovieSession;
 import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.repository.implementation.MovieRepository;
+import com.chornobuk.web.model.repository.implementation.MovieSessionRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,15 +44,13 @@ public class AddNewMovieSessionCommand implements ICommand {
 				|| LocalDateTime.of(movieDate, beginningTime).isBefore(LocalDateTime.now())) {
 			req.setAttribute("beginningTimeError", errorTag);
 		} else {
-			MovieSessionDao movieSessionDao = new MovieSessionDao();
-			MovieDao movieDao = new MovieDao();
+			MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
 			MovieRepository movieRepository = new MovieRepository();
 
 			MovieSession movieSession = new MovieSession();
 			movieSession.setMovieId(movieId);
 			movieSession.setMovieDate(movieDate);
 			movieSession.setBeginningTime(beginningTime);
-			movieSession.setAvailablePlaces(100);
 //			movieSession.setMovie(movieDao.get(movieSession.getMovieId()));
 			movieSession.setMovie(movieRepository.get(new Movie(movieSession.getMovieId())));
 			int cleaningTime = 20;
@@ -63,18 +60,18 @@ public class AddNewMovieSessionCommand implements ICommand {
 					(10 - (movieSession.getMovie().getLengthInMinutes() % 10)) + cleaningTime);
 			movieSession.setEndingTime(endingTime);
 
-			if (!movieSessionDao.isSlotAvailable(movieSession)) {
+			if (movieSessionRepository.getByTime(movieSession.getMovieDate(), movieSession.getBeginningTime(), movieSession.getEndingTime()).size() != 0) {
 				req.setAttribute("slotNotAvailableError", errorTag);
 			} else {
 				forward = Path.REDIRECT_COMMAND;
-				movieSessionDao.add(movieSession);
+				movieSessionRepository.add(movieSession);
 				MovieSessionQueryConstructor constructor = (MovieSessionQueryConstructor) req.getSession().getAttribute("queryConstructor");
 				int limit = (int) req.getSession().getAttribute("limit");
-				int numberOfSessions = movieSessionDao.getNumberOfAvailableSessions();
+				int numberOfSessions = movieSessionRepository.getAvailable().size();
 				int numberOfPages = numberOfSessions / limit;
 				if (numberOfSessions % limit != 0)
 					numberOfPages += 1;
-				List<MovieSession> availableSessions = movieSessionDao.getSomeElementsByQuery(constructor.getQuery(), 0, limit);
+				List<MovieSession> availableSessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), 0, limit);
 				req.getSession().setAttribute("availableSessions", availableSessions);
 				req.getSession().setAttribute("numberOfPages", numberOfPages);
 

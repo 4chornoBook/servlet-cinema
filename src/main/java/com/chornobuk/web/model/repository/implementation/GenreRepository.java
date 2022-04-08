@@ -4,7 +4,6 @@ import com.chornobuk.web.model.builder.GenreQueryBuilder;
 import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.Genre;
 import com.chornobuk.web.model.entity.Movie;
-import com.chornobuk.web.model.repository.IRepository;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class GenreRepository  {
 		" inner join movie on movie_genre.movie_id = movie.id"+
 		" where movie.id = ?";
 
-	public List<Genre> getALL() {
+	public List<Genre> getAll() {
 		return genreQueryBuilder.getValues(instance, GET_ALL);
 	}
 	public List<Genre> getByMovie(Movie movie) {

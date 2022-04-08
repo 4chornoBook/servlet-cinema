@@ -2,10 +2,11 @@ package com.chornobuk.web.controller.command.user;
 
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
-import com.chornobuk.web.model.dao.MovieDao;
-import com.chornobuk.web.model.dao.MovieSessionDao;
+import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.entity.MovieSession;
 import com.chornobuk.web.model.entity.UserRole;
+import com.chornobuk.web.model.repository.implementation.MovieRepository;
+import com.chornobuk.web.model.repository.implementation.MovieSessionRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +21,11 @@ public class SubmitOrderCommand implements ICommand {
 		String forward = Path.SESSION_PAGE;//continue operation
 		UserRole role = (UserRole) req.getSession().getAttribute("role");
 		if (role != null) {
-			MovieSessionDao sessionDao = new MovieSessionDao();
-			MovieDao movieDao = new MovieDao();
+			MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
+			MovieRepository movieRepository = new MovieRepository();
 			Long sessionId = Long.parseLong(req.getParameter("sessionId"));
-			MovieSession session = sessionDao.get(sessionId);
-			session.setMovie(movieDao.get(session.getMovieId()));
+			MovieSession session = movieSessionRepository.get(new MovieSession(sessionId));
+			session.setMovie(movieRepository.get(new Movie(session.getMovieId())));
 			String [] placesString = req.getParameterValues("numberPlace");
 			if (placesString == null || placesString.length == 0) {
 				req.setAttribute("noTicketsError",errorTag );
@@ -34,7 +35,7 @@ public class SubmitOrderCommand implements ICommand {
 					.mapToInt(Integer::parseInt).toArray();
 
 			forward = Path.BUY_TICKETS_PAGE;
-			int totalPrice = req.getParameterValues("numberPlace").length * session.getMovie().getTicketPrice();
+			int totalPrice = req.getParameterValues("numberPlace").length * session.getTicketPrice();
 
 			req.getSession().removeAttribute("session");
 			req.getSession().setAttribute("orderCreatingTime", LocalDateTime.now());

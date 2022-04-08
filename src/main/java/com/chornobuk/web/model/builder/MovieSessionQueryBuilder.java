@@ -12,11 +12,11 @@ public class MovieSessionQueryBuilder extends QueryBuilder<MovieSession>{
 	@Override
 	public MovieSession getObject(ResultSet rs) throws SQLException {
 		MovieSession movieSession = new MovieSession();
-		Movie movie = new Movie();
 		movieSession.setMovieId(rs.getLong("id"));
 		movieSession.setMovieDate(rs.getObject("session_date",LocalDate.class));
 		movieSession.setBeginningTime(rs.getObject("beginning_time", LocalTime.class));
 		movieSession.setEndingTime(rs.getObject("ending_time",LocalTime.class));
+		movieSession.setTicketPrice(rs.getInt("ticket_price"));
 		movieSession.setMovieId(rs.getLong("movie_id"));
 		return movieSession;
 	}

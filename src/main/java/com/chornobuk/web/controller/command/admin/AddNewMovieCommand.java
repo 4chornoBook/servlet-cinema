@@ -2,10 +2,10 @@ package com.chornobuk.web.controller.command.admin;
 
 import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
-import com.chornobuk.web.model.dao.GenreDao;
-import com.chornobuk.web.model.dao.MovieDao;
 import com.chornobuk.web.model.entity.Genre;
 import com.chornobuk.web.model.entity.Movie;
+import com.chornobuk.web.model.repository.implementation.GenreRepository;
+import com.chornobuk.web.model.repository.implementation.MovieRepository;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -63,9 +63,9 @@ public class AddNewMovieCommand implements ICommand {
 		} else {
 			forward = Path.REDIRECT_COMMAND;
 			Movie movie = new Movie();
-			MovieDao movieDao = new MovieDao();
-			GenreDao genreDao = new GenreDao();
-			LinkedList<Genre> genres = genreDao.getAll()
+			MovieRepository movieRepository = new MovieRepository();
+			GenreRepository genreRepository = new GenreRepository();
+			LinkedList<Genre> genres = genreRepository.getAll()
 					.stream()
 					.filter(x -> Arrays.binarySearch(genresId, x.getName()) >= 0)
 					.collect(Collectors.toCollection(LinkedList::new));
@@ -73,12 +73,10 @@ public class AddNewMovieCommand implements ICommand {
 			movie.setName(name);
 			movie.setGenres(genres);
 			movie.setDescription(description);
-			movie.setTicketPrice(ticketPrice);
 			movie.setImageURL(imageURL);
 			movie.setLengthInMinutes(lengthInMinutes);
 			movie.setReleaseDate(releaseDate);
-			movieDao.add(movie);
-
+			movieRepository.add(movie);
 			try {
 				resp.sendRedirect(Path.INDEX_PAGE);
 			} catch (IOException e) {

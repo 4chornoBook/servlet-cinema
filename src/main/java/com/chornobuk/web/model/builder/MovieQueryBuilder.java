@@ -15,7 +15,6 @@ public class MovieQueryBuilder extends QueryBuilder<Movie> {
 		movie.setReleaseDate(rs.getObject("release_date", LocalDate.class));
 		movie.setDescription(rs.getString("description"));
 		movie.setImageURL(rs.getString("image_url"));
-		movie.setTicketPrice(rs.getInt("ticket_price"));
 		movie.setLengthInMinutes(rs.getInt("length_in_minutes"));
 
 		return movie;
