@@ -83,6 +83,14 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 		return sessions;
 	}
 
+	public List<MovieSession> getByQuery(String query) {
+		List<MovieSession> sessions = movieSessionQueryBuilder.getValues(instance, query);
+		for(MovieSession session : sessions) {
+			session.setMovie(movieRepository.get(new Movie(session.getMovieId())));
+		}
+		return sessions;
+	}
+
 	public List<MovieSession> getByTime(LocalDate date, LocalTime beginning, LocalTime ending) {
 		return movieSessionQueryBuilder.getValues(instance, GET_SESSIONS_BY_TIME, date, ending, beginning, ending, beginning);
 	}

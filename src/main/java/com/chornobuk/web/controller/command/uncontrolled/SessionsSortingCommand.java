@@ -89,10 +89,12 @@ public class SessionsSortingCommand implements ICommand {
 		if (movieNameFilter != null && !movieNameFilter.isEmpty()) {
 			constructor.setFilmFilter(movieNameFilter);
 		}
+		System.out.println("filter");
+		System.out.println(movieNameFilter);
 		MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
 		int currentPage = 1;
 		int limit = (int) req.getSession().getAttribute("limit");
-		int numberOfSessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), 0, Integer.MAX_VALUE).size();
+		int numberOfSessions = movieSessionRepository.getByQuery(constructor.getQueryWithoutLimit()).size();
 		int numberOfPages = numberOfSessions / limit;
 		if (numberOfSessions % limit != 0)
 			numberOfPages += 1;

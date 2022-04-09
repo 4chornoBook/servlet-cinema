@@ -26,6 +26,13 @@ public class MovieSessionQueryConstructor {
 		return String.join(delimiter, strings);
 	}
 
+	public String getQueryWithoutLimit() {
+		String delimiter = " ";
+		String[] strings = Stream.of(queryBody, getWhere(), "group by", groupBy, getOrderBy())
+				.filter(s -> !s.isEmpty()).toArray(String[]::new);
+		return String.join(delimiter, strings);
+	}
+
 	public void setSortingByDate(String value) {
 		sortingByDate = "movie_session.session_date";
 		if (value.equals("ascending"))
