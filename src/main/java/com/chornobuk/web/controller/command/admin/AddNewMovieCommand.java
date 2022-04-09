@@ -30,7 +30,6 @@ public class AddNewMovieCommand implements ICommand {
 		String[] genresId = req.getParameterValues("genre");
 		String imageURL = req.getParameter("imageURL");
 		String description = req.getParameter("description");
-		int ticketPrice = Integer.parseInt(req.getParameter("ticketPrice"));
 //		movie name min 1 max 200
 		if (name == null || name.isEmpty() || name.length() > 200) {
 			req.setAttribute("movieNameError", errorTag);
@@ -52,10 +51,6 @@ public class AddNewMovieCommand implements ICommand {
 //		image url not null (optional check is it url)
 		else if (imageURL == null || imageURL.isEmpty()) {
 			req.setAttribute("imageURLError", errorTag);
-		}
-//		ticket price min 50
-		else if (ticketPrice < 50) {
-			req.setAttribute("ticketPriceError", errorTag);
 		}
 //		description not null
 		else if (description == null || description.isEmpty()) {

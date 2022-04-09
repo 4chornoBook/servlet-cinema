@@ -15,7 +15,7 @@ public class MovieRepository implements IRepository<Movie> {
 	private final static String GET_BY_ID = "select * from movie where id = ?";
 	private final static String GET_ALL = "select * from movie";
 	private final static String DELETE_BY_ID = "delete from movie where id ?";
-	private final static String INSERT = "insert into movie values (?,?,?,?,?,?,?)";
+	private final static String INSERT = "insert into movie values (?, ?, ?, ?, ?, ?)";
 	private final static String INSERT_GENRE = "insert into movie_genre values (?, ?)";
 	private final static String DELETE_MOVIE_GENRES = "delete from movie_genre where movie_id = ?";
 	private final static String UPDATE = "update movie set name = ?, release_date = ?, description = ?, image_url = ?, length_in_minutes = ? where id = ?";
