@@ -16,7 +16,7 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 	MovieSessionQueryBuilder movieSessionQueryBuilder = new MovieSessionQueryBuilder();
 	private static final String GET_NEXT_ID = "select max(id)+1 from movie_session";
 	private static final String GET_BY_ID = "select * from movie_session where id = ?";
-	private static final String INSERT = "insert into movie_session values (?, ?, ?, ?, ?, ?)";
+	private static final String INSERT = "insert into movie_session values (default, ?, ?, ?, ?, ?)";
 	private static final String DELETE_BY_ID = "delete from movie_session where id = ?";
 	private static final String UPDATE = "update movie_session set movie_id = ?, session_date = ?, beginning_time = ?, ending_time = ?, ticket_price = ? where id = ?";
 	private static final String GET_LIMITED_WITH_OFFSET = "select * from movie_session where movie_session.session_date + movie_session.beginning_time >= now() limit ? offset ?";
@@ -63,10 +63,7 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 
 	@Override
 	public void add(MovieSession entity) {
-		long id = movieSessionQueryBuilder.getNextId(instance, GET_NEXT_ID);
-		entity.setId(id);
-		movieSessionQueryBuilder.executeQuery(instance, INSERT,
-				entity.getId(),
+		movieSessionQueryBuilder.insertNewEntity(instance, entity, INSERT,
 				entity.getMovieId(),
 				entity.getMovieDate(),
 				entity.getBeginningTime(),
@@ -92,7 +89,7 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 	}
 
 	public List<MovieSession> getByTime(LocalDate date, LocalTime beginning, LocalTime ending) {
-		return movieSessionQueryBuilder.getValues(instance, GET_SESSIONS_BY_TIME, date, ending, beginning, ending, beginning);
+		return movieSessionQueryBuilder.getValues(instance, GET_SESSIONS_BY_TIME, date, ending, ending, beginning, beginning);
 	}
 
 	public List<MovieSession> getAvailable() {

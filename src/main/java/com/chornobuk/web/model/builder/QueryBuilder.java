@@ -3,24 +3,13 @@ package com.chornobuk.web.model.builder;
 import com.chornobuk.web.model.database.DBManager;
 import com.chornobuk.web.model.entity.Entity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 //todo query as final
 public abstract class QueryBuilder<T extends Entity> {
-
-
-//	method for execute query without results (delete, update, add)
-//	method for execute query with one result (select)
-//	method for execute query with many results (select)
-//	get method for get id (create in every builder query for getting max id
-//	method for calling function in database
-//	method for calling a procedure
 
 	public abstract T getObject(ResultSet rs) throws SQLException;
 
@@ -38,6 +27,23 @@ public abstract class QueryBuilder<T extends Entity> {
 		return nextId;
 	}
 
+	public void insertNewEntity(DBManager instance, Entity entity, String query, Object... args) {
+		Connection connection = instance.getConnection();
+		try(PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+			setArgsForPrepareStatement(preparedStatement, args);
+			preparedStatement.executeUpdate();
+			ResultSet resultSet = preparedStatement.getGeneratedKeys();
+			while(resultSet.next())
+				entity.setId(resultSet.getLong("id"));
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			instance.closeConnection(connection);
+		}
+	}
+
 	public List<T> getValues(DBManager instance, String query, Object... args) {
 		List<T> objects = new LinkedList<>();
 		Connection connection = instance.getConnection();
@@ -50,7 +56,9 @@ public abstract class QueryBuilder<T extends Entity> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		instance.closeConnection(connection);
+		finally {
+			instance.closeConnection(connection);
+		}
 		return objects;
 	}
 
@@ -65,7 +73,9 @@ public abstract class QueryBuilder<T extends Entity> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		instance.closeConnection(connection);
+		finally {
+			instance.closeConnection(connection);
+		}
 		return object;
 	}
 

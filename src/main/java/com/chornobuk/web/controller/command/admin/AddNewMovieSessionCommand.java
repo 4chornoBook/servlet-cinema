@@ -30,7 +30,6 @@ public class AddNewMovieSessionCommand implements ICommand {
 		String beginningTimeS = req.getParameter("beginningTime");
 		String movieIdString = req.getParameter("movie");
 		String ticketPriceString = req.getParameter("ticketPrice");
-		System.out.println("ticket price: "+ticketPriceString);
 
 		Long movieId = (movieIdString == null || movieIdString.isEmpty()) ? null : Long.parseLong(movieIdString);
 		LocalDate movieDate = (movieDateString == null || movieDateString.isEmpty()) ? null : LocalDate.parse(movieDateString);
@@ -57,7 +56,6 @@ public class AddNewMovieSessionCommand implements ICommand {
 			movieSession.setMovieId(movieId);
 			movieSession.setMovieDate(movieDate);
 			movieSession.setBeginningTime(beginningTime);
-//			movieSession.setMovie(movieDao.get(movieSession.getMovieId()));
 			movieSession.setTicketPrice(ticketPrice);
 			movieSession.setMovie(movieRepository.get(new Movie(movieSession.getMovieId())));
 			int cleaningTime = 20;

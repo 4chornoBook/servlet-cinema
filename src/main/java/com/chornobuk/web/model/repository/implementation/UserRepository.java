@@ -13,7 +13,7 @@ public class UserRepository implements IRepository<User> {
 	private static final String GET_BY_LOGIN = "select * from cinema_user where login = ?";
 	private static final String DELETE_BY_ID = "delete from cinema_user where id = ?";
 	private static final String UPDATE_BY_ID = "";
-	private static final String ADD_NEW = "insert into cinema_user values (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT = "insert into cinema_user values (default, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_DATA_BY_ID = "update cinema set login = ?, name = ?, surname = ?, password = ?, salt = ?, role_id = ? where id = ?";
 	@Override
 	public User get(User entity) {
@@ -40,10 +40,7 @@ public class UserRepository implements IRepository<User> {
 
 	@Override
 	public void add(User entity) {
-		long id = queryBuilder.getNextId(instance, GET_NEXT_ID);
-		entity.setId(id);
-		queryBuilder.executeQuery(instance, ADD_NEW,
-				id,
+		queryBuilder.insertNewEntity(instance, entity, INSERT,
 				entity.getLogin(),
 				entity.getName(),
 				entity.getSurname(),
