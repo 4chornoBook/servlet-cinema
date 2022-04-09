@@ -12,7 +12,7 @@ public class OrderQueryBuilder extends QueryBuilder<Order> {
 		Order order = new Order();
 		order.setId(rs.getLong("id"));
 		order.setUserId(rs.getLong("user_id"));
-		order.setCreationDate(rs.getObject("creation_time", LocalDateTime.class));
+		order.setCreationDate(rs.getObject("creation_date", LocalDateTime.class));
 		order.setTotalPrice(rs.getInt("total_price"));
 		return order;
 	}

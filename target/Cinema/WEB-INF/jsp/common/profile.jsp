@@ -23,21 +23,24 @@
 		<fmt:message key="profile.surname"/> <c:out value="${sessionScope.user.getSurname()}"/>
 	</p>
 </div>
-<c:if test="${sessionScope.get('role').name().equals('USER')}">
 	<div style="font-size: larger;  width: 70%; margin: 2% auto">
 		<h2><fmt:message key="profile.orders.history"/></h2>
-		<c:forEach items="${ordersPrices}" var="orderInfo">
+		<c:forEach items="${userOrders}" var="order">
 			<div style="display: flex; justify-content: space-between; border-radius: 15px; border: 2px solid darkblue; background-color: lavender;margin: 20px auto; padding: 10px;">
 				<p>
-					<fmt:message key="profile.orders.order.number"/> <c:out value="${orderInfo.key}"/>
+					<fmt:message key="profile.orders.order.number"/> <c:out value="${order.getId()}"/>
 				</p>
 				<p>
-					<fmt:message key="profile.orders.order.price"/> <c:out value="${orderInfo.value}"/> <fmt:message key="profile.orders.price.currency"/>
+					<fmt:message key="profile.orders.order.price"/> <c:out value="${order.getTotalPrice()}"/> <fmt:message key="profile.orders.price.currency"/>
 				</p>
 			</div>
 		</c:forEach>
+		<c:if test="${userHasNoOrders}">
+			<div style="justify-content: space-between; border-radius: 15px; border: 2px solid darkblue; background-color: lavender;margin: 20px auto; padding: 10px;">
+				<p  style="text-align: center;"><fmt:message key="profile.no.oders"/></p>
+			</div>
+		</c:if>
 	</div>
-</c:if>
-</body>
 <jsp:include page="/WEB-INF/common_elements/footer.jsp"/>
+</body>
 </html>

@@ -14,7 +14,7 @@ public class OrderRepository {
 	TicketRepository ticketRepository = new TicketRepository();
 	private static final String GET_BY_ID = "select * from tickets_order where id = ?";
 	private static final String GET_NEXT_ID = "select max(id)+1 from tickets_order";
-	private static final String GET_BY_USER = "select * from tickets_order where user_id= ?";
+	private static final String GET_BY_USER = "select * from tickets_order where user_id = ?";
 	private static final String INSERT = "insert into tickets_order values(?, ?, ?, ?)";
 	private static final String INSERT_TICKET = "insert into ticket values (default, ?, ?, ?)";
 	public Order get(Order entity) {

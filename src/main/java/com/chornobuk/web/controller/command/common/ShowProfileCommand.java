@@ -24,11 +24,9 @@ public class ShowProfileCommand implements ICommand {
 //			todo use list of orders instead of difficult code
 			List<Order> userOrders = orderRepository.getByUser(user);
 			req.setAttribute("userOrders", userOrders);
-//			get user's orders
-//			get tickets by order, sum all
-//				call to database
-//			put in map values
 		}
+		else
+			req.setAttribute("userHasNoOrders",true);
 		return forward;
 	}
 }

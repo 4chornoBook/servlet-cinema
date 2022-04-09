@@ -13,6 +13,7 @@ public class UserQueryBuilder extends QueryBuilder<User> {
 		user.setId(rs.getLong("id"));
 		user.setLogin(rs.getString("login"));
 		user.setName(rs.getString("name"));
+		user.setSurname(rs.getString("surname"));
 		user.setPassword(rs.getString("password"));
 		user.setSalt(rs.getString("salt"));
 		user.setRoleId(rs.getInt("role_id"));
