@@ -9,12 +9,10 @@ import com.chornobuk.web.model.repository.IRepository;
 public class UserRepository implements IRepository<User> {
 	private UserQueryBuilder queryBuilder = new UserQueryBuilder();
 	private DBManager instance = DBManager.getInstance();
-	private static final String GET_NEXT_ID = "select max(id)+1 from cinema_user";
 	private static final String GET_BY_LOGIN = "select * from cinema_user where login = ?";
 	private static final String DELETE_BY_ID = "delete from cinema_user where id = ?";
-	private static final String UPDATE_BY_ID = "";
 	private static final String INSERT = "insert into cinema_user values (default, ?, ?, ?, ?, ?, ?)";
-	private static final String UPDATE_DATA_BY_ID = "update cinema set login = ?, name = ?, surname = ?, password = ?, salt = ?, role_id = ? where id = ?";
+	private static final String UPDATE = "update cinema set login = ?, name = ?, surname = ?, password = ?, salt = ?, role_id = ? where id = ?";
 	@Override
 	public User get(User entity) {
 		return queryBuilder.getValue(instance, GET_BY_LOGIN, entity.getLogin());
@@ -27,7 +25,7 @@ public class UserRepository implements IRepository<User> {
 
 	@Override
 	public void update(User entity) {
-		queryBuilder.executeQuery(instance, UPDATE_DATA_BY_ID,
+		queryBuilder.executeQuery(instance, UPDATE,
 				entity.getLogin(),
 				entity.getName(),
 				entity.getSurname(),

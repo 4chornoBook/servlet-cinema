@@ -14,7 +14,6 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 	private DBManager instance = DBManager.getInstance();
 	MovieRepository movieRepository = new MovieRepository();
 	MovieSessionQueryBuilder movieSessionQueryBuilder = new MovieSessionQueryBuilder();
-	private static final String GET_NEXT_ID = "select max(id)+1 from movie_session";
 	private static final String GET_BY_ID = "select * from movie_session where id = ?";
 	private static final String INSERT = "insert into movie_session values (default, ?, ?, ?, ?, ?)";
 	private static final String DELETE_BY_ID = "delete from movie_session where id = ?";
