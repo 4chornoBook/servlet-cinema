@@ -1,4 +1,4 @@
-package com.chornobuk.web.model.filter;
+package com.chornobuk.web.controller.filter;
 
 import com.chornobuk.web.model.MovieSessionQueryConstructor;
 import com.chornobuk.web.model.entity.MovieSession;
@@ -38,7 +38,7 @@ public class MoviesListFilter implements Filter {
 			if (numberOfSessions % limit != 0)
 				numberOfPages += 1;
 
-			List<MovieSession> availableSessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), currentPage - 1, limit);
+			List<MovieSession> availableSessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), limit, currentPage - 1);
 			httpServletRequest.getSession().setAttribute("currentPage", currentPage);
 			httpServletRequest.getSession().setAttribute("numberOfPages", numberOfPages);
 			httpServletRequest.getSession().setAttribute("limit", limit);

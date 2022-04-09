@@ -52,6 +52,15 @@
 			<fmt:message key="new.session.beginning.time.error"/>
 		</div>
 	</div>
+	<div class="mb-3">
+		<label for="ticketPrice" class="form-label"><fmt:message key="new.movie.ticket.price"/></label>
+		<input type="number" min="50" step="5" value="50" name="ticketPrice"
+			   class="form-control ${requestScope.ticketPriceError}"
+			   id="ticketPrice" aria-describedby="ticketPriceError">
+		<div id="ticketPriceError" class="invalid-feedback">
+			<fmt:message key="new.movie.ticket.price.error"/>
+		</div>
+	</div>
 	<button type="submit" class="btn btn-primary"><fmt:message key="new.session.add.session.button"/></button>
 </form>
 </body>

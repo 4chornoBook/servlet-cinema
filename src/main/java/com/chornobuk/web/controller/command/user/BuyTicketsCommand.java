@@ -73,6 +73,7 @@ public class BuyTicketsCommand implements ICommand {
 			Order order = new Order();
 			order.setCreationDate((LocalDateTime) req.getSession().getAttribute("orderCreatingTime"));
 			order.setUserId(user.getId());
+			order.setTotalPrice(session.getTicketPrice() * tickets.length);
 //			put them in database using transaction
 			OrderRepository orderRepository = new OrderRepository();
 //			remove order attributes from session

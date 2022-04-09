@@ -29,6 +29,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 		String movieDateString = req.getParameter("movieDate");
 		String beginningTimeS = req.getParameter("beginningTime");
 		String movieIdString = req.getParameter("movie");
+		String ticketPriceString = req.getParameter("ticketPrice");
 
 		Long movieId = (movieIdString == null || movieIdString.isEmpty()) ? null : Long.parseLong(movieIdString);
 		LocalDate movieDate = (movieDateString == null || movieDateString.isEmpty()) ? null : LocalDate.parse(movieDateString);
@@ -43,15 +44,20 @@ public class AddNewMovieSessionCommand implements ICommand {
 				|| beginningTime.isAfter(LocalTime.of(22, 0))
 				|| LocalDateTime.of(movieDate, beginningTime).isBefore(LocalDateTime.now())) {
 			req.setAttribute("beginningTimeError", errorTag);
-		} else {
+		}
+		else if(ticketPriceString == null || ticketPriceString.isEmpty()) {
+			req.setAttribute("ticketPriceError", errorTag);
+		}
+		else {
 			MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
 			MovieRepository movieRepository = new MovieRepository();
-
+			int ticketPrice = Integer.parseInt(ticketPriceString);
 			MovieSession movieSession = new MovieSession();
 			movieSession.setMovieId(movieId);
 			movieSession.setMovieDate(movieDate);
 			movieSession.setBeginningTime(beginningTime);
 //			movieSession.setMovie(movieDao.get(movieSession.getMovieId()));
+			movieSession.setTicketPrice(ticketPrice);
 			movieSession.setMovie(movieRepository.get(new Movie(movieSession.getMovieId())));
 			int cleaningTime = 20;
 

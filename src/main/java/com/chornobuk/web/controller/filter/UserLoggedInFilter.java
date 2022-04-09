@@ -1,4 +1,4 @@
-package com.chornobuk.web.model.filter;
+package com.chornobuk.web.controller.filter;
 
 import com.chornobuk.web.controller.Path;
 import org.apache.logging.log4j.Logger;

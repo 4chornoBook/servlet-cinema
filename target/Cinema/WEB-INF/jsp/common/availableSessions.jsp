@@ -100,7 +100,7 @@
 				<p><fmt:message key="sessions.session.time"/> <c:out value="${session.getBeginningTime()}"/> - <c:out
 						value="${session.getEndingTime()}"/></p>
 				<p><fmt:message key="sessions.session.ticket.price"/> <c:out
-						value="${session.getMovie().getTicketPrice()}"/> <fmt:message
+						value="${session.getTicketPrice()}"/> <fmt:message
 						key="sessions.session.currency"/></p>
 				<p><fmt:message key="sessions.session.length"/> <c:out
 						value="${session.getMovie().getLengthInMinutes()}"/> <fmt:message

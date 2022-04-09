@@ -36,7 +36,7 @@
 					<fmt:message key="buy.tickets.place"/> <c:out value="${place}"/>
 				</p>
 				<p>
-					<c:out value="${sessionScope.orderSession.getMovie().getTicketPrice()}"/> <fmt:message
+					<c:out value="${sessionScope.orderSession.getTicketPrice()}"/> <fmt:message
 						key="buy.tickets.currency"/>
 				</p>
 			</div>

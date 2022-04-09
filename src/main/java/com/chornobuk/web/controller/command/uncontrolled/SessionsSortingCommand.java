@@ -99,8 +99,7 @@ public class SessionsSortingCommand implements ICommand {
 		req.getSession().setAttribute("currentPage", currentPage);
 		req.getSession().setAttribute("numberOfPages", numberOfPages);
 
-
-		List<MovieSession> sessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), 0, limit);
+		List<MovieSession> sessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), limit, 0);
 		req.getSession().setAttribute("availableSessions", sessions);
 		req.getSession().setAttribute("queryConstructor", constructor);
 		return forward;

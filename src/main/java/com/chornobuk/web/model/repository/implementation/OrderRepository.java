@@ -6,9 +6,7 @@ import com.chornobuk.web.model.entity.Order;
 import com.chornobuk.web.model.entity.Ticket;
 import com.chornobuk.web.model.entity.User;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrderRepository {
 	DBManager instance = DBManager.getInstance();
@@ -17,7 +15,7 @@ public class OrderRepository {
 	private static final String GET_BY_ID = "select * from tickets_order where id = ?";
 	private static final String GET_NEXT_ID = "select max(id)+1 from tickets_order";
 	private static final String GET_BY_USER = "select * from tickets_order where user_id= ?";
-	private static final String INSERT = "insert into tickets_order values(?, ?, ?)";
+	private static final String INSERT = "insert into tickets_order values(?, ?, ?, ?)";
 	private static final String INSERT_TICKET = "insert into ticket values (default, ?, ?, ?)";
 	public Order get(Order entity) {
 		Order order =orderQueryBuilder.getValue(instance, GET_BY_ID, entity.getId());
@@ -26,20 +24,22 @@ public class OrderRepository {
 	}
 
 	public void add(Order entity, Ticket[] tickets) {
-		long id = orderQueryBuilder.getNextId(instance,GET_NEXT_ID);
+		long id = orderQueryBuilder.getNextId(instance, GET_NEXT_ID);
 		entity.setId(id);
-		Map<String, Object[]> queryParametersMap = new HashMap<>();
-		queryParametersMap.put(INSERT,new Object[]{
+		List<Map.Entry<String, Object[]>>  queryParametersMap = new LinkedList<>();
+		queryParametersMap.add(new AbstractMap.SimpleEntry<>(INSERT,new Object[]{
 				id,
 				entity.getUserId(),
-				entity.getCreationDate()}
-		);
+				entity.getCreationDate(),
+				entity.getTotalPrice()
+		}));
 		for(Ticket ticket : tickets) {
-			queryParametersMap.put(INSERT_TICKET, new Object[]{
+			ticket.setOrderId(id);
+			queryParametersMap.add(new AbstractMap.SimpleEntry<>(INSERT_TICKET, new Object[]{
 					ticket.getPlaceNumber(),
 					ticket.getOrderId(),
-					ticket.getSessionId()}
-			);
+					ticket.getSessionId()
+			}));
 		}
 		orderQueryBuilder.executeTransaction(instance, queryParametersMap);
 	}

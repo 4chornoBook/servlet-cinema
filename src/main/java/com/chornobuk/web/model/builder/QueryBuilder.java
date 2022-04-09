@@ -90,19 +90,19 @@ public abstract class QueryBuilder<T extends Entity> {
 		}
 	}
 
-	public void executeTransaction(DBManager instance, Map<String,Object[]> queries) {
+	public void executeTransaction(DBManager instance, List<Map.Entry<String,Object[]>> queries) {
 		PreparedStatement [] statements = new PreparedStatement[queries.size()];
 		Connection connection = instance.getConnection();
 		try {
 			connection.setAutoCommit(false);
 			int i = 0;
-			for (Map.Entry<String, Object[]> entry : queries.entrySet()) {
+			for(Map.Entry<String, Object[]> entry : queries){
 				statements[i] = connection.prepareStatement(entry.getKey());
 				setArgsForPrepareStatement(statements[i], entry.getValue());
 				i++;
 			}
 			for (int j = 0; j < statements.length; j++) {
-				statements[i].executeUpdate();
+				statements[j].executeUpdate();
 			}
 			connection.commit();
 			connection.setAutoCommit(true);
@@ -118,12 +118,6 @@ public abstract class QueryBuilder<T extends Entity> {
 		finally {
 			instance.closeConnection(connection);
 		}
-//		create array of prepare statement
-//		unable autocommit for the database
-//		set args for every statement
-//		execute all queries in cycle
-//		commit changes
-//		error checking
 	}
 
 	private void setArgsForPrepareStatement(PreparedStatement ps, Object... args) throws SQLException {

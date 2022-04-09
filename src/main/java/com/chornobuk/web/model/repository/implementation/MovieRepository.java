@@ -6,9 +6,7 @@ import com.chornobuk.web.model.entity.Genre;
 import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.repository.IRepository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MovieRepository implements IRepository<Movie> {
 	MovieQueryBuilder movieQueryBuilder = new MovieQueryBuilder();
@@ -34,9 +32,9 @@ public class MovieRepository implements IRepository<Movie> {
 
 	@Override
 	public void delete(Movie entity) {
-		Map<String, Object[]> queryParametersMap = new HashMap<>();
-		queryParametersMap.put(DELETE_BY_ID, new Object[]{entity.getId()});
-		queryParametersMap.put(DELETE_MOVIE_GENRES, new Object[]{entity.getId()});
+		List<Map.Entry<String, Object[]>> queryParametersMap = new LinkedList<>();
+		queryParametersMap.add(new AbstractMap.SimpleEntry<>(DELETE_BY_ID, new Object[]{entity.getId()}));
+		queryParametersMap.add(new AbstractMap.SimpleEntry<>(DELETE_MOVIE_GENRES, new Object[]{entity.getId()}));
 		movieQueryBuilder.executeTransaction(instance, queryParametersMap);
 	}
 
@@ -56,19 +54,19 @@ public class MovieRepository implements IRepository<Movie> {
 	public void add(Movie entity) {
 		long id = movieQueryBuilder.getNextId(instance, GET_NEXT_ID);
 		entity.setId(id);
-		Map<String, Object[]> queryParametersMap = new HashMap<>();
+		List<Map.Entry<String, Object[]>> queryParametersMap = new LinkedList<>();
 //		insert new movie
-		queryParametersMap.put(INSERT, new Object[] {
+		queryParametersMap.add(new AbstractMap.SimpleEntry<>(INSERT, new Object[] {
 				entity.getId(),
 				entity.getName(),
 				entity.getReleaseDate(),
 				entity.getDescription(),
 				entity.getImageURL(),
-				entity.getLengthInMinutes()}
-		);
+				entity.getLengthInMinutes()
+		}));
 //		insert movie's genres
 		for(Genre g : entity.getGenres()) {
-			queryParametersMap.put(INSERT_GENRE, new Object[]{entity.getId(), g.getId()});
+			queryParametersMap.add(new AbstractMap.SimpleEntry<>(INSERT_GENRE, new Object[]{entity.getId(), g.getId()}));
 		}
 		movieQueryBuilder.executeTransaction(instance, queryParametersMap);
 	}

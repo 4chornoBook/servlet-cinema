@@ -3,7 +3,7 @@ package com.chornobuk.web.model;
 import java.util.stream.Stream;
 
 public class MovieSessionQueryConstructor {
-	private static String queryBody = "select movie_session.*, movie.*,"
+	private static String queryBody = "select movie_session.*, movie.name,"
 			+ " (select (100 - count(ticket.id)) from ticket where ticket.movie_session_id = movie_session.id) as available_tickets"
 			+ " from movie_session"
 			+ " inner join movie"
@@ -43,7 +43,7 @@ public class MovieSessionQueryConstructor {
 	}
 
 	public void setSortingByTickets(String value) {
-		sortByTickets = "14";
+		sortByTickets = "available_tickets";
 		if (value.equals("ascending"))
 			sortByTickets += " ASC";
 		else

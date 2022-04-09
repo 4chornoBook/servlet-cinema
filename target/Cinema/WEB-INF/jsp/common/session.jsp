@@ -30,7 +30,7 @@
 		<p><fmt:message key="movie.session.date"/> <c:out value="${sessionScope.session.getMovieDate()}"/></p>
 		<p><fmt:message key="movie.session.time"/> <c:out value="${sessionScope.session.getBeginningTime()}"/></p>
 		<p><fmt:message key="movie.session.ticket.price"/> <c:out
-				value="${sessionScope.session.getMovie().getTicketPrice()}"/> <fmt:message
+				value="${sessionScope.session.getTicketPrice()}"/> <fmt:message
 				key="movie.session.currency"/></p>
 		<p><fmt:message key="movie.session.length"/> <c:out
 				value="${sessionScope.session.getMovie().getLengthInMinutes()}"/> <fmt:message

@@ -80,15 +80,6 @@
 		</div>
 	</div>
 	<div class="mb-3">
-		<label for="ticketPrice" class="form-label"><fmt:message key="new.movie.ticket.price"/></label>
-		<input type="number" min="50" step="5" value="50" name="ticketPrice"
-			   class="form-control ${requestScope.ticketPriceError}"
-			   id="ticketPrice" aria-describedby="ticketPriceError">
-		<div id="ticketPriceError" class="invalid-feedback">
-			<fmt:message key="new.movie.ticket.price.error"/>
-		</div>
-	</div>
-	<div class="mb-3">
 		<label for="exampleFormControlTextarea1" class="form-label"><fmt:message key="new.movie.description"/></label>
 		<textarea class="form-control ${requestScope.descriptionError}" name="description"
 				  id="exampleFormControlTextarea1" aria-describedby="descriptionError" rows="3"></textarea>

@@ -8,9 +8,7 @@ import com.chornobuk.web.model.repository.IRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MovieSessionRepository implements IRepository<MovieSession> {
 	private DBManager instance = DBManager.getInstance();
@@ -44,10 +42,10 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 
 	@Override
 	public void delete(MovieSession entity) {
-		Map<String, Object[]> queryParamsMap = new HashMap<>();
-		queryParamsMap.put(DELETE_TICKETS_BY_SESSION, new Object[] {entity.getId()});
-		queryParamsMap.put(DELETE_ORDERS_BY_SESSION, new Object[]{entity.getId()});
-		queryParamsMap.put(DELETE_BY_ID, new Object[]{entity.getId()});
+		List<Map.Entry<String, Object[]>> queryParamsMap = new LinkedList<>();
+		queryParamsMap.add(new AbstractMap.SimpleEntry<>(DELETE_TICKETS_BY_SESSION, new Object[] {entity.getId()}));
+		queryParamsMap.add(new AbstractMap.SimpleEntry<>(DELETE_ORDERS_BY_SESSION, new Object[]{entity.getId()}));
+		queryParamsMap.add(new AbstractMap.SimpleEntry<>(DELETE_BY_ID, new Object[]{entity.getId()}));
 		movieSessionQueryBuilder.executeTransaction(instance,queryParamsMap);
 	}
 
@@ -76,7 +74,11 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 	}
 
 	public List<MovieSession> getLimitedWithOffset(String query, int limit, int offset) {
-		return movieSessionQueryBuilder.getValues(instance, query, limit, offset);
+		List<MovieSession> sessions = movieSessionQueryBuilder.getValues(instance, query, limit, offset);
+		for(MovieSession session : sessions) {
+			session.setMovie(movieRepository.get(new Movie(session.getMovieId())));
+		}
+		return sessions;
 	}
 
 	public List<MovieSession> getByTime(LocalDate date, LocalTime beginning, LocalTime ending) {
@@ -84,6 +86,10 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 	}
 
 	public List<MovieSession> getAvailable() {
-		return movieSessionQueryBuilder.getValues(instance, GET_AVAILABLE);
+		List<MovieSession> sessions = movieSessionQueryBuilder.getValues(instance, GET_AVAILABLE);
+		for(MovieSession session : sessions) {
+			session.setMovie(movieRepository.get(new Movie(session.getMovieId())));
+		}
+		return sessions;
 	}
 }
