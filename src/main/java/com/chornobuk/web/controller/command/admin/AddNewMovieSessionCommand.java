@@ -30,6 +30,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 		String beginningTimeS = req.getParameter("beginningTime");
 		String movieIdString = req.getParameter("movie");
 		String ticketPriceString = req.getParameter("ticketPrice");
+		System.out.println("ticket price: "+ticketPriceString);
 
 		Long movieId = (movieIdString == null || movieIdString.isEmpty()) ? null : Long.parseLong(movieIdString);
 		LocalDate movieDate = (movieDateString == null || movieDateString.isEmpty()) ? null : LocalDate.parse(movieDateString);
@@ -77,7 +78,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 				int numberOfPages = numberOfSessions / limit;
 				if (numberOfSessions % limit != 0)
 					numberOfPages += 1;
-				List<MovieSession> availableSessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), 0, limit);
+				List<MovieSession> availableSessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), limit, 0);
 				req.getSession().setAttribute("availableSessions", availableSessions);
 				req.getSession().setAttribute("numberOfPages", numberOfPages);
 

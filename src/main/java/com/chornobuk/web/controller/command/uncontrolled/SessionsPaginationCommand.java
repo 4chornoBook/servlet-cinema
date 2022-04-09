@@ -28,7 +28,7 @@ public class SessionsPaginationCommand implements ICommand {
 		}
 		if (req.getParameter("page") != null) {
 			page = Integer.parseInt(req.getParameter("page"));
-			sessions = new LinkedList<>(movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), (page - 1) * limit, limit));
+			sessions = new LinkedList<>(movieSessionRepository.getLimitedWithOffset(constructor.getQuery(),limit, (page - 1) * limit));
 			req.getSession().setAttribute("availableSessions", sessions);
 			req.getSession().setAttribute("currentPage", page);
 
@@ -37,12 +37,12 @@ public class SessionsPaginationCommand implements ICommand {
 			if (action.equals("nextPage")) {
 				page += 1;
 				if (page <= numberOfPages) {
-					sessions = new LinkedList<>(movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), (page - 1) * limit, limit));
+					sessions = new LinkedList<>(movieSessionRepository.getLimitedWithOffset(constructor.getQuery(),  limit,(page - 1) * limit));
 				}
 			} else {
 				page -= 1;
 				if (page > 0) {
-					sessions = new LinkedList<>(movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), (page - 1) * limit, limit));
+					sessions = new LinkedList<>(movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), limit,(page - 1) * limit));
 				}
 			}
 		}
