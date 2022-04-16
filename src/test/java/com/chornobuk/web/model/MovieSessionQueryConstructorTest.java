@@ -9,10 +9,10 @@ public class MovieSessionQueryConstructorTest {
 	@Test
 	public void defaultQuery() {
 		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
-		String query = "select movie_session.*, movie.*,"
-				+ " (select (10 - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
-				+ " from movie_session inner join movie on movie_session.movie_id = movie.movie_id where"
-				+ " movie_session.session_date + movie_session.beginning_time >= now() group by movie_session.session_id, movie.movie_id" +
+		String query = "select movie_session.*, movie.name,"
+				+ " (select (100 - count(ticket.id)) from ticket where ticket.movie_session_id = movie_session.id) as available_tickets"
+				+ " from movie_session inner join movie on movie_session.movie_id = movie.id where"
+				+ " movie_session.session_date + movie_session.beginning_time >= now() group by movie_session.id, movie.id" +
 				" limit ? offset ?";
 		assertEquals(query, movieSessionQueryConstructor.getQuery());
 	}
@@ -21,10 +21,10 @@ public class MovieSessionQueryConstructorTest {
 	public void queryWithFilter() {
 		MovieSessionQueryConstructor movieSessionQueryConstructor = new MovieSessionQueryConstructor();
 		movieSessionQueryConstructor.setFilmFilter("Форест Гамп");
-		String query = "select movie_session.*, movie.*,"
-				+ " (select (100 - count(ticket.ticket_id)) from ticket where ticket.movie_session_id = movie_session.session_id) as available_tickets"
-				+ " from movie_session inner join movie on movie_session.movie_id = movie.movie_id where"
-				+ " movie_session.session_date + movie_session.beginning_time >= now() and movie.name ='Форест Гамп' group by movie_session.session_id, movie.movie_id" +
+		String query = "select movie_session.*, movie.name,"
+				+ " (select (100 - count(ticket.id)) from ticket where ticket.movie_session_id = movie_session.id) as available_tickets"
+				+ " from movie_session inner join movie on movie_session.movie_id = movie.id where"
+				+ " movie_session.session_date + movie_session.beginning_time >= now() and movie.name ='Форест Гамп' group by movie_session.id, movie.id" +
 				" limit ? offset ?";
 
 		assertEquals(query, movieSessionQueryConstructor.getQuery());
@@ -46,7 +46,7 @@ public class MovieSessionQueryConstructorTest {
 		movieSessionQueryConstructor.setSortingByTickets("ascending");
 		movieSessionQueryConstructor.setSortingByMovieName("ascending");
 
-		String orderBy = "order by movie_session.session_date ASC, movie_session.beginning_time ASC, 14 ASC, movie.name ASC";
+		String orderBy = "order by movie_session.session_date ASC, movie_session.beginning_time ASC, available_tickets ASC, movie.name ASC";
 		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
 	}
 
@@ -58,7 +58,7 @@ public class MovieSessionQueryConstructorTest {
 		movieSessionQueryConstructor.setSortingByTickets("dkdkd");
 		movieSessionQueryConstructor.setSortingByMovieName(";lksajfd");
 
-		String orderBy = "order by movie_session.session_date DESC, movie_session.beginning_time DESC, 14 DESC, movie.name DESC";
+		String orderBy = "order by movie_session.session_date DESC, movie_session.beginning_time DESC, available_tickets DESC, movie.name DESC";
 		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
 	}
 
@@ -70,7 +70,7 @@ public class MovieSessionQueryConstructorTest {
 		movieSessionQueryConstructor.setSortingByTickets("ascending");
 		movieSessionQueryConstructor.setSortingByMovieName("descending");
 
-		String orderBy = "order by movie_session.session_date ASC, movie_session.beginning_time DESC, 14 ASC, movie.name DESC";
+		String orderBy = "order by movie_session.session_date ASC, movie_session.beginning_time DESC, available_tickets ASC, movie.name DESC";
 		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
 	}
 
@@ -100,7 +100,7 @@ public class MovieSessionQueryConstructorTest {
 		movieSessionQueryConstructor.setSortingByTickets("ascending");
 		movieSessionQueryConstructor.setSortingByMovieName("ascending");
 
-		String orderBy = "order by movie_session.beginning_time ASC, 14 ASC, movie.name ASC";
+		String orderBy = "order by movie_session.beginning_time ASC, available_tickets ASC, movie.name ASC";
 		assertEquals(orderBy, movieSessionQueryConstructor.getOrderBy());
 	}
 
@@ -118,8 +118,4 @@ public class MovieSessionQueryConstructorTest {
 		String where = "where movie_session.session_date + movie_session.beginning_time >= now() and movie.name =\'Зелена книга\'";
 		assertEquals(where, movieSessionQueryConstructor.getWhere());
 	}
-//	I can test methods which return String
-//		getOrderBy
-//		getWhere
-//	I can test some situations in getQuery method
 }
