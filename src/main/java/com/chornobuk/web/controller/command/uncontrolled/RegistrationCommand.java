@@ -34,10 +34,9 @@ public class RegistrationCommand implements ICommand {
 		} else if (password == null || password.length() < 5 || password.length() > 64) {
 			req.setAttribute("passwordError", errorTag);
 		} else {
-//			UserDao userDao = new UserDao();
 			UserRepository userRepository = new UserRepository();
-//			User user = userDao.getUserByLogin(login);
-			User user = userRepository.getByLogin(login);
+			User user = userRepository.get(new User(login));
+			
 			if (user == null) {
 				forward = Path.REDIRECT_COMMAND;
 				user = new User();
@@ -47,7 +46,6 @@ public class RegistrationCommand implements ICommand {
 				user.setSalt(HashingAlgorithm.getSalt());
 				user.setRoleId(2);
 				user.setPassword(HashingAlgorithm.cryptPassword(password, user.getSalt()));
-//				userDao.add(user);
 				userRepository.add(user);
 				try {
 					resp.sendRedirect(Path.LOGIN_PAGE);

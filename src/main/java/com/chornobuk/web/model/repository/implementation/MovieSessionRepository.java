@@ -18,7 +18,6 @@ public class MovieSessionRepository implements IRepository<MovieSession> {
 	private static final String INSERT = "insert into movie_session values (default, ?, ?, ?, ?, ?)";
 	private static final String DELETE_BY_ID = "delete from movie_session where id = ?";
 	private static final String UPDATE = "update movie_session set movie_id = ?, session_date = ?, beginning_time = ?, ending_time = ?, ticket_price = ? where id = ?";
-	private static final String GET_LIMITED_WITH_OFFSET = "select * from movie_session where movie_session.session_date + movie_session.beginning_time >= now() limit ? offset ?";
 	private static final String DELETE_TICKETS_BY_SESSION = "delete from ticket where movie_session_id = ?";
 	private static final String GET_AVAILABLE = "select movie_session.* from movie_session where session_date + beginning_time >= now()";
 	private static final String DELETE_ORDERS_BY_SESSION = "delete from tickets_order" +
