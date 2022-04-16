@@ -27,9 +27,10 @@ public class LoginCommand implements ICommand {
 			req.setAttribute("userLoginError", errorTag);
 			return forward;
 		} else {
-			User user = userRepository.get(new User(login));
+			User user = userRepository.getByLogin(login);
 			if (user == null || user.getPassword().compareTo(HashingAlgorithm.cryptPassword(password, user.getSalt())) != 0) {
 				req.setAttribute("userLoginError", errorTag);
+				System.out.println("lsjdflskf ");
 				return forward;
 			} else {
 				UserRole userRole = UserRole.getRole(user);

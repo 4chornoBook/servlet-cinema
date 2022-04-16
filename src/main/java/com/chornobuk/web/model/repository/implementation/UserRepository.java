@@ -47,4 +47,8 @@ public class UserRepository implements IRepository<User> {
 				entity.getRoleId()
 		);
 	}
+
+	public User getByLogin(String login) {
+		return get(new User(login));
+	}
 }
