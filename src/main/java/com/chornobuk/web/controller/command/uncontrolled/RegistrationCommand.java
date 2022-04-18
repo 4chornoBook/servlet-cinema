@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegistrationCommand implements ICommand {
+	UserRepository userRepository = new UserRepository();
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		Logger log = LogManager.getLogger(RegistrationCommand.class);
@@ -34,7 +35,6 @@ public class RegistrationCommand implements ICommand {
 		} else if (password == null || password.length() < 5 || password.length() > 64) {
 			req.setAttribute("passwordError", errorTag);
 		} else {
-			UserRepository userRepository = new UserRepository();
 			User user = userRepository.get(new User(login));
 			
 			if (user == null) {
