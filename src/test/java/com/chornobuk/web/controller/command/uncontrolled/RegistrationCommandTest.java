@@ -12,11 +12,8 @@ import org.mockito.MockitoAnnotations;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.notNull;
 
 public class RegistrationCommandTest {
 
@@ -56,7 +53,7 @@ public class RegistrationCommandTest {
 	}
 
 	@Test
-	public void failedRegistration() throws Exception{
+	public void failedRegistrationNotValidPassword() throws Exception{
 		Mockito.when(request.getParameter("login")).thenReturn(user.getLogin());
 		Mockito.when(request.getParameter("name")).thenReturn(user.getName());
 		Mockito.when(request.getParameter("surname")).thenReturn(user.getSurname());
@@ -65,4 +62,39 @@ public class RegistrationCommandTest {
 		String result = command.execute(request, response);
 		assertEquals(Path.REGISTRATION_PAGE, result);
 	}
+
+	@Test
+	public void failedRegistrationNotValidLogin() throws Exception{
+		Mockito.when(request.getParameter("login")).thenReturn("t");
+		Mockito.when(request.getParameter("name")).thenReturn(user.getName());
+		Mockito.when(request.getParameter("surname")).thenReturn(user.getSurname());
+		Mockito.when(request.getParameter("password")).thenReturn(user.getPassword());
+		Mockito.doNothing().when(repository).add(Mockito.isA(User.class));
+		String result = command.execute(request, response);
+		assertEquals(Path.REGISTRATION_PAGE, result);
+	}
+
+
+	@Test
+	public void failedRegistrationAllFieldsNotValid() throws Exception{
+		Mockito.when(request.getParameter("login")).thenReturn("t");
+		Mockito.when(request.getParameter("name")).thenReturn("");
+		Mockito.when(request.getParameter("surname")).thenReturn("");
+		Mockito.when(request.getParameter("password")).thenReturn("nope");
+		Mockito.doNothing().when(repository).add(Mockito.isA(User.class));
+		String result = command.execute(request, response);
+		assertEquals(Path.REGISTRATION_PAGE, result);
+	}
+
+	@Test
+	public void failedRegistrationAllFieldsEmpty() throws Exception{
+		Mockito.when(request.getParameter("login")).thenReturn("");
+		Mockito.when(request.getParameter("name")).thenReturn("");
+		Mockito.when(request.getParameter("surname")).thenReturn("");
+		Mockito.when(request.getParameter("password")).thenReturn("");
+		Mockito.doNothing().when(repository).add(Mockito.isA(User.class));
+		String result = command.execute(request, response);
+		assertEquals(Path.REGISTRATION_PAGE, result);
+	}
+
 }

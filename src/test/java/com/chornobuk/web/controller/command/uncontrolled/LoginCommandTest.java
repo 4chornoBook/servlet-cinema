@@ -54,7 +54,7 @@ public class LoginCommandTest {
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(request.getParameter("login")).thenReturn("test");
 		Mockito.when(request.getParameter("password")).thenReturn("123");
-		Mockito.when(repository.getByLogin("test")).thenReturn(user);
+		Mockito.when(repository.getByLogin(Mockito.isA(String.class))).thenReturn(user);
 
 		String result = command.execute(request,response);
 		Mockito.verify(response, Mockito.times(1)).sendRedirect(Path.INDEX_PAGE);
@@ -65,7 +65,7 @@ public class LoginCommandTest {
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(request.getParameter("login")).thenReturn("test");
 		Mockito.when(request.getParameter("password")).thenReturn("111");
-		Mockito.when(repository.getByLogin("test")).thenReturn(user);
+		Mockito.when(repository.getByLogin(Mockito.isA(String.class))).thenReturn(user);
 
 		assertEquals(Path.LOGIN_PAGE, command.execute(request, response));
 	}
