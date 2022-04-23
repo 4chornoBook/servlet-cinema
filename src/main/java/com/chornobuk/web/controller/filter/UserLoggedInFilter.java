@@ -23,13 +23,17 @@ public class UserLoggedInFilter implements Filter {
 		HttpServletRequest servletRequest = (HttpServletRequest) request;
 		HttpServletResponse servletResponse = (HttpServletResponse) response;
 		HttpSession session = servletRequest.getSession();
-		if(session.getAttribute("user") != null) {
+		log.debug(session);
+		if(session !=null)
+			log.debug("session isn't null");
+		if(session != null && session.getAttribute("user") != null) {
 			log.debug("user was logged in. Redirect on index page");
 			servletResponse.sendRedirect(Path.INDEX_PAGE);
 		}
-		else
+		else {
 			log.debug("user wasn't logged in");
-		chain.doFilter(request,response);
+			chain.doFilter(request, response);
+		}
 		log.debug("Filter finished");
 	}
 
