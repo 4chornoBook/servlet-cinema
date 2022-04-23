@@ -50,7 +50,6 @@ public class AddNewMovieSessionCommand implements ICommand {
 			movieDate = null;
 			beginningTime = null;
 		}
-
 		if (movieId == null) {
 			req.setAttribute("movieSelectionError", errorTag);
 		} else if (movieDate == null || movieDate.isBefore(LocalDate.now())) {
@@ -61,7 +60,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 				|| LocalDateTime.of(movieDate, beginningTime).isBefore(LocalDateTime.now())) {
 			req.setAttribute("beginningTimeError", errorTag);
 		}
-		else if(ticketPrice >50 && ticketPrice < 1000) {
+		else if(ticketPrice < 50 || ticketPrice > 1000) {
 			req.setAttribute("ticketPriceError", errorTag);
 		}
 		else {

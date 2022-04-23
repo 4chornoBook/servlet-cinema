@@ -88,7 +88,7 @@ public class AddNewMovieSessionCommandTest {
 	}
 
 	@Test
-	public void failedMovieDateNotValid() throws Exception{
+	public void successfulAdding() throws Exception{
 		Mockito.when(request.getParameter("movieDate")).thenReturn(testMovieSession.getMovieDate().toString());
 		Mockito.when(request.getParameter("beginningTime")).thenReturn(testMovieSession.getBeginningTime().toString());
 		Mockito.when(request.getParameter("movie")).thenReturn(testMovieSession.getMovieId()+"");

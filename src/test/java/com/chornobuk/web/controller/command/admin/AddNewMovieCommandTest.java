@@ -42,6 +42,13 @@ public class AddNewMovieCommandTest {
 	@Before
 	public void setUp() throws Exception {
 
+		testMovie = new Movie();
+		testMovie.setName("testName");
+		testMovie.setReleaseDate(LocalDate.now());
+		testMovie.setImageURL("testURL");
+		testMovie.setLengthInMinutes(120);
+		testMovie.setDescription("test description");
+
 		LinkedList<Genre> genres = new LinkedList<>();
 		genres.add(new Genre(1, "testGenre"));
 		genres.add(new Genre(2, "testGenre2"));
