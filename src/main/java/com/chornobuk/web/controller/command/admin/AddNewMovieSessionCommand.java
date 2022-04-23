@@ -17,9 +17,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public class AddNewMovieSessionCommand implements ICommand {
+	MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
+	MovieRepository movieRepository = new MovieRepository();
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		Logger log = LogManager.getLogger(AddNewMovieSessionCommand.class);
@@ -29,11 +32,24 @@ public class AddNewMovieSessionCommand implements ICommand {
 		String movieDateString = req.getParameter("movieDate");
 		String beginningTimeS = req.getParameter("beginningTime");
 		String movieIdString = req.getParameter("movie");
-		String ticketPriceString = req.getParameter("ticketPrice");
-
-		Long movieId = (movieIdString == null || movieIdString.isEmpty()) ? null : Long.parseLong(movieIdString);
-		LocalDate movieDate = (movieDateString == null || movieDateString.isEmpty()) ? null : LocalDate.parse(movieDateString);
-		LocalTime beginningTime = (beginningTimeS == null || beginningTimeS.isEmpty()) ? null : LocalTime.parse(beginningTimeS, dateTimeFormatter);
+		int ticketPrice;
+		Long movieId;
+		LocalDate movieDate;
+		LocalTime beginningTime;
+		try {
+			movieId = (movieIdString == null || movieIdString.isEmpty()) ? null : Long.parseLong(movieIdString);
+			ticketPrice = Integer.parseInt(req.getParameter("ticketPrice"));
+		}catch (NumberFormatException e) {
+			movieId = null;
+			ticketPrice = -1;
+		}
+		try{
+			movieDate = (movieDateString == null || movieDateString.isEmpty()) ? null : LocalDate.parse(movieDateString);
+			beginningTime = (beginningTimeS == null || beginningTimeS.isEmpty()) ? null : LocalTime.parse(beginningTimeS, dateTimeFormatter);
+		}catch (DateTimeParseException e) {
+			movieDate = null;
+			beginningTime = null;
+		}
 
 		if (movieId == null) {
 			req.setAttribute("movieSelectionError", errorTag);
@@ -45,13 +61,10 @@ public class AddNewMovieSessionCommand implements ICommand {
 				|| LocalDateTime.of(movieDate, beginningTime).isBefore(LocalDateTime.now())) {
 			req.setAttribute("beginningTimeError", errorTag);
 		}
-		else if(ticketPriceString == null || ticketPriceString.isEmpty()) {
+		else if(ticketPrice >50 && ticketPrice < 1000) {
 			req.setAttribute("ticketPriceError", errorTag);
 		}
 		else {
-			MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
-			MovieRepository movieRepository = new MovieRepository();
-			int ticketPrice = Integer.parseInt(ticketPriceString);
 			MovieSession movieSession = new MovieSession();
 			movieSession.setMovieId(movieId);
 			movieSession.setMovieDate(movieDate);
