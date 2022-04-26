@@ -13,18 +13,19 @@ import java.io.IOException;
 import java.util.List;
 
 public class RemoveSessionCommand implements ICommand {
+	MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		Logger logger = LogManager.getLogger(RemoveSessionCommand.class);
 		String forward = Path.REDIRECT_COMMAND;
-		MovieSession movieSession;
-		MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
-		long id = Long.parseLong( req.getParameter("sessionId"));
-		movieSession = movieSessionRepository.get(new MovieSession(id));
-		movieSessionRepository.delete(movieSession);
-		List<MovieSession> availableSessions = movieSessionRepository.getAvailable();
-		req.getSession().setAttribute("availableSessions", availableSessions);
-
+		try {
+			long id = Long.parseLong(req.getParameter("sessionId"));
+			movieSessionRepository.delete(new MovieSession(id));
+			List<MovieSession> availableSessions = movieSessionRepository.getAvailable();
+			req.getSession().setAttribute("availableSessions", availableSessions);
+		} catch (NumberFormatException e ) {
+			logger.error("session id is in wrong format", e);
+		}
 		try {
 			resp.sendRedirect(Path.INDEX_PAGE);
 		} catch (IOException e) {
