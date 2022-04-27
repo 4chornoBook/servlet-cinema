@@ -15,14 +15,14 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class SubmitOrderCommand implements ICommand {
+	MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
+	MovieRepository movieRepository = new MovieRepository();
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
 		String forward = Path.SESSION_PAGE;//continue operation
 		UserRole role = (UserRole) req.getSession().getAttribute("role");
 		if (role != null) {
-			MovieSessionRepository movieSessionRepository = new MovieSessionRepository();
-			MovieRepository movieRepository = new MovieRepository();
 			Long sessionId = Long.parseLong(req.getParameter("sessionId"));
 			MovieSession session = movieSessionRepository.get(new MovieSession(sessionId));
 			session.setMovie(movieRepository.get(new Movie(session.getMovieId())));
