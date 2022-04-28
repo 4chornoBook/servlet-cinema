@@ -4,6 +4,7 @@ import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.controller.command.ICommand;
 import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.entity.MovieSession;
+import com.chornobuk.web.model.entity.User;
 import com.chornobuk.web.model.entity.UserRole;
 import com.chornobuk.web.model.repository.implementation.MovieRepository;
 import com.chornobuk.web.model.repository.implementation.MovieSessionRepository;
@@ -21,7 +22,7 @@ public class SubmitOrderCommand implements ICommand {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String errorTag = "is-invalid";
 		String forward = Path.SESSION_PAGE;//continue operation
-		UserRole role = (UserRole) req.getSession().getAttribute("role");
+		User role = (User) req.getSession().getAttribute("user");
 		if (role != null) {
 			Long sessionId = Long.parseLong(req.getParameter("sessionId"));
 			MovieSession session = movieSessionRepository.get(new MovieSession(sessionId));

@@ -1,10 +1,13 @@
 package com.chornobuk.web.controller.command.user;
 
+import com.chornobuk.web.controller.Path;
 import com.chornobuk.web.model.entity.Movie;
 import com.chornobuk.web.model.entity.MovieSession;
+import com.chornobuk.web.model.entity.User;
 import com.chornobuk.web.model.repository.implementation.MovieRepository;
 import com.chornobuk.web.model.repository.implementation.MovieSessionRepository;
 import org.junit.Before;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -37,7 +40,7 @@ public class SubmitOrderCommandTest {
 	MovieRepository movieRepository;
 
 	@InjectMocks
-	BuyTicketsCommand command;
+	SubmitOrderCommand command;
 
 	MovieSession testMovieSession;
 
@@ -46,7 +49,7 @@ public class SubmitOrderCommandTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
-
+		testMovieSession = new MovieSession();
 		testMovieSession.setMovieDate(LocalDate.of(2023,12,10));
 		testMovieSession.setBeginningTime(LocalTime.of(12,00,00));
 		testMovieSession.setEndingTime(LocalTime.of(14,00,00));
@@ -66,4 +69,27 @@ public class SubmitOrderCommandTest {
 
 	}
 
+	@Test
+	public void execute() {
+		Mockito.when(request.getSession()).thenReturn(session);
+		Mockito.when(session.getAttribute("user")).thenReturn(new User());
+		Mockito.when(request.getParameter("sessionId")).thenReturn("1");
+		Mockito.when(request.getParameterValues("numberPlace")).thenReturn(new String[]{"1","2","3"});
+		String result= command.execute(request,response);
+		assertEquals(Path.BUY_TICKETS_PAGE, result);
+	}
+
+	@Test
+	public void executeUserNotAuthorized() throws Exception{
+		command.execute(request,response);
+		Mockito.verify(response, Mockito.times(1)).sendRedirect(Path.LOGIN_PAGE);
+	}
+	@Test
+	public void executeNoTickets() {
+		Mockito.when(request.getSession()).thenReturn(session);
+		Mockito.when(session.getAttribute("user")).thenReturn(new User());
+		Mockito.when(request.getParameter("sessionId")).thenReturn("1");
+		String result = command.execute(request,response);
+		assertEquals(Path.SESSION_PAGE, result);
+	}
 }
