@@ -81,7 +81,7 @@ public class BuyTicketsCommand implements ICommand {
 			req.getSession().removeAttribute("orderSession");
 			req.getSession().removeAttribute("orderPlaces");
 			req.getSession().removeAttribute("totalPrice");
-
+			req.getSession().setAttribute("currentPage",1);
 //			put them in database using transaction
 			orderRepository.add(order, tickets);
 			try {

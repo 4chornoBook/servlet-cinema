@@ -89,6 +89,7 @@ public class AddNewMovieSessionCommand implements ICommand {
 				if (numberOfSessions % limit != 0)
 					numberOfPages += 1;
 				List<MovieSession> availableSessions = movieSessionRepository.getLimitedWithOffset(constructor.getQuery(), limit, 0);
+				req.getSession().setAttribute("currentPage",1);
 				req.getSession().setAttribute("availableSessions", availableSessions);
 				req.getSession().setAttribute("numberOfPages", numberOfPages);
 
