@@ -21,6 +21,9 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Pattern;
 
 public class BuyTicketsCommand implements ICommand {
+	TicketRepository ticketRepository = new TicketRepository();
+	OrderRepository orderRepository = new OrderRepository();
+
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		Logger log = LogManager.getLogger(BuyTicketsCommand.class);
@@ -34,6 +37,7 @@ public class BuyTicketsCommand implements ICommand {
 		String cardOwnerName = req.getParameter("cardOwner");
 		String cardNumber = req.getParameter("cardNumber");
 		String cardExpirationDate = req.getParameter("cardExpirationDate");
+		String cvvCode = req.getParameter("cvvCode");
 		YearMonth cardDate;
 		try {
 			cardDate = YearMonth.parse(cardExpirationDate, monthYearFormatter);
@@ -41,7 +45,6 @@ public class BuyTicketsCommand implements ICommand {
 			req.setAttribute("cardExpirationDateError", errorTag);
 			return forward;
 		}
-		String cvvCode = req.getParameter("cvvCode");
 
 		if (cardOwnerName == null || cardOwnerName.isEmpty() || !Pattern.matches(ownerNameRegex, cardOwnerName)) {
 			req.setAttribute("ownerNameError", errorTag);
@@ -52,11 +55,10 @@ public class BuyTicketsCommand implements ICommand {
 		} else if (cvvCode == null || cvvCode.isEmpty() || !Pattern.matches(cvvCodeRegex, cvvCode)) {
 			req.setAttribute("cvvError", errorTag);
 		} else {
-//			take money from card
+			log.debug("data is valid");
 			int[] places = (int[]) req.getSession().getAttribute("orderPlaces");
 			Ticket[] tickets = new Ticket[places.length];
 			MovieSession session = (MovieSession) req.getSession().getAttribute("orderSession");
-			TicketRepository ticketRepository= new TicketRepository();
 			User user = (User) req.getSession().getAttribute("user");
 //			creating tickets
 			for (int i = 0; i < tickets.length; i++) {
@@ -68,21 +70,20 @@ public class BuyTicketsCommand implements ICommand {
 					return forward;
 				}
 			}
+			//	take money from card
 			forward = Path.REDIRECT_COMMAND;
 //			create order
 			Order order = new Order();
 			order.setCreationDate((LocalDateTime) req.getSession().getAttribute("orderCreatingTime"));
 			order.setUserId(user.getId());
 			order.setTotalPrice(session.getTicketPrice() * tickets.length);
-//			put them in database using transaction
-			OrderRepository orderRepository = new OrderRepository();
 //			remove order attributes from session
 			req.getSession().removeAttribute("orderCreatingTime");
 			req.getSession().removeAttribute("orderSession");
 			req.getSession().removeAttribute("orderPlaces");
 			req.getSession().removeAttribute("totalPrice");
 
-//			orderDao.addOrderWithTickets(order, user, session, tickets);
+//			put them in database using transaction
 			orderRepository.add(order, tickets);
 			try {
 				resp.sendRedirect(Path.INDEX_PAGE);
