@@ -54,15 +54,6 @@ public class BuyTicketsCommandTest {
 		Mockito.when(request.getSession()).thenReturn(session);
 		Mockito.when(session.getAttribute("user")).thenReturn(new User(1));
 		Mockito.when(session.getAttribute("orderSession")).thenReturn(testMovieSession);
-//		String cardOwnerName = req.getParameter("cardOwner");
-//		String cardNumber = req.getParameter("cardNumber");
-//		String cardExpirationDate = req.getParameter("cardExpirationDate");
-//		req.getParameter("cvvCode");
-//		req.getSession().getAttribute("orderPlaces");
-//		req.getSession().getAttribute("orderSession");
-//		req.getSession().getAttribute("user");
-//		req.getSession().getAttribute("orderCreatingTime"));
-//		resp.sendRedirect(Path.INDEX_PAGE);
 	}
 
 	@Test
