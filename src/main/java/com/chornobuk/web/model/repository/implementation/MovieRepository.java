@@ -11,6 +11,8 @@ import java.util.*;
 public class MovieRepository implements IRepository<Movie> {
 	MovieQueryBuilder movieQueryBuilder = new MovieQueryBuilder();
 	DBManager instance = DBManager.getInstance();
+
+	GenreRepository genreRepository = new GenreRepository();
 	private final static String GET_NEXT_ID = "select max(id)+1 from movie";
 	private final static String GET_BY_ID = "select * from movie where id = ?";
 	private final static String GET_ALL = "select * from movie";
@@ -27,7 +29,10 @@ public class MovieRepository implements IRepository<Movie> {
 
 	@Override
 	public Movie get(Movie entity) {
-		return movieQueryBuilder.getValue(instance, GET_BY_ID, entity.getId());
+		Movie movie =  movieQueryBuilder.getValue(instance, GET_BY_ID, entity.getId());
+		movie.setGenres(genreRepository.getByMovie(movie));
+
+		return movie;
 	}
 
 	@Override

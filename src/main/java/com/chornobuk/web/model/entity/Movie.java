@@ -2,6 +2,7 @@ package com.chornobuk.web.model.entity;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Movie extends Entity{
 	private String name;
@@ -9,7 +10,7 @@ public class Movie extends Entity{
 	private String description;
 	private String imageURL;
 	private int lengthInMinutes;
-	private LinkedList<Genre> genres;
+	private List<Genre> genres;
 
 	public Movie(long id, String name, LocalDate releaseDate, String description, String imageURL, int lengthInMinutes, LinkedList<Genre> genres) {
 		super(id);
@@ -69,11 +70,11 @@ public class Movie extends Entity{
 		this.lengthInMinutes = lengthInMinutes;
 	}
 
-	public LinkedList<Genre> getGenres() {
+	public List<Genre> getGenres() {
 		return genres;
 	}
 
-	public void setGenres(LinkedList<Genre> genres) {
+	public void setGenres(List<Genre> genres) {
 		this.genres = genres;
 	}
 }
