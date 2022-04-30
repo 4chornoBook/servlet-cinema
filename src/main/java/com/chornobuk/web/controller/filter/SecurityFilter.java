@@ -62,6 +62,7 @@ public class SecurityFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
+		log.debug("init here");
 		log.debug("Filter initialization started");
 		common = getParametersAsList(filterConfig.getInitParameter("commonCommands"));
 		accessMap.put(UserRole.ADMIN, getParametersAsList(filterConfig.getInitParameter("adminCommands")));

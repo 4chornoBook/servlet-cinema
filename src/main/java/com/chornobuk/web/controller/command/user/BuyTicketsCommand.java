@@ -55,7 +55,6 @@ public class BuyTicketsCommand implements ICommand {
 		} else if (cvvCode == null || cvvCode.isEmpty() || !Pattern.matches(cvvCodeRegex, cvvCode)) {
 			req.setAttribute("cvvError", errorTag);
 		} else {
-			log.debug("data is valid");
 			int[] places = (int[]) req.getSession().getAttribute("orderPlaces");
 			Ticket[] tickets = new Ticket[places.length];
 			MovieSession session = (MovieSession) req.getSession().getAttribute("orderSession");
